@@ -38,6 +38,7 @@ public class BreadthFirstSearch {
         while(queue.size() > 0){
             //get first node from queue
             Graph.Vertex current_node = queue.pop();
+            farthestNode = current_node;
             //for each node adj which is not visited add to queue
             for(Graph.Edge u : current_node.adj){
                 if(!visited[u.otherEnd(current_node).getName()]){
