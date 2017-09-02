@@ -1,7 +1,7 @@
 /**
  *  Get the diameter (longest path) in a Tree.
  *  @author Umang Shah, Vibha Belavadi, Abhishek Jagwani, Shreya Rao
- *  Ver 1.0: 2017/08/28.  
+ *  Ver 1.1: 2017/09/01.  
  *
  */
 
@@ -19,13 +19,16 @@ public class TreeDiameter {
         LinkedList<Graph.Vertex> start = BreadthFirstSearch.bfs(g, g.getVertex(1));
         //2nd BFS starting from farthest node
         LinkedList<Graph.Vertex> end = BreadthFirstSearch.bfs(g, start.get(start.size()-1));
-        return new LinkedList<>();
+        return end;
     }
     
     public static void main(String[] args)throws FileNotFoundException{
-
-        Scanner sf = new Scanner(new File("graph.in"));
-        Graph graph = Graph.readGraph(sf);
-        System.out.println(TreeDiameter.diameter(graph));
+        if(args.length > 0){
+          Scanner sf = new Scanner(new File(args[0]));
+          Graph graph = Graph.readGraph(sf);
+          System.out.println("Longest Path is: " + TreeDiameter.diameter(graph));
+        }
+        else
+          System.out.println("usage: java cs6301.g21.TreeDiameter <path to graph file>");
     }
 }
