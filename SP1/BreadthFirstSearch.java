@@ -10,7 +10,17 @@ package cs6301.g21;
 import java.util.LinkedList;
 
 public class BreadthFirstSearch {
-
+    /**
+		 * BreadthFirstSearch for Graph Class
+		 * 
+		 * Standard BFS using queues for the Graph class, 
+		 * starting from the vertex specified, returns the
+		 * path to the farthest node in the graph.
+		 *
+		 * @param g: Graph : the graph on which BFS is performed
+		 * @param v: Graph.Vertex : the vertex to start BFS from
+		 * 
+		 */
     static LinkedList<Graph.Vertex> bfs(Graph g, Graph.Vertex v){
         Graph.Vertex farthestNode = v;
         //queue for BFS

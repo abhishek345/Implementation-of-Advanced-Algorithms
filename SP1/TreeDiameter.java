@@ -13,7 +13,16 @@ import java.util.Scanner;
 import java.io.File;
 
 public class TreeDiameter {
-    // Return a longest path in g.  Algorithm is correct only if g is a tree.
+    /**
+		 * function finds diameter of a tree
+		 * 
+		 * Return a longest path in g.  Algorithm is correct only if g is a tree.
+		 * perform 1st bfs from arbitrary node, and then 2nd bfs from farthest node,
+		 * this gives the longest path in the tree.
+		 *
+		 * @param g: Graph : the tree whose diameter we need to find
+		 * 
+		 */
     static LinkedList<Graph.Vertex> diameter (Graph g) {
         //1st BFS to find farthest node
         LinkedList<Graph.Vertex> start = BreadthFirstSearch.bfs(g, g.getVertex(1));
