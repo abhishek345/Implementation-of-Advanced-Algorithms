@@ -7,13 +7,15 @@ public class Num {
 
     private LinkedList<Long> digits;
     private static int BASE = 10;
-
-    public Iterator iterator(){
-        return digits.iterator();
-    }
+    private boolean sign = false;//false (not set) +ve number; if true (set) -ve num
 
     public Num(String num){ //only positive numbers yet!
         digits = new LinkedList<>();
+        if(num.charAt(0) == '-'){
+            sign = true;
+            num = num.substring(1);
+            System.out.println(num);
+        }
         int decimalPoint = num.indexOf(".");
         //If a decimal point is present, truncate at the decimal point
         if(decimalPoint > -1){
@@ -36,16 +38,24 @@ public class Num {
         if(num==0)
             digits.add(num);
         else {
+            if(num < 0){
+                sign = true;
+                num = -1*num;
+            }
             while (num != 0) {
-                digit = num % 10;
+                digit = num % BASE;
                 digits.addLast(digit);
-                num = num / 10;
+                num = num / BASE;
             }
         }
     }
 
     public Num(){
         digits = new LinkedList<>();
+    }
+
+    public Iterator iterator(){
+        return digits.iterator();
     }
 
     public long get(int i){
@@ -96,38 +106,38 @@ public class Num {
         return digits.size();
     }
 
-    public static Num karatsubaMul(Num a, Num b){
-        //Needs split and subtract function
-        int len;
-        if(a.size() < b.size())
-            len = a.size();
-        else
-            len = b.size();
-        if(len == 0)
-            return new Num(0);
-        if(len == 1)
-            return simpleMul(a,b);
-
-        int half = len/2; //length of the half of the numbers
-
-        Num[] aSplit, bSplit;
-        aSplit = a.split(a,half);
-        bSplit = b.split(b,half);
-        //aSplit[0] - L ; [1] - R
-
-        Num mulLeft = simpleMul(aSplit[0], bSplit[0]);
-        Num mulRight = simpleMul(aSplit[1], bSplit[1]);
-        Num mulMid = simpleMul(add(aSplit[0],aSplit[1]), add(bSplit[0],bSplit[1]));
-
-        mulMid = sub(mulMid, mulLeft);
-        mulMid = sub(mulMid, mulRight);
-        mulMid = simpleMul(mulMid, power(new Num(BASE),len/2));
-        Num ans = simpleMul(mulLeft, power(new Num(BASE), len));
-        ans = add(ans, mulMid);
-        ans = add(ans, mulRight);
-
-        return ans;
-    }
+//    public static Num karatsubaMul(Num a, Num b){
+//        //Needs split and subtract function
+//        int len;
+//        if(a.size() < b.size())
+//            len = a.size();
+//        else
+//            len = b.size();
+//        if(len == 0)
+//            return new Num(0);
+//        if(len == 1)
+//            return simpleMul(a,b);
+//
+//        int half = len/2; //length of the half of the numbers
+//
+//        Num[] aSplit, bSplit;
+//        aSplit = a.split(a,half);
+//        bSplit = b.split(b,half);
+//        //aSplit[0] - L ; [1] - R
+//
+//        Num mulLeft = simpleMul(aSplit[0], bSplit[0]);
+//        Num mulRight = simpleMul(aSplit[1], bSplit[1]);
+//        Num mulMid = simpleMul(add(aSplit[0],aSplit[1]), add(bSplit[0],bSplit[1]));
+//
+//        mulMid = sub(mulMid, mulLeft);
+//        mulMid = sub(mulMid, mulRight);
+//        mulMid = simpleMul(mulMid, power(new Num(BASE),len/2));
+//        Num ans = simpleMul(mulLeft, power(new Num(BASE), len));
+//        ans = add(ans, mulMid);
+//        ans = add(ans, mulRight);
+//
+//        return ans;
+//    }
 
     public static Num simpleMul(Num a, Num b){
         long value = 0;
@@ -204,7 +214,7 @@ public class Num {
     }
 
     public static void main(String args[]){
-        Num n = new Num("319.90");
+        Num n = new Num("-319.90");
         n.printList();
         Num n2 = new Num(5074);
         Num.simpleMul(n,n2);
