@@ -9,12 +9,11 @@ public class Num {
     private static int BASE = 10;
     private boolean sign = false;//false (not set) +ve number; if true (set) -ve num
 
-    public Num(String num){ //only positive numbers yet!
+    public Num(String num){
         digits = new LinkedList<>();
         if(num.charAt(0) == '-'){
             sign = true;
             num = num.substring(1);
-            System.out.println(num);
         }
         int decimalPoint = num.indexOf(".");
         //If a decimal point is present, truncate at the decimal point
@@ -54,6 +53,10 @@ public class Num {
         digits = new LinkedList<>();
     }
 
+    public boolean isNegative() { return sign; }
+
+    public void setNegative() { sign = true; }
+
     public Iterator iterator(){
         return digits.iterator();
     }
@@ -71,7 +74,11 @@ public class Num {
     }
 
     public void printList(){
-        System.out.println(digits);
+        System.out.print(BASE + " : ");
+        Iterator it = this.iterator();
+        while(it.hasNext())
+            System.out.print(it.next() + " ");
+        System.out.println();
     }
 
     public String toString() {
@@ -140,6 +147,7 @@ public class Num {
 //    }
 
     public static Num simpleMul(Num a, Num b){
+        //need to add -ve no consideration
         long value = 0;
         long carry = 0;
         int secondSize = 0;
@@ -219,6 +227,7 @@ public class Num {
         Num n2 = new Num(5074);
         Num.simpleMul(n,n2);
         System.out.println(n);
+        System.out.println(n.isNegative());
     }
 
 }
