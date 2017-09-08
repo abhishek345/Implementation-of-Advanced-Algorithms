@@ -6,6 +6,7 @@ import java.util.LinkedList;
 public class Num {
 
     private LinkedList<Long> digits;
+    private static int BASE = 10;
 
     public Iterator iterator(){
         return digits.iterator();
@@ -32,10 +33,14 @@ public class Num {
     public Num(long num){
         digits = new LinkedList<>();
         long digit;
-        while(num != 0){
-            digit = num%10;
-            digits.addLast(digit);
-            num = num/10;
+        if(num==0)
+            digits.add(num);
+        else {
+            while (num != 0) {
+                digit = num % 10;
+                digits.addLast(digit);
+                num = num / 10;
+            }
         }
     }
 
@@ -58,6 +63,21 @@ public class Num {
     public void printList(){
         System.out.println(digits);
     }
+
+    public String toString() {
+        Iterator value = this.iterator();
+        long result = (long) value.next();
+        long first;
+        int factor = BASE;
+        while(value.hasNext()){
+            first = (long) value.next();
+            first = first * factor;
+            result = result + first;
+            factor *= BASE;
+        }
+        return String.valueOf(result);
+    }
+
 //    private class Result{
 //        int value;
 //        int carry;
@@ -93,25 +113,19 @@ public class Num {
             c = a;
             secondSize = b.size();
         }
-        /*
-        4->7->0->5
-        9->1->3
-         */
+
         Num[] tempArr = new Num[secondSize];
         int k = 0;
-        long mul = 1;
         while(outer.hasNext()){
             long number = (long) outer.next();
-            long ans = 0;
             inner = c.iterator();
             tempArr[k] = new Num();
             for(int i=0;i < k;i++)
                 tempArr[k].addLast(0);
             while(inner.hasNext()){
                 value = number * (long) inner.next() + carry;
-                carry = value / 10;
-                ans = (value%10)*mul + ans;
-                tempArr[k].addLast(value%10);
+                carry = value / BASE;
+                tempArr[k].addLast(value%BASE);
             }
             if(carry != 0) tempArr[k].addLast(carry);
             tempArr[k++].printList();
@@ -134,6 +148,24 @@ public class Num {
 
     }
 
+    static Num power(Num a, long n) {
+        Num result;
+        if(n==0)
+            return new Num(1);
+        if(n==1)
+            return a;
+
+        Num halfVal=power(a,n/2);
+        if((n%2)==0){
+            result= simpleMul(halfVal,halfVal);
+        }
+        else{
+            Num subResult = simpleMul(halfVal, halfVal);
+            result = simpleMul(subResult,a);
+        }
+        return result;
+    }
+
     public static Num add(Num a, Num b){
         return new Num(0);
     }
@@ -142,8 +174,8 @@ public class Num {
         Num n = new Num("319.90");
         n.printList();
         Num n2 = new Num(5074);
-        n2.printList();
         Num.simpleMul(n,n2);
+        System.out.println(n);
     }
 
 }
