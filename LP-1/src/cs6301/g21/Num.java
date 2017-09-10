@@ -220,6 +220,63 @@ public class Num {
     public static Num add(Num a, Num b){
         return new Num(0);
     }
+    
+ //Get the square root of Num
+public static Num squareRoot(Num a){
+
+    Num left = new Num(0);
+    Num right = a;
+
+    while(isGreater(right, left) > 0){
+
+        Num middle = getMid(right, left);
+        Num square = pow(middle, 2L);
+        if(isGreater(square, a) > 0)
+            right = middle;
+        else if(isGreater(square, a) < 0)
+            left = middle;
+        else
+            return middle;
+    }
+
+    return left;
+}
+
+/*public static Num pow(Num a, long b){
+
+    return new Num(0);
+}*/
+
+//Compares two numbers and sees which one is greater
+public static int isGreater(Num a, Num b){
+
+    if(a.digits.size()>b.digits.size())
+        return 1;
+    else if(a.digits.size() == b.digits.size()){
+        if(a.digits.getLast() > b.digits.getLast())
+            return 1;
+        else if(a.digits.getLast() < b.digits.getLast()){
+            return -1;
+        }else{
+            for(int i=0; i<a.digits.size(); i++){
+                if(a.digits.get(i) > b.digits.get(i))
+                    return 1;
+                else if(a.digits.get(i) < b.digits.get(i))
+                    return -1;
+                else
+                    return 0;
+            }
+        }
+    }
+
+    return -1;
+}
+
+//Get the average of two Num
+public static Num getMid(Num a, Num b){
+
+    return divide(add(a,b), new Num(2));
+}
 
     public static void main(String args[]){
         Num n = new Num("-319.90");
