@@ -1,7 +1,14 @@
 package cs6301.g21;
 
-import java.util.Stack;
+/**
+ * Implementation of Reverse-Recursive, Reverse-non recursive forms of Linked list.
+ * Also Implements printlist functions for both reverse-recursive and reverse-non recursive forms of Linked list
+ * @author Abhishek Jagwani, Umang Shah, Vibha  Belavadi, Shreya Vishwanath Rao
+ * @version 1.0 : 09/02/2016
+ *
+ */
 
+import java.util.Stack;
 
 public class SinglyLinkedListReverse<E> {
 	
@@ -23,6 +30,10 @@ public class SinglyLinkedListReverse<E> {
 		}
 	}
 	
+	/**
+	 * Function to implement reverse recursive singly linked list
+	 * @param temp : node head passed from the main function
+	 */
 	Node<E> reverseListRecursive(Node<E> temp){
 		if(temp.next != null){
 			Node<E> oldHead = null;
@@ -37,9 +48,14 @@ public class SinglyLinkedListReverse<E> {
 		else{
 			head = temp;
 			return temp;
+			
 		}
 	}
-	
+
+	/**
+	 * Function to implement printing of reverse recursive singly linked list
+	 * @param temp : node head passed from the main function
+	 */
 	void printListReverseRecursive(Node<E> temp){
 		if(temp != null){
 			printListReverseRecursive(temp.next);
@@ -47,6 +63,12 @@ public class SinglyLinkedListReverse<E> {
 		}
 	}
 	
+	/**
+	 * Function to implement reverse non recursive singly linked list
+	 * @param temp : node head passed from the main function
+	 * 
+	 * Loop Invariant : "temp" will not be null inside the loop
+	 */
 	void reverseListNonRecursive(Node<E> temp){
 		Stack<E> stackList = new Stack<E>();
 		while(temp != null){
@@ -58,6 +80,12 @@ public class SinglyLinkedListReverse<E> {
 			insertElement(stackList.pop());
 	}
 	
+	/**
+	 * Function to implement printing of reverse non recursive singly linked list
+	 * @param temp : node head passed from the main function
+	 * 
+	 * Loop Invariant : "temp" will not be null inside the loop
+	 */
 	void printListReverseNonRecursive(Node<E> temp){
 		Stack<E> stackList = new Stack<E>();
 		while(temp != null){
@@ -68,6 +96,10 @@ public class SinglyLinkedListReverse<E> {
 			System.out.println(stackList.pop());
 	}
 	
+	/**
+	 * Main function which inserts element into linked list and performs recursive and non recursive functions of reversing and printing the lists
+	 * @param args : command line input
+	 */
 	public static void main(String[] args){
 		int n = 10;
 		if(args.length>0){
@@ -85,6 +117,7 @@ public class SinglyLinkedListReverse<E> {
 
 }
 
+// Node class to create an empty node
 class Node<E>{
 	E element = null;
 	Node<E> next = null;
