@@ -58,6 +58,7 @@ public class Driver34 {
     }
 
     //Stores Num values against the characters, given the arithmetic functions to be performed
+    //L3 has two cases, with post fix and without postfix, so can call Shunting yard directly (or not)
     public static void calculateL3(HashMap<Integer, String> hmap, HashMap<String, Num> repo){
 
         String [] tokens;
@@ -67,10 +68,8 @@ public class Driver34 {
         for(Map.Entry<Integer, String> entry : hmap.entrySet()){
             temp = entry.getValue();
             tokens = temp.split(" ");
-            //doesn't exist for Level 3
+            //Loop doesn't exist for Level 3
             if(!temp.split(" ")[0].matches("\\d+")){
-                //Stuff for the loop
-
             /*}else{*/
                 if(!repo.containsKey(tokens[0])) {
                     if (tokens.length == 4){
@@ -83,35 +82,34 @@ public class Driver34 {
                     }
                     else if(tokens.length == 6){
                         //consider the following cases: addition, subtraction, multiplication, division, modulus, power
+                        //two cases to be considered: no postfix and with postfix
                         if(tokens[4].contains("+")){
                             //add()
-                            if(tokens[2].contains("\\d+") && tokens[3].contains("\\d+")){
-                                repo.put(tokens[0], Num.add(new Num(tokens[2]), new Num(tokens[3])));
-                            }else if(tokens[2].contains("\\d+") && tokens[3].contains("\\D+")){
-                                repo.put(tokens[0], Num.add(new Num(tokens[2]), repo.get(tokens[3])));
-                            }else if(tokens[2].contains("\\D+") && tokens[3].contains("\\d+")){
-                                repo.put(tokens[0], Num.add(repo.get(tokens[2]), new Num(tokens[3])));
-                            }else{
-                                repo.put(tokens[0], Num.add(repo.get(tokens[2]), repo.get(tokens[3])));
-                            }
+                            repo.put(tokens[0], Num.add(repo.get(tokens[2]), repo.get(tokens[4])));
 
                         }else if(tokens[4].contains("-")){
-
                             //subtract()
+                            repo.put(tokens[0], Num.subtract(repo.get(tokens[2]), repo.get(tokens[4])));
+
                         }else if(tokens[4].contains("*")){
-
                             //product()
+                            repo.put(tokens[0], Num.simpleMul(repo.get(tokens[2]), repo.get(tokens[4])));
+
                         }else if(tokens[4].contains("/")){
-
                             //divide()
+                            repo.put(tokens[0], Num.divide(repo.get(tokens[2]), repo.get(tokens[4])));
+
                         }else if(tokens[4].contains("%")){
-
                             //mod()
-                        }else if(tokens[4].contains("^")){
+                            repo.put(tokens[0], Num.mod(repo.get(tokens[2]), repo.get(tokens[4])));
 
-                            //power() case
+                        }else if(tokens[4].contains("^")){
+                            //power()
                             //see if long() and Num() can both be called
-                        }
+                            repo.put(tokens[0], Num.pow(repo.get(tokens[2]), repo.get(tokens[4])));
+
+                        }//now go to the postfix case, convert it into queue and stack (to call shunting yard)
+
                     }else if(tokens.length == 5){
 
                         //check for any other not known now
@@ -120,10 +118,12 @@ public class Driver34 {
 
                 }else if(tokens.length == 2){
                     if(tokens[1].contains("|")){
-
                         //squareRoot()
+                        repo.put(tokens[0], Num.squareRoot(repo.get(tokens[0])));
+
                     }else if(tokens[1].contains(";")){
-                        System.out.println(repo.get(tokens[0])); //prints the value of the variable
+                        //prints the value of the variable
+                        System.out.println(repo.get(tokens[0]));
                     }
 
                 }
