@@ -73,6 +73,11 @@ public class Num {
         digits.addLast(value);
     }
 
+    public static Num divide(Num a, Num b){
+
+        return new Num(0);
+    }
+
     public void printList(){
         System.out.print(BASE + " : ");
         Iterator it = this.iterator();
@@ -220,6 +225,11 @@ public class Num {
     public static Num add(Num a, Num b){
         return new Num(0);
     }
+
+    public static Num pow(Num a, Num b){
+
+        return new Num(0);
+    }
     
  //Get the square root of Num
 public static Num squareRoot(Num a){
@@ -242,10 +252,20 @@ public static Num squareRoot(Num a){
     return left;
 }
 
-/*public static Num pow(Num a, long b){
+public static Num pow(Num a, long b){
 
     return new Num(0);
-}*/
+}
+
+//Does subtract function
+public static Num subtract(Num a, Num b){
+    return new Num(0);
+}
+
+//Does modulus in a division
+public static Num mod(Num a, Num b){
+    return new Num(0);
+}
 
 //Compares two numbers and sees which one is greater
 public static int isGreater(Num a, Num b){

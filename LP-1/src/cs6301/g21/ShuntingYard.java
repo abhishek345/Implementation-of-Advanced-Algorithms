@@ -45,9 +45,10 @@ public class ShuntingYard {
     }
 
     //Calculate the value given the polish notation
-    public Num calculate(Queue<String> q, Stack<Num> stack){
+    //does not handles the case of ( and )
+    public Num calculate(Queue<String> q){
 
-        //Stack<Num> stack = new Stack<>();
+        Stack<Num> stack = new Stack<>();
 
         for(String item: q){
 
@@ -67,7 +68,7 @@ public class ShuntingYard {
                 }else if(item.equals("-")){
                     right = stack.pop();
                     left = stack.pop();
-                    //stack.push(Num.sub(left, right))
+                    stack.push(Num.subtract(left, right));
 
                 }else if(item.equals("*")){
                     right = stack.pop();
@@ -92,11 +93,13 @@ public class ShuntingYard {
                 }else if(item.equals("|")){
                     right = stack.pop();
                     stack.push(Num.squareRoot(right));
+
                 }
 
-            }//to do, handle the case of ?, = or ;
+            }//to do, handle the case of ?, = or ;. Don't, whether to handle it here or in input parsing
             else if(item.equals("=") || item.equals("?") || item.equals(";")){
-
+                //don't do anything as of now
+                continue;
             }
             else
                 throw new IllegalArgumentException("Invalid token, neither a number nor a token: " + item);

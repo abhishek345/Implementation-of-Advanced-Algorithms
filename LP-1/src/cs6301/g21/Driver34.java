@@ -1,9 +1,7 @@
 package cs6301.g21;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 //Driver class for Level 3
 public class Driver34 {
@@ -63,6 +61,7 @@ public class Driver34 {
 
         String [] tokens;
         String temp;
+        ShuntingYard shuntingYard = new ShuntingYard();
 
         //testing: print the hmap
         for(Map.Entry<Integer, String> entry : hmap.entrySet()){
@@ -83,33 +82,46 @@ public class Driver34 {
                     else if(tokens.length == 6){
                         //consider the following cases: addition, subtraction, multiplication, division, modulus, power
                         //two cases to be considered: no postfix and with postfix
-                        if(tokens[4].contains("+")){
+                        if(tokens[3].contains("+")){
                             //add()
                             repo.put(tokens[0], Num.add(repo.get(tokens[2]), repo.get(tokens[4])));
 
-                        }else if(tokens[4].contains("-")){
+                        }else if(tokens[3].contains("-")){
                             //subtract()
                             repo.put(tokens[0], Num.subtract(repo.get(tokens[2]), repo.get(tokens[4])));
 
-                        }else if(tokens[4].contains("*")){
+                        }else if(tokens[3].contains("*")){
                             //product()
                             repo.put(tokens[0], Num.simpleMul(repo.get(tokens[2]), repo.get(tokens[4])));
 
-                        }else if(tokens[4].contains("/")){
+                        }else if(tokens[3].contains("/")){
                             //divide()
                             repo.put(tokens[0], Num.divide(repo.get(tokens[2]), repo.get(tokens[4])));
 
-                        }else if(tokens[4].contains("%")){
+                        }else if(tokens[3].contains("%")){
                             //mod()
                             repo.put(tokens[0], Num.mod(repo.get(tokens[2]), repo.get(tokens[4])));
 
-                        }else if(tokens[4].contains("^")){
+                        }else if(tokens[3].contains("^")){
                             //power()
                             //see if long() and Num() can both be called
                             repo.put(tokens[0], Num.pow(repo.get(tokens[2]), repo.get(tokens[4])));
 
                         }//now go to the postfix case, convert it into queue and stack (to call shunting yard)
+                         else if(tokens[3].matches("\\D+")){
+                            //read the values from hash Map, convert into nums and pass to as Queue of String calculate of Shunting Yard algorithm
+                            Queue<String> stringQueue = new LinkedList<String>();
 
+                            String n1 = repo.get(tokens[2]).toString();
+                            String n2 = repo.get(tokens[3]).toString();
+                            String ops = tokens[4];
+                            stringQueue.add(n1);
+                            stringQueue.add(n2);
+                            stringQueue.add(ops);
+
+                            repo.put(tokens[0], shuntingYard.calculate(stringQueue));
+
+                        }
                     }else if(tokens.length == 5){
 
                         //check for any other not known now
