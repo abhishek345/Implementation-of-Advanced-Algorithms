@@ -10,7 +10,7 @@ public class Driver34 {
 
     public static void main(String[] args) throws IOException {
 
-        //For LP3
+        //For LP1 Level 3
         //ShuntingYard shuntingYard = new ShuntingYard();
         int base = 10;
         HashMap<Integer, String> hmap = new HashMap<Integer, String>();
@@ -20,7 +20,7 @@ public class Driver34 {
             base = Integer.parseInt(args[0]);
 
         readInput(hmap);
-        calculate(hmap, repo);
+        calculateL3(hmap, repo);
 
         //output the internal representation of the last variable
 
@@ -58,7 +58,7 @@ public class Driver34 {
     }
 
     //Stores Num values against the characters, given the arithmetic functions to be performed
-    public static void calculate(HashMap<Integer, String> hmap, HashMap<String, Num> repo){
+    public static void calculateL3(HashMap<Integer, String> hmap, HashMap<String, Num> repo){
 
         String [] tokens;
         String temp;
@@ -67,19 +67,34 @@ public class Driver34 {
         for(Map.Entry<Integer, String> entry : hmap.entrySet()){
             temp = entry.getValue();
             tokens = temp.split(" ");
-
-            if(temp.split(" ")[0].matches("\\d+")){
+            //doesn't exist for Level 3
+            if(!temp.split(" ")[0].matches("\\d+")){
                 //Stuff for the loop
 
-            }else{
+            /*}else{*/
                 if(!repo.containsKey(tokens[0])) {
-                    if (tokens.length == 4)
-                        repo.put(tokens[0], new Num(tokens[2])); //stores the value to the variable
+                    if (tokens.length == 4){
+                        //either assign a variable a number or reference it
+                        if(tokens[2].contains("\\d+")) {
+                            repo.put(tokens[0], new Num(tokens[2]));
+                        }else if(tokens[2].contains("\\D+")){
+                            repo.put(tokens[0], repo.get(tokens[2]));
+                        }
+                    }
                     else if(tokens.length == 6){
                         //consider the following cases: addition, subtraction, multiplication, division, modulus, power
                         if(tokens[4].contains("+")){
-
                             //add()
+                            if(tokens[2].contains("\\d+") && tokens[3].contains("\\d+")){
+                                repo.put(tokens[0], Num.add(new Num(tokens[2]), new Num(tokens[3])));
+                            }else if(tokens[2].contains("\\d+") && tokens[3].contains("\\D+")){
+                                repo.put(tokens[0], Num.add(new Num(tokens[2]), repo.get(tokens[3])));
+                            }else if(tokens[2].contains("\\D+") && tokens[3].contains("\\d+")){
+                                repo.put(tokens[0], Num.add(repo.get(tokens[2]), new Num(tokens[3])));
+                            }else{
+                                repo.put(tokens[0], Num.add(repo.get(tokens[2]), repo.get(tokens[3])));
+                            }
+
                         }else if(tokens[4].contains("-")){
 
                             //subtract()
