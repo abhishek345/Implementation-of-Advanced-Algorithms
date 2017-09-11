@@ -73,9 +73,20 @@ public class Num {
         digits.addLast(value);
     }
 
+    //Simple division
     public static Num divide(Num a, Num b){
 
-        return new Num(0);
+        Num quotient = a;
+
+        while(quotient.compareTo(b) > 0){
+            quotient = subtract(quotient, b);
+        }
+        return quotient;
+    }
+
+    //Simple modulus after invoking the divison method
+    public static Num mod(Num a, Num b){
+        return subtract(a, simpleMul(divide(a, b), b));
     }
 
     public void printList(){
@@ -237,13 +248,13 @@ public static Num squareRoot(Num a){
     Num left = new Num(0);
     Num right = a;
 
-    while(isGreater(right, left) > 0){
+    while(right.compareTo(left) > 0){
 
-        Num middle = getMid(right, left);
-        Num square = pow(middle, 2L);
-        if(isGreater(square, a) > 0)
+        Num middle = divide(add(right, left), new Num(2));
+        Num square = power(middle, 2L);
+        if(square.compareTo(a) > 0)
             right = middle;
-        else if(isGreater(square, a) < 0)
+        else if(square.compareTo(a) < 0)
             left = middle;
         else
             return middle;
@@ -252,36 +263,35 @@ public static Num squareRoot(Num a){
     return left;
 }
 
-public static Num pow(Num a, long b){
-
-    return new Num(0);
-}
-
 //Does subtract function
 public static Num subtract(Num a, Num b){
     return new Num(0);
 }
 
-//Does modulus in a division
-public static Num mod(Num a, Num b){
-    return new Num(0);
-}
+
+//get digits of the Num
+    public LinkedList<Long> getDigits(){
+        return this.digits;
+    }
 
 //Compares two numbers and sees which one is greater
-public static int isGreater(Num a, Num b){
+public int compareTo(Num b){
 
-    if(a.digits.size()>b.digits.size())
+    if(this.size()>b.size())
         return 1;
-    else if(a.digits.size() == b.digits.size()){
-        if(a.digits.getLast() > b.digits.getLast())
+    else if(this.size() == b.size()){
+        LinkedList<Long> digitsThis = this.getDigits();
+        LinkedList<Long> digitsB = b.getDigits();
+
+        if(digitsThis.getLast() > digitsB.getLast())
             return 1;
-        else if(a.digits.getLast() < b.digits.getLast()){
+        else if(digitsThis.getLast() < digitsB.getLast()){
             return -1;
         }else{
-            for(int i=0; i<a.digits.size(); i++){
-                if(a.digits.get(i) > b.digits.get(i))
+            for(int i=0; i<digitsThis.size(); i++){
+                if(digitsThis.get(i) > digitsB.get(i))
                     return 1;
-                else if(a.digits.get(i) < b.digits.get(i))
+                else if(digitsThis.get(i) < digitsB.get(i))
                     return -1;
                 else
                     return 0;
@@ -292,11 +302,6 @@ public static int isGreater(Num a, Num b){
     return -1;
 }
 
-//Get the average of two Num
-public static Num getMid(Num a, Num b){
-
-    return divide(add(a,b), new Num(2));
-}
 
     public static void main(String args[]){
         Num n = new Num("-319.90");
