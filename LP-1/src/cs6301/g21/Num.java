@@ -61,6 +61,7 @@ public class Num {
         return digits.iterator();
     }
 
+    //get the value of the digits at a particular index
     public long get(int i){
         return digits.get(i);
     }
@@ -73,7 +74,20 @@ public class Num {
         digits.addLast(value);
     }
 
-    //Simple division
+    //Flip the sign of Num
+    public void setSign(){
+        if(this.sign == true)
+            this.sign = false;
+        else
+            this.sign = true;
+    }
+
+    //get sign of Num
+    public boolean getSign(){
+        return this.getSign();
+    }
+
+    //Simple division following Euclidean example Wikipedia algorithm (inefficient)
     public static Num divide(Num a, Num b){
 
         Num quotient = a;
@@ -82,6 +96,85 @@ public class Num {
             quotient = subtract(quotient, b);
         }
         return quotient;
+    }
+
+    //Long division by binary search
+    //reference: http://www.techiedelight.com/division-two-numbers-using-binary-search-algorithm/
+    //reference: https://en.wikipedia.org/wiki/Division_algorithm
+    public static Num divideWiki(Num a, Num b){
+
+        Num zero = new Num(0);
+        Num one = new Num(1);
+        Num quotient = new Num(0);
+
+        //handle b<0 cases from Wikipedia
+        if(b.getSign() == true){
+            b.setSign();
+            quotient = divideWiki(a, b);
+            b.setSign();
+            quotient.setSign();
+        }
+
+        //handle a<0 case from Wikipedia
+        if(a.getSign() == true){
+            a.setSign();
+            quotient = divideWiki(a, b);
+            a.setSign();
+            if(simpleMul(quotient, b).compareTo(zero) > 0){
+                quotient = add(quotient, one);
+            }
+            quotient.setSign();
+        }
+
+        //throw exception if dividing by zero and return a if divide by 1
+        if(b.compareTo(zero) == 0) {
+            //handles divide by zero case
+            throw new IllegalArgumentException("Argument 'divisor' is 0");
+
+        }else if(b.compareTo(one) == 0)
+            //handles divide by 1 case
+            return a;
+
+        //return zero if a<b, one if a==b
+        if(a.compareTo(b) < 0) {
+            //When a < b
+            return zero;
+
+        }else if(a.compareTo(b) == 0) {
+            //When a == b
+            return one;
+
+        }else{
+            //When a>b
+            Num avg;
+            Num high = copyNum(a);
+            Num low = new Num(0);
+
+            while(high.compareTo(low) > 0){
+
+                //calculate mid point
+                avg = average(high, low);
+
+                Num temp = simpleMul(b, avg);
+                int compareResult = a.compareTo(simpleMul(b, temp));
+                Num reminder = subtract(a, temp);
+
+                if(b.compareTo(reminder) > 0)
+                    return avg;
+
+                //if b*avg < a, update low to avg, if b*avg > a, update high to avg
+                //else if b*avg == a, return avg
+                if(compareResult > 0)
+                    low = avg;
+                else if(compareResult < 0)
+                    high = avg;
+                else
+                    return avg;
+            }
+
+            return low;
+
+        }
     }
 
     //Simple modulus after invoking the divison method
@@ -109,6 +202,12 @@ public class Num {
             factor *= BASE;
         }
         return String.valueOf(result);
+    }
+
+    //copy the value of the number to a new number
+    public static Num copyNum(Num a){
+        String value = a.toString();
+        return new Num(value);
     }
 
 //    private class Result{
@@ -242,67 +341,99 @@ public class Num {
         return new Num(0);
     }
     
- //Get the square root of Num
-public static Num squareRoot(Num a){
+    //Get the square root of Num
+    //see if separate binary search algo can be written
+    //optimize it
+    public static Num squareRoot(Num a){
 
-    Num left = new Num(0);
-    Num right = a;
+        Num low = new Num(0);
+        Num high = copyNum(a);
+        Num avg;
 
-    while(right.compareTo(left) > 0){
+        while(high.compareTo(low) > 0){
 
-        Num middle = divide(add(right, left), new Num(2));
-        Num square = power(middle, 2L);
-        if(square.compareTo(a) > 0)
-            right = middle;
-        else if(square.compareTo(a) < 0)
-            left = middle;
-        else
-            return middle;
+            avg = average(high, low);
+            Num square = power(avg, 2L);
+            int compareResult = square.compareTo(high);
+
+            if(compareResult > 0)
+                high = avg;
+            else if(compareResult < 0)
+                low = avg;
+            else
+                return avg;
+        }
+
+        return low;
     }
 
-    return left;
-}
+    //Manually calculated the average of two numbers
+    public static Num average(Num a, Num b){
 
-//Does subtract function
-public static Num subtract(Num a, Num b){
-    return new Num(0);
-}
+        Num sum = add(a, b);
+        LinkedList<Long> n = sum.getDigits();
+        String avg = null;
+        String carry = "0";
+        long digit = 0L;
+        long temp = 0L;
 
+        for(int i=n.size()-1; i>0; i--) {
+            temp = Long.parseLong((carry + n.get(i).toString()));
+            digit = temp/2L;
+            avg = avg.concat(String.valueOf(digit));
 
-//get digits of the Num
+            //defining the carry digit
+            if(temp % 2L == 0){
+                carry = "0";
+            }else{
+                carry = "1";
+            }
+        }
+
+        return new Num(avg);
+        //see if trailing zeros needs to be handled.
+    }
+
+    //Does subtract function
+    public static Num subtract(Num a, Num b){
+        return new Num(0);
+    }
+
+    //get digits of the Num
     public LinkedList<Long> getDigits(){
         return this.digits;
     }
 
-//Compares two numbers and sees which one is greater
-public int compareTo(Num b){
+    //Compares two numbers and sees which one is greater
+    //slight modification to compare
+    public int compareTo(Num b){
 
-    if(this.size()>b.size())
-        return 1;
-    else if(this.size() == b.size()){
-        LinkedList<Long> digitsThis = this.getDigits();
-        LinkedList<Long> digitsB = b.getDigits();
-
-        if(digitsThis.getLast() > digitsB.getLast())
+        if(this.size()>b.size())
             return 1;
-        else if(digitsThis.getLast() < digitsB.getLast()){
-            return -1;
-        }else{
-            for(int i=0; i<digitsThis.size(); i++){
-                if(digitsThis.get(i) > digitsB.get(i))
-                    return 1;
-                else if(digitsThis.get(i) < digitsB.get(i))
-                    return -1;
-                else
-                    return 0;
+        else if(this.size() == b.size()){
+            LinkedList<Long> digitsThis = this.getDigits();
+            LinkedList<Long> digitsB = b.getDigits();
+
+            if(digitsThis.getLast() > digitsB.getLast())
+                return 1;
+            else if(digitsThis.getLast() < digitsB.getLast()){
+                return -1;
+            }else{
+                for(int i=digitsThis.size()-2; i>0; i--){
+                    if(digitsThis.get(i) > digitsB.get(i))
+                        return 1;
+                    else if(digitsThis.get(i) < digitsB.get(i))
+                        return -1;
+                    else
+                        return 0;
+                }
             }
         }
+
+        return -1;
     }
 
-    return -1;
-}
-
-
+    //Driver function to check
     public static void main(String args[]){
         Num n = new Num("-319.90");
         n.printList();
