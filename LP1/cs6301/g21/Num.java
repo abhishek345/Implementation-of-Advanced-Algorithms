@@ -10,7 +10,7 @@ public class Num {
     private static int BASE = 10;
     private boolean sign = false;//false (not set) +ve number; if true (set) -ve num
     private static boolean flag =  false;
-
+    
     public Num(String num){
         digits = new LinkedList<>();
         if(num.charAt(0) == '-'){
@@ -65,7 +65,9 @@ public class Num {
         return digits.iterator();
     }
 
+    //get the value of the digits at a particular index
     public long get(int i){
+        LinkedList<Long> digits = this.getDigits();
         return digits.get(i);
     }
 
@@ -75,6 +77,103 @@ public class Num {
 
     public void addLast(long value){
         digits.addLast(value);
+    }
+
+    //Flip the sign of Num
+    public void setSign(){
+        if(this.sign)
+            this.sign = false;
+        else
+            this.sign = true;
+    }
+
+    //get sign of Num
+    public boolean getSign(){
+        return this.sign;
+    }
+
+    //Long division by binary search. Implement separate method for binary search
+    //reference: http://www.techiedelight.com/division-two-numbers-using-binary-search-algorithm/
+    //reference: https://en.wikipedia.org/wiki/Division_algorithm
+    public static Num divide(Num a, Num b){
+
+        Num zero = new Num(0);
+        Num one = new Num(1);
+        Num quotient = new Num(0);
+
+        //handle b<0 cases from Wikipedia
+        if(b.getSign() == true){
+            b.setSign();
+            quotient = divide(a, b);
+            b.setSign();
+            quotient.setSign();
+        }
+
+        //handle a<0 case from Wikipedia
+        if(a.getSign() == true){
+            a.setSign();
+            quotient = divide(a, b);
+            a.setSign();
+            if(simpleMul(quotient, b).compareTo(zero) > 0){
+                quotient = add(quotient, one);
+            }
+            quotient.setSign();
+        }
+
+        //throw exception if dividing by zero and return a if divide by 1
+        if(b.compareTo(zero) == 0) {
+            //handles divide by zero case
+            throw new IllegalArgumentException("Argument 'divisor' is 0");
+
+        }else if(b.compareTo(one) == 0)
+            //handles divide by 1 case
+            return a;
+
+        //return zero if a<b, one if a==b
+        if(a.compareTo(b) < 0) {
+            //When a < b
+            return zero;
+
+        }else if(a.compareTo(b) == 0) {
+            //When a == b
+            return one;
+
+        }else{
+            //When a>b
+            Num avg;
+            Num high = copyNum(a);
+            Num low = new Num(0);
+
+            while(high.compareTo(low) > 0){
+
+                //calculate mid point
+                avg = average(high, low);
+
+                Num temp = simpleMul(b, avg);
+                int compareResult = a.compareTo(simpleMul(b, temp));
+                Num reminder = subtract(a, temp);
+
+                if(b.compareTo(reminder) > 0)
+                    return avg;
+
+                //if b*avg < a, update low to avg, if b*avg > a, update high to avg
+                //else if b*avg == a, return avg
+                if(compareResult > 0)
+                    low = avg;
+                else if(compareResult < 0)
+                    high = avg;
+                else
+                    return avg;
+            }
+
+            return low;
+
+        }
+    }
+
+    //Simple modulus after invoking the divison method
+    public static Num mod(Num a, Num b){
+        return subtract(a, simpleMul(divide(a, b), b));
     }
 
     public void printList(){
@@ -97,6 +196,12 @@ public class Num {
             factor *= BASE;
         }
         return String.valueOf(result);
+    }
+
+    //copy the value of the number to a new number
+    public static Num copyNum(Num a){
+        String value = a.toString();
+        return new Num(value);
     }
 
 //    private class Result{
@@ -159,9 +264,9 @@ public class Num {
         Num c;
         Iterator inner;
         if(a.size() < b.size()){
-             outer = a.iterator();
-             c = b;
-             secondSize = a.size();
+            outer = a.iterator();
+            c = b;
+            secondSize = a.size();
         }
         else{
             outer = b.iterator();
@@ -221,331 +326,375 @@ public class Num {
         return result;
     }
 
-    
-    
- //Get the square root of Num
-public static Num squareRoot(Num a){
+   
 
-    Num left = new Num(0);
-    Num right = a;
+    public static Num pow(Num a, Num b){
 
-    while(isGreater(right, left) > 0){
-
-        Num middle = getMid(right, left);
-        Num square = power(middle, 2L);
-        if(isGreater(square, a) > 0)
-            right = middle;
-        else if(isGreater(square, a) < 0)
-            left = middle;
-        else
-            return middle;
+        return new Num(0);
     }
 
-    return left;
-}
+    //Get the square root of Num
+    //see if separate binary search algo can be written
+    //optimize it
+    public static Num squareRoot(Num a){
 
-/*public static Num pow(Num a, long b){
+        Num low = new Num(0);
+        Num high = copyNum(a);
+        Num avg;
 
-    return new Num(0);
-}*/
+        while(high.compareTo(low) > 0){
 
-//Compares two numbers and sees which one is greater
-public static int isGreater(Num a, Num b){
+            avg = average(high, low);
+            Num square = power(avg, 2L);
+            int compareResult = square.compareTo(high);
 
-    if(a.digits.size()>b.digits.size())
-        return 1;
-    else if(a.digits.size() == b.digits.size()){
-        if(a.digits.getLast() > b.digits.getLast())
-            return 1;
-        else if(a.digits.getLast() < b.digits.getLast()){
-            return -1;
-        }else{
-            for(int i=0; i<a.digits.size(); i++){
-                if(a.digits.get(i) > b.digits.get(i))
-                    return 1;
-                else if(a.digits.get(i) < b.digits.get(i))
-                    return -1;
-                else
-                    return 0;
+            if(compareResult > 0)
+                high = avg;
+            else if(compareResult < 0)
+                low = avg;
+            else
+                return avg;
+        }
+
+        return low;
+    }
+
+    //Manually calculated the average of two numbers
+    public static Num average(Num a, Num b){
+
+        Num sum = add(a, b);
+        LinkedList<Long> n = sum.getDigits();
+        String avg = null;
+        String carry = "0";
+        long digit = 0L;
+        long temp = 0L;
+
+        for(int i=n.size()-1; i>0; i--) {
+            temp = Long.parseLong((carry + n.get(i).toString()));
+            digit = temp/2L;
+            avg = avg.concat(String.valueOf(digit));
+
+            //defining the carry digit
+            if(temp % 2L == 0){
+                carry = "0";
+            }else{
+                carry = "1";
             }
         }
+
+        return new Num(avg);
+        //see if trailing zeros needs to be handled.
     }
 
-    return -1;
-}
 
-//Get the average of two Num
-public static Num getMid(Num a, Num b){
+    
 
-    return divide(add(a,b), new Num(2));
-}
+    //get digits of the Num
+    //testing done
+    public LinkedList<Long> getDigits(){
+        return this.digits;
+    }
 
-public static Num add(Num a ,Num b){
-	Num temp = new Num();
-	Num tempA = a;
-	Num tempB = b;
-	Num tempResult;
-	LinkedList<Long> result = new LinkedList<Long>();
-	String outStr = "";
+    //Compares two numbers and sees which one is greater
+    //testing done
+    public int compareTo(Num b){
 
-   	Num a1 = compare(a,b);
+        if(this.size()>b.size())
+            return 1;
+        else if(this.size() == b.size()){
+            LinkedList<Long> digitsThis = this.getDigits();
+            LinkedList<Long> digitsB = b.getDigits();
 
-	if(a.isNegative()!=b.isNegative()){
-		if(a1.isNegative())
-			flag = true;
-		
-		tempA.setPositive();
-		tempB.setPositive();
-		tempResult = subtract(tempA,tempB);
-		if(a1.equals(a))
-			if(a1.isNegative())
-				tempA.setNegative();
-			else
-				tempB.setNegative();
-		else
-			if(a1.isNegative())
-				tempA.setNegative();
-			else
-				tempB.setNegative();
-		return tempResult;
-	}
-	else if(a.isNegative()==false && b.isNegative()==false)
-		temp.setPositive();
-	else
-		temp.setNegative();
-	
-	Iterator<Long> it1;
-	Iterator<Long> it2;
-		
-	if(a1.equals(a)){
-		it1 = a.digits.iterator();
-		it2 = b.digits.iterator();
-	}
-	else{
-		it1 = b.digits.iterator();
-		it2 = a.digits.iterator();    		
-	}
-	
-	long carry = 0;
-	Long temp1 = it1.next();
-	Long temp2 = it2.next();
-			
-	while(temp1!=null && temp2!=null){
-		Long sum = temp1 + temp2 + carry;
-		result.addLast(sum%10);
-		carry = sum/10;
-		
-		try{
-			temp1 = it1.next();
-		}
-		catch(NoSuchElementException e){
-			temp1 = null;
-		}
-			
-		try{
-			temp2 = it2.next();
-		}
-		catch(NoSuchElementException e){
-			temp2 = null;
-		}
-	}
-	
-	while(temp1!=null){
-		Long sum = temp1 + carry;
-		result.addLast(sum%10);
-		carry = sum/10;
-	
-		try{
-			temp1 = it1.next();
-		}
-		catch(NoSuchElementException e){
-			temp1 = null;
-		}
-	}
-	
-	while(temp2!=null){
-		Long sum = temp2 + carry;
-		result.addLast(sum%10);
-		carry = sum/10;
-	
-		try{
-			temp2 = it2.next();
-		}
-		catch(NoSuchElementException e){
-			temp2 = null;
-		}
-	}
-	
-	if(carry>0)
-		result.addLast(carry);
-		
+            if(digitsThis.getLast() > digitsB.getLast())
+                return 1;
+            else if(digitsThis.getLast() < digitsB.getLast()){
+                return -1;
+            }else{
+                for(int i=digitsThis.size()-2; i>0; i--){
+                    if(digitsThis.get(i) > digitsB.get(i))
+                        return 1;
+                    else if(digitsThis.get(i) < digitsB.get(i))
+                        return -1;
+                    else
+                        return 0;
+                }
+            }
+        }
 
-	
-	for(int i = result.size()-1;i>=0;i--)
-		outStr += result.get(i);
-	
-	System.out.println(outStr);
-	if(flag==true){
-		temp.setPositive();
-		System.out.println(temp.sign);
-		flag = false;
-	}
-	else
-		System.out.println(temp.sign);
-	temp.setPositive();
-	return new Num(outStr);
-}
+        return -1;
+    }
+    
+    public static Num add(Num a ,Num b){
+    	Num temp = new Num();
+    	Num tempA = a;
+    	Num tempB = b;
+    	Num tempResult;
+    	LinkedList<Long> result = new LinkedList<Long>();
+    	String outStr = "";
 
-public static Num subtract(Num a, Num b){
-	
-	Num temp = new Num();
-	Num tempA = a;
-	Num tempB = b;
-	Num tempResult;
-	Num a1 = compare(a,b);
-	if(a.isNegative()!=b.isNegative()){
-		if(a1.isNegative())
-			flag = true;
-		tempA.setPositive();
-		tempB.setPositive();
-		tempResult =  add(tempA,tempB);
-		if(flag == true)
-			a1.setNegative();
-		if(a1.equals(a))
-			if(a1.isNegative())
-				tempA.setNegative();
-			else
-				tempB.setNegative();
-		else
-			if(a1.isNegative())
-				tempA.setNegative();
-			else
-				tempB.setNegative();
-		return tempResult;
-	}
-	
-   	
-	Iterator<Long> it1;
-	Iterator<Long> it2;
-	
-if(a1.equals(a)){
-	it1 = a.digits.iterator();
-	it2 = b.digits.iterator();
-	if(a.isNegative()==false)
-		temp.setPositive();
-	else
-		temp.setNegative();
-}
-else{
-	it1 = b.digits.iterator();
-	it2 = a.digits.iterator();
-	if(b.isNegative()==false)
-		temp.setPositive();
-	else
-		temp.setNegative();
-}
+       	Num a1 = compare(a,b);
 
-	boolean carry = false;
-	Long temp1 = it1.next();
-	Long temp2 = it2.next();
-	
-	LinkedList<Long> result = new LinkedList<Long>();
-	while(temp1!=null && temp2!=null){
-		if(carry){
-			if(temp1 == 0)
-				temp1 = (long)9;
-			else{
-				temp1 -= 1;
-				carry = false;
-			}
-		}
-		if(temp1<temp2){
-			temp1 += 10;
-			carry = true;
-		}
-		long difference = temp1 - temp2;
-		result.addLast(difference%10);
-		
-		try{
-			temp1 = it1.next();
-		}
-		catch(NoSuchElementException e){
-			temp1 = null;
-		}
-		
-		try{
-			temp2 = it2.next();
-		}
-		catch(NoSuchElementException e){
-			temp2 = null;
-		}
-	}
-	
-	
-	while(temp1 != null){
-		if(carry){
-			if(temp1 == 0)
-				temp1 = (long)9;
-			else{
-				temp1 -= 1;
-				carry = false;
-			}
-		}
-		result.addLast(temp1);
-		try{
-			temp1 = it1.next();
-		}
-		catch(NoSuchElementException e){
-			temp1 = null;
-		}
-	}
-	
-	String outStr = "";
-	
-	for(int i=result.size()-1;i>=0;i--)
-		outStr += result.get(i);
-	
-	System.out.println(outStr);
-	if(flag == true){
-		temp.setNegative();
-		System.out.println(temp.sign);
-		flag = false;
-	}
-	else
-		System.out.println(temp.sign);
-	temp.setPositive();
-	return new Num(outStr);
-	
-}
+    	if(a.isNegative()!=b.isNegative()){
+    		if(a1.isNegative())
+    			flag = true;
+    		
+    		tempA.setPositive();
+    		tempB.setPositive();
+    		tempResult = subtract(tempA,tempB);
+    		if(a1.equals(a))
+    			if(a1.isNegative())
+    				tempA.setNegative();
+    			else
+    				tempB.setNegative();
+    		else
+    			if(a1.isNegative())
+    				tempA.setNegative();
+    			else
+    				tempB.setNegative();
+    		return tempResult;
+    	}
+    	else if(a.isNegative()==false && b.isNegative()==false)
+    		temp.setPositive();
+    	else
+    		temp.setNegative();
+    	
+    	Iterator<Long> it1;
+    	Iterator<Long> it2;
+    		
+    	if(a1.equals(a)){
+    		it1 = a.digits.iterator();
+    		it2 = b.digits.iterator();
+    	}
+    	else{
+    		it1 = b.digits.iterator();
+    		it2 = a.digits.iterator();    		
+    	}
+    	
+    	long carry = 0;
+    	Long temp1 = it1.next();
+    	Long temp2 = it2.next();
+    			
+    	while(temp1!=null && temp2!=null){
+    		Long sum = temp1 + temp2 + carry;
+    		result.addLast(sum%10);
+    		carry = sum/10;
+    		
+    		try{
+    			temp1 = it1.next();
+    		}
+    		catch(NoSuchElementException e){
+    			temp1 = null;
+    		}
+    			
+    		try{
+    			temp2 = it2.next();
+    		}
+    		catch(NoSuchElementException e){
+    			temp2 = null;
+    		}
+    	}
+    	
+    	while(temp1!=null){
+    		Long sum = temp1 + carry;
+    		result.addLast(sum%10);
+    		carry = sum/10;
+    	
+    		try{
+    			temp1 = it1.next();
+    		}
+    		catch(NoSuchElementException e){
+    			temp1 = null;
+    		}
+    	}
+    	
+    	while(temp2!=null){
+    		Long sum = temp2 + carry;
+    		result.addLast(sum%10);
+    		carry = sum/10;
+    	
+    		try{
+    			temp2 = it2.next();
+    		}
+    		catch(NoSuchElementException e){
+    			temp2 = null;
+    		}
+    	}
+    	
+    	if(carry>0)
+    		result.addLast(carry);
+    		
 
-public static Num compare(Num a ,Num b){
-	
-	Num temp = new Num();
-	
-	if(a.size()>b.size())
-		temp = a;
-	else if(b.size()>a.size()){
-		temp = b;
-	}
-	else{
-		for(int i=a.size()-1;i>=0;i--){
-			if(a.get(i)>b.get(i))
-				temp = a;
-			else
-				temp = b;					
-		}
-	}
-	return temp;
-}
+    	
+    	for(int i = result.size()-1;i>=0;i--)
+    		outStr += result.get(i);
+    	
+    	System.out.println(outStr);
+    	if(flag==true){
+    		temp.setPositive();
+    		System.out.println(temp.sign);
+    		flag = false;
+    	}
+    	else
+    		System.out.println(temp.sign);
+    	temp.setPositive();
+    	return new Num(outStr);
+    }
 
+    public static Num subtract(Num a, Num b){
+    	
+    	Num temp = new Num();
+    	Num tempA = a;
+    	Num tempB = b;
+    	Num tempResult;
+    	Num a1 = compare(a,b);
+    	if(a.isNegative()!=b.isNegative()){
+    		if(a1.isNegative())
+    			flag = true;
+    		tempA.setPositive();
+    		tempB.setPositive();
+    		tempResult =  add(tempA,tempB);
+    		if(flag == true)
+    			a1.setNegative();
+    		if(a1.equals(a))
+    			if(a1.isNegative())
+    				tempA.setNegative();
+    			else
+    				tempB.setNegative();
+    		else
+    			if(a1.isNegative())
+    				tempA.setNegative();
+    			else
+    				tempB.setNegative();
+    		return tempResult;
+    	}
+    	
+       	
+    	Iterator<Long> it1;
+    	Iterator<Long> it2;
+    	
+    if(a1.equals(a)){
+    	it1 = a.digits.iterator();
+    	it2 = b.digits.iterator();
+    	if(a.isNegative()==false)
+    		temp.setPositive();
+    	else
+    		temp.setNegative();
+    }
+    else{
+    	it1 = b.digits.iterator();
+    	it2 = a.digits.iterator();
+    	if(b.isNegative()==false)
+    		temp.setPositive();
+    	else
+    		temp.setNegative();
+    }
 
+    	boolean carry = false;
+    	Long temp1 = it1.next();
+    	Long temp2 = it2.next();
+    	
+    	LinkedList<Long> result = new LinkedList<Long>();
+    	while(temp1!=null && temp2!=null){
+    		if(carry){
+    			if(temp1 == 0)
+    				temp1 = (long)9;
+    			else{
+    				temp1 -= 1;
+    				carry = false;
+    			}
+    		}
+    		if(temp1<temp2){
+    			temp1 += 10;
+    			carry = true;
+    		}
+    		long difference = temp1 - temp2;
+    		result.addLast(difference%10);
+    		
+    		try{
+    			temp1 = it1.next();
+    		}
+    		catch(NoSuchElementException e){
+    			temp1 = null;
+    		}
+    		
+    		try{
+    			temp2 = it2.next();
+    		}
+    		catch(NoSuchElementException e){
+    			temp2 = null;
+    		}
+    	}
+    	
+    	
+    	while(temp1 != null){
+    		if(carry){
+    			if(temp1 == 0)
+    				temp1 = (long)9;
+    			else{
+    				temp1 -= 1;
+    				carry = false;
+    			}
+    		}
+    		result.addLast(temp1);
+    		try{
+    			temp1 = it1.next();
+    		}
+    		catch(NoSuchElementException e){
+    			temp1 = null;
+    		}
+    	}
+    	
+    	String outStr = "";
+    	
+    	for(int i=result.size()-1;i>=0;i--)
+    		outStr += result.get(i);
+    	
+    	System.out.println(outStr);
+    	if(flag == true){
+    		temp.setNegative();
+    		System.out.println(temp.sign);
+    		flag = false;
+    	}
+    	else
+    		System.out.println(temp.sign);
+    	temp.setPositive();
+    	return new Num(outStr);
+    	
+    }
+
+    public static Num compare(Num a ,Num b){
+    	
+    	Num temp = new Num();
+    	
+    	if(a.size()>b.size())
+    		temp = a;
+    	else if(b.size()>a.size()){
+    		temp = b;
+    	}
+    	else{
+    		for(int i=a.size()-1;i>=0;i--){
+    			if(a.get(i)>b.get(i))
+    				temp = a;
+    			else
+    				temp = b;					
+    		}
+    	}
+    	return temp;
+    }
+
+    //Driver function to check
     public static void main(String args[]){
-        Num n = new Num("-319.90");
-        n.printList();
+        Num n = new Num("-5074");
         Num n2 = new Num(5074);
-        Num.simpleMul(n,n2);
-        System.out.println(n);
-        System.out.println(n.isNegative());
+
+        LinkedList<Long> d = n2.getDigits();
+        //iterate through linked List to get digits
+        for(Long l : d)
+            System.out.println(l);
+
+        System.out.println(n2.getSign());
+
+
     }
 
 }
