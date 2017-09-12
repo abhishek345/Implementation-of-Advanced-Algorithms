@@ -63,6 +63,7 @@ public class Num {
 
     //get the value of the digits at a particular index
     public long get(int i){
+        LinkedList<Long> digits = this.getDigits();
         return digits.get(i);
     }
 
@@ -76,7 +77,7 @@ public class Num {
 
     //Flip the sign of Num
     public void setSign(){
-        if(this.sign == true)
+        if(this.sign)
             this.sign = false;
         else
             this.sign = true;
@@ -84,24 +85,13 @@ public class Num {
 
     //get sign of Num
     public boolean getSign(){
-        return this.getSign();
+        return this.sign;
     }
 
-    //Simple division following Euclidean example Wikipedia algorithm (inefficient)
-    public static Num divide(Num a, Num b){
-
-        Num quotient = a;
-
-        while(quotient.compareTo(b) > 0){
-            quotient = subtract(quotient, b);
-        }
-        return quotient;
-    }
-
-    //Long division by binary search
+    //Long division by binary search. Implement separate method for binary search
     //reference: http://www.techiedelight.com/division-two-numbers-using-binary-search-algorithm/
     //reference: https://en.wikipedia.org/wiki/Division_algorithm
-    public static Num divideWiki(Num a, Num b){
+    public static Num divide(Num a, Num b){
 
         Num zero = new Num(0);
         Num one = new Num(1);
@@ -110,7 +100,7 @@ public class Num {
         //handle b<0 cases from Wikipedia
         if(b.getSign() == true){
             b.setSign();
-            quotient = divideWiki(a, b);
+            quotient = divide(a, b);
             b.setSign();
             quotient.setSign();
         }
@@ -118,7 +108,7 @@ public class Num {
         //handle a<0 case from Wikipedia
         if(a.getSign() == true){
             a.setSign();
-            quotient = divideWiki(a, b);
+            quotient = divide(a, b);
             a.setSign();
             if(simpleMul(quotient, b).compareTo(zero) > 0){
                 quotient = add(quotient, one);
@@ -270,9 +260,9 @@ public class Num {
         Num c;
         Iterator inner;
         if(a.size() < b.size()){
-             outer = a.iterator();
-             c = b;
-             secondSize = a.size();
+            outer = a.iterator();
+            c = b;
+            secondSize = a.size();
         }
         else{
             outer = b.iterator();
@@ -340,7 +330,7 @@ public class Num {
 
         return new Num(0);
     }
-    
+
     //Get the square root of Num
     //see if separate binary search algo can be written
     //optimize it
@@ -400,12 +390,13 @@ public class Num {
     }
 
     //get digits of the Num
+    //testing done
     public LinkedList<Long> getDigits(){
         return this.digits;
     }
 
     //Compares two numbers and sees which one is greater
-    //slight modification to compare
+    //testing done
     public int compareTo(Num b){
 
         if(this.size()>b.size())
@@ -435,12 +426,17 @@ public class Num {
 
     //Driver function to check
     public static void main(String args[]){
-        Num n = new Num("-319.90");
-        n.printList();
+        Num n = new Num("-5074");
         Num n2 = new Num(5074);
-        Num.simpleMul(n,n2);
-        System.out.println(n);
-        System.out.println(n.isNegative());
+
+        LinkedList<Long> d = n2.getDigits();
+        //iterate through linked List to get digits
+        for(Long l : d)
+            System.out.println(l);
+
+        System.out.println(n2.getSign());
+
+
     }
 
 }
