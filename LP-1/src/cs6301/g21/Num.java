@@ -95,7 +95,7 @@ public class Num {
 
         Num zero = new Num(0);
         Num one = new Num(1);
-        Num quotient = new Num(0);
+        Num quotient;
 
         //handle b<0 cases from Wikipedia
         if(b.getSign() == true){
@@ -424,6 +424,8 @@ public class Num {
         return -1;
     }
 
+
+
     //Driver function to check
     public static void main(String args[]){
         Num n = new Num("-5074");
@@ -431,8 +433,8 @@ public class Num {
 
         LinkedList<Long> d = n2.getDigits();
         //iterate through linked List to get digits
-        for(Long l : d)
-            System.out.println(l);
+        //for(Long l : d)
+        //    System.out.println(l);
 
         System.out.println(n2.getSign());
 
