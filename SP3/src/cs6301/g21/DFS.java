@@ -1,76 +1,93 @@
 package cs6301.g21;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Iterator;
 import java.util.LinkedList;
-
-/**
- *
- * Depth First Search Implementation
- * 
- * @author Shreya Vishwanath Rao, Abhishek Jagwani, Vibha Belavadi, Umang Shah
- * @version 1.0: 2017/09/13
- *
- */
+import java.util.Scanner;
 
 public class DFS {
-	
-	static int time;
-	static int topNum;
-	static LinkedList<Graph.Vertex> decFinList;
+    private static int time = 0;
+    private static int cno = 0;
+    private static int topNum = 0;
+    private static boolean checkCycles = true;
+    private static LinkedList<Graph.Vertex> decFinList;
 
-	/**
-	 * Depth First Search implementation
-	 * 
-	 * @param it : order in which DFS must be implemented 
-	 * @param ge : Graph extended object containing the graph
-	 * @return   : LinkedList<Graph.Vertex> : decreasing finish order time of the vertices in the graph
-	 */
-	public static LinkedList<Graph.Vertex> DFS(Iterator it,GraphExtended ge){
-		topNum=ge.size();
-		time=0;
-		ge.cno=0;
-		decFinList= new LinkedList<Graph.Vertex>();
 
-		for(int i=0;i<ge.size();i++)
-			ge.setSeen(ge.getVertex(i),false);
-		while(it.hasNext()){
-			Graph.Vertex u= (Graph.Vertex)it.next();
-			if(!ge.getSeen(u)){
-				ge.cno++;
-				DFSVisit(u,ge);
-			}
-		}
-		return decFinList;
-	}
-	
-	/**
-	 * Traverses through all the adjacent unvisited vertices of the vertex
-	 * sent to the function.
-	 * Stores the topological number, discovery and finish time of the vertex. 
-	 * It add the vertex to the finish order list once all its neighbors
-	 * have been visited.
-	 * 
-	 * @param u : the vertex whose neighbors have to be traversed through
-	 * @param ge :GraphExtended object containing the graph and other details of the vertex
-	 */
-	public static void DFSVisit(Graph.Vertex u, GraphExtended ge){
-		ge.setSeen(u,true);
-		ge.setDis(u,++time);
-		ge.setVCno(u,ge.cno);
-		
-		Iterator adjEdges = u.adj.iterator();
-		
-		while(adjEdges.hasNext()){
-			Graph.Edge e= (Graph.Edge)adjEdges.next();
-			Graph.Vertex v= e.otherEnd(u);
-			if(!ge.getSeen(v)){
-				ge.setParent(v,u);
-				DFSVisit(v,ge);
-			}
-		}
-		ge.setFin(u,++time);
-		ge.setTop(u,topNum--);
-		decFinList.addFirst(u);
-		
-	}
+    public DFS(GraphExtended ge){
+        topNum = ge.size();
+    }
+
+    public static void DFSGraph(GraphExtended ge)throws CyclicGraphException{
+        topNum=ge.size();
+        decFinList= new LinkedList<>();
+
+        Iterator it = ge.g.iterator();
+        for(int i=0;i<ge.size();i++) {
+            ge.setSeen(i, false);
+            ge.setParent(i, -1);
+        }
+        while(it.hasNext()){
+            Graph.Vertex u= (Graph.Vertex)it.next();
+            if(!ge.getSeen(u.getName())){
+                cno++;
+                DFSVisit(ge, u);
+            }
+        }
+    }
+
+    public static void DFSVisit(GraphExtended ge, Graph.Vertex u)throws CyclicGraphException{
+        int uName= u.getName();
+        ge.setSeen(uName,true);
+        ge.setDis(uName,++time);
+        ge.setVCno(uName,cno);
+
+        Iterator adjEdges = u.adj.iterator();
+
+        while(adjEdges.hasNext()){
+            Graph.Edge e = (Graph.Edge)adjEdges.next();
+            Graph.Vertex v = e.otherEnd(u);
+            if(!ge.getSeen(v.getName())){
+                ge.setParent(v.getName(),uName);
+                DFSVisit(ge, v);
+            }
+            else if(checkCycles && (ge.isDir() && ge.getSeen(v.getName()))){
+
+                int a = ge.getParent(u.getName());
+                if(ge.getVCno(uName) == ge.getVCno(v.getName()))
+                    throw new CyclicGraphException("Cycle ");
+                while(a != -1){
+                    a = ge.getParent(a);
+                    if(a == v.getName())
+                        throw new CyclicGraphException("Cycle Found");
+                }
+                System.out.print("no cycle found");
+            }
+        }
+        ge.setFin(uName,++time);
+        ge.setTop(uName,topNum--);
+        decFinList.addFirst(u); //supposed to be addFirst
+    }
+
+    public static boolean isDAG(GraphExtended ge){
+        try{
+            if(ge.isDir()) {
+                DFSGraph(ge);
+                return true;
+            }
+            else{
+                System.out.println("Graph is not directed");
+                return false;
+            }
+        }catch(CyclicGraphException e){
+            return false;
+        }
+    }
+
+    public static void main(String args[])throws FileNotFoundException{
+        Scanner sf = new Scanner(new File("/home/uks/ImplofAlgos/Implementation-of-Advanced-Algorithms/SP3/src/cs6301/g21/cyclicgraph.in"));
+        Graph graph = Graph.readDirectedGraph(sf);
+        GraphExtended ge = new GraphExtended(graph);
+        System.out.println(isDAG(ge));
+    }
 }
