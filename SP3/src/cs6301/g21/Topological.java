@@ -39,23 +39,22 @@ public class Topological {
 			
 		while(vertices.hasNext()){
 			Graph.Vertex s= vertices.next(); 
-			ge.setInDegree(s.getName(), s.revAdj.size());
-			if(ge.getInDegree(s.getName())==0){
+			ge.setInDegree(s, s.revAdj.size());
+			if(ge.getInDegree(s)==0){
 				queue.add(s);
 			}
 		}
 			
 		while(!queue.isEmpty()){
 			Graph.Vertex u= queue.remove();
-			ge.setTop(u.getName(),++topNum);
+			ge.setTop(u,++topNum);
 			topList.add(u);
 			Iterator<Graph.Edge> e= u.iterator();
 			while(e.hasNext()){
 				Graph.Vertex v= e.next().otherEnd(u);
-				int vName=v.getName();
-				int inDegreeVal= ge.getInDegree(vName);
-				ge.setInDegree(vName, inDegreeVal-1);
-				if(ge.getInDegree(vName)==0){
+				int inDegreeVal= ge.getInDegree(v);
+				ge.setInDegree(v, inDegreeVal-1);
+				if(ge.getInDegree(v)==0){
 					queue.add(v);
 				}
 				
