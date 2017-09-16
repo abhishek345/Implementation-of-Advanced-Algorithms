@@ -7,22 +7,34 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Scanner;
 
+/**
+ * Determining the topological ordering of all vertices in a graph using
+ * two techniques.
+ * 
+ * @author Shreya Vishwanath Rao, Abhishek Jagwani, Vibha Belavadi, Umang Shah
+ * @version 1.0: 2017/09/13
+ *
+ */
 public class Topological {
 	
 	static int topNum;
 	static LinkedList<Graph.Vertex> decFinList;
 	static GraphExtended ge;
-	static int time;
-	static int cno;
 	
-	
-public static LinkedList<Graph.Vertex> toplogicalOrder1(Graph g){
+	/**
+	 * Returns the topological order of a graph by sequentially
+	 * removing vertices with no incoming edges and its incident edges
+	 * 
+	 * @param g : graph whose topological order is determined
+	 * @return  : LinkedList<Graph.Vertex> : topological order
+	 */
+	public static LinkedList<Graph.Vertex> toplogicalOrder1(Graph g){
 		
 		int topNum= 0;
 		LinkedList<Graph.Vertex> queue=new LinkedList<Graph.Vertex>();
 		LinkedList<Graph.Vertex> topList= new LinkedList<Graph.Vertex>();
 		ge= new GraphExtended(g);
-		Iterator<Graph.Vertex> vertices = ge.g.iterator();
+		Iterator<Graph.Vertex> vertices = ge.iterator();
 		
 			
 		while(vertices.hasNext()){
@@ -55,67 +67,49 @@ public static LinkedList<Graph.Vertex> toplogicalOrder1(Graph g){
 		}
 		return topList;
 		
-		
-}
+	}
 	
+	/**
+	 * Returns the topological order of a graph by adding the nodes to 
+	 * the front of a list in the order of finish time.
+	 * Function calls DFS function from DFS class.
+	 * 
+	 * @param g : graph whose topological order is determined
+	 * @return  : LinkedList<Graph.Vertex> : topological order
+	 */
 	public static LinkedList<Graph.Vertex> toplogicalOrder2(Graph g) {
 		ge = new GraphExtended(g);
-		Iterator it= ge.g.iterator();
-		DFS(it);
+		Iterator it= ge.iterator();
+		decFinList =DFS.DFS(it,ge);
 		return decFinList;
 		
 	}
 	
-	public static void DFS(Iterator it){
-		topNum=ge.size();
-		time=0;
-		cno=0;
-		decFinList= new LinkedList<Graph.Vertex>();
-
-		for(int i=0;i<ge.size();i++)
-			ge.setSeen(i,false);
-		while(it.hasNext()){
-			Graph.Vertex u= (Graph.Vertex)it.next();
-			if(!ge.getSeen(u.getName())){
-				cno++;
-				DFSVisit(u);
-			}
-		}
-	}
-	
-	public static void DFSVisit(Graph.Vertex u){
-		int uName= u.getName();
-		ge.setSeen(uName,true);
-		ge.setDis(uName,++time);
-		ge.setVCno(uName,cno);
-		
-		Iterator adjEdges = u.adj.iterator();
-		
-		while(adjEdges.hasNext()){
-			Graph.Edge e= (Graph.Edge)adjEdges.next();
-			Graph.Vertex v= e.otherEnd(u);
-			if(!ge.getSeen(v.getName())){
-				ge.setParent(v.getName(),uName);
-				DFSVisit(v);
-			}
-		}
-		ge.setFin(uName,++time);
-		ge.setTop(uName,topNum--);
-		decFinList.addFirst(u); //supposed to be addFirst
-		
-	}
-
-	
+	/**
+	 * Main function. Reads the graph from a file sent through command
+	 * line. Calls both functions to determine the topological order 
+	 * and displays them
+	 * 
+	 * @param args : command line arguments
+	 * @throws FileNotFoundException :Exception if no file is provided as input or no file found
+	 */
 	public static void main(String[] args)throws FileNotFoundException, Exception{
         if(args.length > 0){
           Scanner sf = new Scanner(new File(args[0]));
           Graph graph = Graph.readDirectedGraph(sf);
-          LinkedList l= toplogicalOrder2(graph);
-          Iterator i= l.iterator();
-          while(i.hasNext()){
-        	  System.out.println((Graph.Vertex)i.next());
+          LinkedList l1= toplogicalOrder1(graph);
+          Iterator i1= l1.iterator();
+          while(i1.hasNext()){
+        	  System.out.print((Graph.Vertex)i1.next() + " ");
           }
+          System.out.println();
           
+          LinkedList l2= toplogicalOrder2(graph);
+          Iterator i2= l2.iterator();
+          while(i2.hasNext()){
+        	  System.out.print((Graph.Vertex)i2.next() + " ");
+          }
+          System.out.println();
     }
 		
 	}
