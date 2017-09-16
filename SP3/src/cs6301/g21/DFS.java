@@ -65,7 +65,7 @@ public class DFS {
 			Graph.Edge e= (Graph.Edge)adjEdges.next();
 			Graph.Vertex v= e.otherEnd(u);
 			if(!ge.getSeen(v.getName())){
-				ge.setParent(v.getName(),uName);
+				ge.setParent(v.getName(),u);
 				DFSVisit(v,ge);
 			}
 		}
