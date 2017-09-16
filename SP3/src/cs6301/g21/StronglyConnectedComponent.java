@@ -1,78 +1,62 @@
 package cs6301.g21;
 
 import java.io.File;
+
 import java.io.FileNotFoundException;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Scanner;
 
+import cs6301.g21.Graph.Edge;
+import cs6301.g21.Graph.Vertex;
+
+/**
+ * Determining the number of Strongly Connected Components in a graph
+ * 
+ * @author Shreya Vishwanath Rao, Abhishek Jagwani, Vibha Belavadi, Umang Shah
+ * @version 1.0: 2017/09/13
+ *
+ */
+
 public class StronglyConnectedComponent {
 	
 	static GraphExtended ge;
-	static int topNum;
-	static int time;
-	static int cno;
-	static LinkedList decFinList;
 
+	/**
+	 * 
+	 * Finds the finish order time of the graph using DFS. Further,
+	 * reverses all the edges of the graph and then performs DFS
+	 * on the new graph in the finish order computed earlier. The number
+	 * of components is calculated in the latter implementation.
+	 * 
+	 * @param g : graph whose Strongly Connected Component are determined 
+	 * @return  : int :the number of components
+	 */
 	static int stronglyConnectedComponents(Graph g) {
 	
-		LinkedList<Graph.Vertex> decFinList1 = finishTimeOrder(g);
+		LinkedList<Graph.Vertex> decFinList1 = Topological.toplogicalOrder2(g);
 		
 		Graph gT = reverseGraph(g);
+		Iterator V= decFinList1.iterator();
 		
-		findComponents(gT,decFinList1);
-		
-		return cno;
-	}
-	
-	public static LinkedList<Graph.Vertex> finishTimeOrder(Graph g) {
-		ge = new GraphExtended(g);
-		Iterator it= ge.g.iterator();
-		DFSOrder1(it);
-		return decFinList;
-		
-	}
-	
-	public static void DFSOrder1(Iterator it){
-		topNum=ge.size();
-		time=0;
-		cno=0;
-		decFinList= new LinkedList<Graph.Vertex>();
-
-		for(int i=0;i<ge.size();i++)
-			ge.setSeen(i,false);
-		while(it.hasNext()){
-			Graph.Vertex u= (Graph.Vertex)it.next();
-			if(!ge.getSeen(u.getName())){
-				cno++;
-				DFSVisitOrder1(u);
-			}
+		LinkedList<Graph.Vertex> finOrder = new LinkedList<Graph.Vertex>();
+		while(V.hasNext()){
+			int vName=((Graph.Vertex)V.next()).getName();
+			finOrder.add(gT.getVertex(vName));
 		}
+		
+		findComponents(gT,finOrder);
+		
+		return ge.cno;
 	}
 	
-	public static void DFSVisitOrder1(Graph.Vertex u){
-		int uName= u.getName();
-		ge.setSeen(uName,true);
-		ge.setDis(uName,++time);
-		ge.setVCno(uName,cno);
-		
-		Iterator adjEdges = u.adj.iterator();
-		
-		while(adjEdges.hasNext()){
-			Graph.Edge e= (Graph.Edge)adjEdges.next();
-			Graph.Vertex v= e.otherEnd(u);
-			if(!ge.getSeen(v.getName())){
-				ge.setParent(v.getName(),uName);
-				DFSVisitOrder1(v);
-			}
-		}
-		ge.setFin(uName,++time);
-		ge.setTop(uName,topNum--);
-		decFinList.addFirst(u); 
-		
-	}
-
-	
+	/**
+	 * 
+	 * Reverses all the edges of the graph.
+	 * 
+	 * @param g : graph whose edges have to be reverses
+	 * @return  : Graph :reversed graph
+	 */
 	static Graph reverseGraph(Graph g){
 		Graph gT= new Graph(g.size());
 		gT.directed=true;
@@ -83,63 +67,35 @@ public class StronglyConnectedComponent {
 			Graph.Vertex v = (Graph.Vertex)vertices.next();
 			
 			int vName = v.getName();
-			gT.v[vName].adj=v.revAdj;
-			gT.v[vName].revAdj=v.adj;
-			
+			gT.getVertex(vName).adj=v.revAdj;
+			gT.getVertex(vName).revAdj=v.adj;
 		}
 		return gT;
 	}
 	
-	
-	
-	
+	/**
+	 * 
+	 * Calls DFS, sending the finish order as a parameter
+	 * 
+	 * @param gt : reversed graph
+	 * @param decFinList : finish order
+	 */
 	static void findComponents(Graph gt,LinkedList<Graph.Vertex> decFinList){
 		ge = new GraphExtended(gt);
 		Iterator it= decFinList.iterator();
-		Iterator it1= decFinList.iterator();
 		
-		DFSOrder2(it);
+		DFS.DFS(it,ge);
 	}
-	
-	public static void DFSOrder2(Iterator it){
-		topNum=ge.size();
-		time=0;
-		cno=0;
 
-		for(int i=0;i<ge.size();i++)
-			ge.setSeen(i,false);
-		while(it.hasNext()){
-			Graph.Vertex u= (Graph.Vertex)it.next();
-			if(!ge.getSeen(u.getName())){
-				cno++;
-				DFSVisitOrder2(u);
-			}
-		}
-	}
-	
-	public static void DFSVisitOrder2(Graph.Vertex u){
-		int uName= u.getName();
-		ge.setSeen(uName,true);
-		ge.setDis(uName,++time);
-		ge.setVCno(uName,cno);
-		
-		Iterator adjEdges = u.revAdj.iterator();
-		
-		while(adjEdges.hasNext()){
-			Graph.Edge e= (Graph.Edge)adjEdges.next();
-			Graph.Vertex v= e.otherEnd(u);
-			if(!ge.getSeen(v.getName())){
-				ge.setParent(v.getName(),uName);
-				DFSVisitOrder2(v);
-			}
-		}
-		ge.setFin(uName,++time);
-		ge.setTop(uName,topNum--);
-		
-	}
-	
-
-	public static void main(String[] args)throws FileNotFoundException, Exception{
+	/**
+	 * Main function. Reads the graph from a file sent through command
+	 * line. Calls the function to calculate the number of Strongly Connected
+	 * Components.
+	 * 
+	 * @param args : command line arguments
+	 * @throws FileNotFoundException :Exception if no file is provided as input or no file found
+	 */
+	public static void main(String[] args)throws FileNotFoundException{
         if(args.length > 0){
           Scanner sf = new Scanner(new File(args[0]));
           Graph graph = Graph.readDirectedGraph(sf);
@@ -150,3 +106,4 @@ public class StronglyConnectedComponent {
 	}
 	
 }
+
