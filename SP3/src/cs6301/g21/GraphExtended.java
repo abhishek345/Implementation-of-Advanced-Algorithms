@@ -43,72 +43,86 @@ public class GraphExtended{
 	}
 	
 	/*sets the boolean value of the seen parameter of the vertex*/
-	public void setSeen(int index,boolean value){
+	public void setSeen(Graph.Vertex u,boolean value){
+		int index = u.getName();
 		seen[index]=value;
 	}
 	
 	/*return the boolean value of seen parameter of a vertex*/
-	public boolean getSeen(int index){
+	public boolean getSeen(Graph.Vertex u){
+		int index = u.getName();
 		return seen[index];
 	}
 	
 	/*sets the discovery time of a vertex*/
-	public void setDis(int index,int value){
+	public void setDis(Graph.Vertex u,int value){
+		int index = u.getName();
 		dis[index]=value;
 	}
 	
 	/*returns the discovery time of a vertex*/
-	public int getDis(int index){
+	public int getDis(Graph.Vertex u){
+		int index = u.getName();
 		return dis[index];
 	}
 	
 	/*sets the finish time of a vertex*/
-	public void setFin(int index,int value){
+	public void setFin(Graph.Vertex u,int value){
+		int index = u.getName();
 		fin[index]=value;
 	}
 	
 	/*returns the finish time of a vertex*/
-	public int getFin(int index){
+	public int getFin(Graph.Vertex u){
+		int index = u.getName();
 		return fin[index];
 	}
 	
 	/*sets the component number of a vertex*/
-	public void setVCno(int index,int value){
+	public void setVCno(Graph.Vertex u,int value){
+		int index = u.getName();
 		vCno[index]=value;
 	}
 	
 	/*returns the component number of a vertex*/
-	public int getVCno(int index){
+	public int getVCno(Graph.Vertex u){
+		int index = u.getName();
 		return vCno[index];
 	}
 	
 	/*sets the topological number of a vertex*/
-	public void setTop(int index,int value){
+	public void setTop(Graph.Vertex u,int value){
+		int index = u.getName();
 		top[index]=value;
 	}
 	
 	/*returns the topological number of a vertex*/
-	public int getTop(int index){
+	public int getTop(Graph.Vertex u){
+		int index = u.getName();
 		return top[index];
 	}
 	
 	/*sets the parent of a vertex*/
-	public void setParent(int index,Graph.Vertex value){
+	public void setParent(Graph.Vertex u,Graph.Vertex value){
+		int index = u.getName();
 		parent[index]=value;
 	}
 	
 	/*returns the parent of a vertex*/
-	public Graph.Vertex getParent(int index){
+	public Graph.Vertex getParent(Graph.Vertex u){
+		int index = u.getName();
 		return parent[index];
 	}
 	
 	/*sets the in degree of a vertex*/
-	public void setInDegree(int index,int value){
+	public void setInDegree(Graph.Vertex u,int value){
+		int index = u.getName();
 		inDegree[index]=value;
 	}
 	
 	/*returns the in degree of a vertex*/
-	public int getInDegree(int index){
+	public int getInDegree(Graph.Vertex u){
+		int index = u.getName();
 		return inDegree[index];
 	}
 	
