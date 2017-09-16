@@ -32,10 +32,10 @@ public class DFS {
 		decFinList= new LinkedList<Graph.Vertex>();
 
 		for(int i=0;i<ge.size();i++)
-			ge.setSeen(i,false);
+			ge.setSeen(ge.getVertex(i),false);
 		while(it.hasNext()){
 			Graph.Vertex u= (Graph.Vertex)it.next();
-			if(!ge.getSeen(u.getName())){
+			if(!ge.getSeen(u)){
 				ge.cno++;
 				DFSVisit(u,ge);
 			}
@@ -54,23 +54,22 @@ public class DFS {
 	 * @param ge :GraphExtended object containing the graph and other details of the vertex
 	 */
 	public static void DFSVisit(Graph.Vertex u, GraphExtended ge){
-		int uName= u.getName();
-		ge.setSeen(uName,true);
-		ge.setDis(uName,++time);
-		ge.setVCno(uName,ge.cno);
+		ge.setSeen(u,true);
+		ge.setDis(u,++time);
+		ge.setVCno(u,ge.cno);
 		
 		Iterator adjEdges = u.adj.iterator();
 		
 		while(adjEdges.hasNext()){
 			Graph.Edge e= (Graph.Edge)adjEdges.next();
 			Graph.Vertex v= e.otherEnd(u);
-			if(!ge.getSeen(v.getName())){
-				ge.setParent(v.getName(),u);
+			if(!ge.getSeen(v)){
+				ge.setParent(v,u);
 				DFSVisit(v,ge);
 			}
 		}
-		ge.setFin(uName,++time);
-		ge.setTop(uName,topNum--);
+		ge.setFin(u,++time);
+		ge.setTop(u,topNum--);
 		decFinList.addFirst(u);
 		
 	}
