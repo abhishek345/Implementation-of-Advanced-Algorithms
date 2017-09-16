@@ -21,7 +21,7 @@ public class GraphExtended{
 	int fin[];
 	int vCno[];
 	int top[];
-	int parent[];
+	Graph.Vertex parent[];
 	int inDegree[];
 	static int cno;
 	
@@ -37,7 +37,7 @@ public class GraphExtended{
 		fin = new int[g.size()];
 		vCno = new int[g.size()];
 		top = new int[g.size()];
-		parent = new int[g.size()];
+		parent = new Graph.Vertex[g.size()];
 		inDegree= new int[g.size()];
 		
 	}
@@ -93,12 +93,12 @@ public class GraphExtended{
 	}
 	
 	/*sets the parent of a vertex*/
-	public void setParent(int index,int value){
+	public void setParent(int index,Graph.Vertex value){
 		parent[index]=value;
 	}
 	
 	/*returns the parent of a vertex*/
-	public int getParent(int index){
+	public Graph.Vertex getParent(int index){
 		return parent[index];
 	}
 	
