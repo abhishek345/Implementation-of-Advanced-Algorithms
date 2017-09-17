@@ -81,11 +81,14 @@ public class Num {
 
     private void trimNum(){
         boolean stop = false;
-        int i= 0;
-        while(!stop && i<digits.size()){
+        int i= digits.size()-1;
+        while(!stop && i>=0){
             if(digits.get(i) == 0){
                 digits.remove(i);
+                i--;
             }
+            else
+                stop = true;
 
         }
     }
@@ -914,6 +917,7 @@ public class Num {
     //Driver function to check
     public static void main(String args[]){
         Num n = new Num("32");
+        n.trimNum();
         n.printList();
         Num n2 = new Num(2);
         divide(n,n2).printList();
