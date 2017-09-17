@@ -356,6 +356,137 @@ public class Num {
 
         return low;
     }
+    
+    //Simple division without sign
+    public static Num divideUnsigned(Num a, Num b){
+
+        //throw exception if dividing by zero and return a if divide by 1
+        if(b.compareTo(zero) == 0) {
+            //handles divide by zero case
+            throw new IllegalArgumentException("Argument 'divisor' is 0");
+
+        }else if(b.compareTo(one) == 0) {
+            //handles divide by 1 case
+            return copyNum(a);
+        }
+
+        //return zero if a<b, one if a==b
+        int compareR = a.compareTo(b);
+
+        if(compareR < 0) {
+            return zero;
+
+        } else if(compareR == 0) {
+            return one;
+
+        }else{
+            //When a>b
+            Num avg;
+            Num high = copyNum(a);
+            Num low = new Num(0);
+
+            while(low.compareTo(high) < 0){
+
+                //calculate mid point
+                avg = average(high, low);
+
+                //calculate temporary multiplication
+                Num temp = simpleMul(b, avg);
+                int compareResult = temp.compareTo(a);
+                Num reminder = subtract(a, temp);
+
+                //if reminder < divisor, return quotient
+                if(b.compareTo(reminder) > 0)
+                    return avg;
+
+                //if b*avg < a, update low to avg, if b*avg > a, update high to avg
+                //else if b*avg == a, return avg
+                if(compareResult < 0)
+                    low = avg;
+                else if(compareResult > 0)
+                    high = avg;
+                else
+                    return avg;
+            }
+
+            return low;
+
+        }
+
+    }
+    
+    //copy the value of the number to a new number
+    public static Num copyNum(Num a){
+        String value = a.toString();
+        Num result = new Num(value);
+
+        //add sign bit as well
+        if(a.getSign())
+            result.getSign();
+
+        return new Num(value);
+    }
+    
+    //Long division by binary search.
+    //reference: http://www.techiedelight.com/division-two-numbers-using-binary-search-algorithm/
+    //reference: https://en.wikipedia.org/wiki/Division_algorithm
+    public static Num divide(Num a, Num b){
+
+        boolean aSign = a.getSign();
+        boolean bSign = b.getSign();
+
+        Num quotient;
+
+
+        //consider the sign and call function accordingly
+        //when a.sign != b.sign
+        if(aSign != bSign){
+            //case b<0, a>0
+            if(bSign){
+                b.setSign();
+                quotient = divideUnsigned(a, b);
+                b.setSign();
+                quotient.setSign();
+                return quotient;
+
+            }else{
+                //handle a<0 case from Wikipedia
+                a.setSign();
+                quotient = divideUnsigned(a, b);
+                a.setSign();
+                quotient.setSign();
+                //System.out.println(quotient.getSign());
+                //getting negative sign here for case quotient = -1, divisor = 10
+                //breaking the code here
+                System.out.println(karatsubaMul(quotient, b).getSign());
+
+                if(karatsubaMul(quotient, b).compareTo(a) != 0) {
+                    quotient = add(quotient, one);
+
+                }
+
+                return quotient;
+
+            }
+
+        }else {
+            //case a>0 and b>0
+            if(aSign){
+                a.setSign();
+                b.setSign();
+                quotient = divideUnsigned(a, b);
+                //System.out.println(quotient.getSign());
+                a.setSign();
+                b.setSign();
+
+            }else
+                //case when a>0 and b>0
+                quotient = divideUnsigned(a, b);
+
+        }
+
+        return quotient;
+    }
 
     //Manually calculated the average of two numbers
     public static Num average(Num a, Num b){
