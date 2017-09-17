@@ -33,7 +33,7 @@ public class Topological {
 		int topNum= 0;
 		LinkedList<Graph.Vertex> queue=new LinkedList<Graph.Vertex>();
 		LinkedList<Graph.Vertex> topList= new LinkedList<Graph.Vertex>();
-		ge= new GraphExtended(g);
+		ge = new GraphExtended(g);
 		Iterator<Graph.Vertex> vertices = ge.iterator();
 
 

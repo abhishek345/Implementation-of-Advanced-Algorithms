@@ -98,9 +98,9 @@ public class DFS {
             else if(checkCycles && (ge.isDirected() && ge.getSeen(v))){
                 Graph.Vertex a = ge.getParent(u);
                 while(a != null){
-                    a = ge.getParent(a);
                     if(a.getName() == v.getName())
                         throw new CyclicGraphException("Cycle Found");
+                    a = ge.getParent(a);
                 }
             }
         }
