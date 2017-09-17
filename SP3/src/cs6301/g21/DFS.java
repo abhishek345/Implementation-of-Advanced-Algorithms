@@ -1,10 +1,16 @@
 package cs6301.g21;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.Scanner;
+
+/**
+  *
+  * Depth First Search Implementation
+  *
+  * @author Shreya Vishwanath Rao, Abhishek Jagwani, Vibha Belavadi, Umang Shah
+  * @version 1.0: 2017/09/13
+  *
+  */
 
 public class DFS {
     private static int time = 0;
@@ -13,19 +19,34 @@ public class DFS {
     private static boolean checkCycles = true;
     private static LinkedList<Graph.Vertex> decFinList;
 
-
-    public DFS(GraphExtended ge){
-        topNum = ge.size();
-    }
-
+    /**
+     * Depth First Search Higher level Function Call
+     *
+     * @param it : order in which DFS must be implemented
+     * @param ge : Graph extended object containing the graph
+     * @return   : LinkedList<Graph.Vertex> : decreasing finish order time of the vertices in the graph
+     */
     public static LinkedList<Graph.Vertex> DFSCall(Iterator it, GraphExtended ge)throws CyclicGraphException{
         return DFSGraph(it, ge);
     }
 
+    /**
+     * Depth First Search Higher level Function Call
+     *
+     * @param ge : Graph extended object containing the graph
+     * @return   : LinkedList<Graph.Vertex> : decreasing finish order time of the vertices in the graph
+     */
     public static LinkedList<Graph.Vertex> DFSCall(GraphExtended ge)throws CyclicGraphException{
         return DFSGraph(ge.iterator(), ge);
     }
 
+    /**
+      * Depth First Search Function Call
+      *
+      * @param it : order in which DFS must be implemented
+      * @param ge : Graph extended object containing the graph
+      * @return   : LinkedList<Graph.Vertex> : decreasing finish order time of the vertices in the graph
+      */
     public static LinkedList<Graph.Vertex> DFSGraph(Iterator it, GraphExtended ge)throws CyclicGraphException{
         topNum=ge.size();
         decFinList= new LinkedList<>();
@@ -42,10 +63,21 @@ public class DFS {
                 DFSVisit(ge, u);
             }
         }
+        return decFinList;
     }
 
+    /**
+     * Traverses through all the adjacent unvisited vertices of the vertex
+	 * sent to the function.
+     * Stores the topological number, discovery and finish time of the vertex.
+     * It add the vertex to the finish order list once all its neighbors
+     * have been visited.
+     *
+     * @param u : the vertex whose neighbors have to be traversed through
+	 * @param ge :GraphExtended object containing the graph and other details of the vertex
+	 */
     public static void DFSVisit(GraphExtended ge, Graph.Vertex u)throws CyclicGraphException{
-        int uName= u.getName();
+//        int uName= u.getName();
         ge.setSeen(u,true);
         ge.setDis(u,++time);
         ge.setVCno(u,cno);
@@ -59,14 +91,15 @@ public class DFS {
                 ge.setParent(v,u);
                 DFSVisit(ge, v);
             }
+            System.out.print(u.getName() + " "+ ge.getSeen(v));
             else if(checkCycles && (ge.g.directed && ge.getSeen(v))){
+                System.out.print("checking ");
                 Graph.Vertex a = ge.getParent(u);
                 while(a != null){
                     a = ge.getParent(a);
                     if(a.getName() == v.getName())
                         throw new CyclicGraphException("Cycle Found");
                 }
-                System.out.print("no cycle found");
             }
         }
         ge.setFin(u,++time);
@@ -74,25 +107,4 @@ public class DFS {
         decFinList.addFirst(u); //supposed to be addFirst
     }
 
-    public static boolean isDAG(GraphExtended ge){
-        try{
-            if(ge.g.directed) {
-                DFSCall(ge);
-                return true;
-            }
-            else{
-                System.out.println("Graph is not directed");
-                return false;
-            }
-        }catch(CyclicGraphException e){
-            return false;
-        }
-    }
-
-    public static void main(String args[])throws FileNotFoundException{
-        Scanner sf = new Scanner(new File("/home/uks/ImplofAlgos/Implementation-of-Advanced-Algorithms/SP3/src/cs6301/g21/cyclicgraph.in"));
-        Graph graph = Graph.readDirectedGraph(sf);
-        GraphExtended ge = new GraphExtended(graph);
-        System.out.println(isDAG(ge));
-    }
 }

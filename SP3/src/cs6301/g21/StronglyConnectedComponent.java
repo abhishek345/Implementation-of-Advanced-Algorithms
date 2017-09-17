@@ -32,7 +32,7 @@ public class StronglyConnectedComponent {
 	 * @param g : graph whose Strongly Connected Component are determined
 	 * @return  : int :the number of components
 	 */
-	static int stronglyConnectedComponents(Graph g) {
+	static int stronglyConnectedComponents(Graph g)throws CyclicGraphException{
 
 		LinkedList<Graph.Vertex> decFinList1 = Topological.toplogicalOrder2(g);
 
@@ -95,7 +95,7 @@ public class StronglyConnectedComponent {
 	 * @param args : command line arguments
 	 * @throws FileNotFoundException :Exception if no file is provided as input or no file found
 	 */
-	public static void main(String[] args)throws FileNotFoundException{
+	public static void main(String[] args)throws FileNotFoundException, CyclicGraphException{
         if(args.length > 0){
           Scanner sf = new Scanner(new File(args[0]));
           Graph graph = Graph.readDirectedGraph(sf);
