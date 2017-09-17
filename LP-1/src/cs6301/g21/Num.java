@@ -7,12 +7,13 @@ import java.util.NoSuchElementException;
 public class Num {
 
     private LinkedList<Long> digits;
-    private static long BASE = 10;
+    private static long BASE = 2;
     private boolean sign = false;//false (not set) +ve number; if true (set) -ve num
     private static boolean flag =  false; //#1
     static Num zero = new Num(0);
     static Num one = new Num(1);
     static Num base = new Num(BASE);
+    static Num ten = new Num(10);
 
     public Num(String num){
         digits = new LinkedList<>();
@@ -34,8 +35,8 @@ public class Num {
             else{
                 long digit = Long.parseLong(c.toString());
                 Num a = new Num(digit);
-                current = Num.product(current, base);
-                current = Num.add(current, a);
+                current = Num.product(current, ten);
+                current = Num.unsignedAdd(current, a);
             }
         }
         digits = current.getDigits();
@@ -95,7 +96,7 @@ public class Num {
 
     private void shift(long times){
         while(times > 0){
-            digits.addLast((long)0);
+            digits.addFirst((long)0);
             times--;
         }
     }
@@ -348,7 +349,7 @@ public class Num {
 //            if(len <= 4) {
 //                return simpleMul(a,b);
 //            }
-            if(len < 4){
+            if(len < 2){
                 return simpleMul(a,b);
             }
             while(len%2 != 0){
@@ -367,43 +368,49 @@ public class Num {
             bSplit = b.split(b,half);
             //aSplit[0] - L ; [1] - R
 
-            Num mulRight = karatsubaMul(aSplit[0], bSplit[0]);
+            Num mulRight = product(aSplit[0], bSplit[0]);
 //            System.out.print("Right Term: "); mulRight.printList();
-            Num mulLeft = karatsubaMul(aSplit[1], bSplit[1]);
+            Num mulLeft = product(aSplit[1], bSplit[1]);
 //            System.out.print("Left Term: "); mulLeft.printList();
 
-            Num mulMid = karatsubaMul(add(aSplit[0],aSplit[1]), add(bSplit[0],bSplit[1]));
+            Num mulMid = karatsubaMul(unsignedAdd(aSplit[0],aSplit[1]), unsignedAdd(bSplit[0],bSplit[1]));
 
 //        System.out.print("Middle Term: "); mulMid.printList();
 
 //            System.out.print("Middle Term sub Left: "); subtract(mulMid, mulLeft).printList();
 //            System.out.print("Middle Term sub Right: "); subtract(mulMid, mulRight).printList();
-            mulMid = subtract(subtract(mulMid, mulLeft), mulRight);
+            mulMid = unsignedSubtract(unsignedSubtract(mulMid, mulLeft), mulRight);
 //        System.out.print("Middle Term after sub: "); mulMid.printList();
             //mulMid = subtract(mulMid, mulRight);
 
-            mulMid = simpleMul(mulMid, power(new Num(BASE),len/2));
-            //shift(mulMid, len/2);
-            Num ans = simpleMul(mulLeft, power(new Num(BASE), len));
+//            mulMid = simpleMul(mulMid, power(new Num(BASE),len/2));
+            mulMid.shift(len/2);
+//            Num ans = simpleMul(mulLeft, power(new Num(BASE), len));
+            mulLeft.shift(len);
+            Num ans = mulLeft;
 //            System.out.print("Before Add with mid step: ");ans.printList();
-            ans = add(ans, mulMid);
+            ans = unsignedAdd(ans, mulMid);
 //            ans.printList();
-            ans = add(ans, mulRight);
+            ans = unsignedAdd(ans, mulRight);
 //            System.out.print("Final step: ");ans.printList();
-            if(a.getSign() != b.getSign())
-                if(ans.getSign() == false) ans.setSign();
             return ans;
    }
 
     public static Num product(Num a, Num b){
+        Num answer;
         if(a.size() < 5 && b.size() < 5)
-            return simpleMul(a,b);
-        return karatsubaMul(a,b);
+            answer = simpleMul(a,b);
+        else
+            answer = karatsubaMul(a,b);
+        if(a.getSign() != b.getSign())
+            if(answer.getSign() != true) answer.setSign();
+        return answer;
     }
 
     public static Num simpleMul(Num a, Num b){
         long value = 0;
         long carry = 0;
+
         int secondSize = 0;
         Iterator outer;
         Num c;
@@ -489,7 +496,7 @@ public class Num {
         }
         return result;
     }
-    
+
     public static Num unsignedAdd(Num a,Num b){
         Iterator<Long> it1 = a.iterator();
         Iterator<Long> it2 = b.iterator();
@@ -852,7 +859,6 @@ public class Num {
 //    }
 
     //Compares two numbers and sees which one is greater
-    //testing done
     public int compareTo(Num b){
         //compare negative and positive numbers
         if(this.getSign() != b.getSign())
@@ -907,10 +913,12 @@ public class Num {
 
     //Driver function to check
     public static void main(String args[]){
-        Num n = new Num(-1);
-        Num n2 = new Num(-10);
-        Num n3 = product(n,n2);
-        n3.printList();
+        Num n = new Num("32");
+        n.printList();
+        Num n2 = new Num(2);
+        divide(n,n2).printList();
+        subtract(n,n2).printList();
+        add(n,n2).printList();
     }
 
 }
