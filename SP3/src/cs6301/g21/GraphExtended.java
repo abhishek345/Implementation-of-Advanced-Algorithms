@@ -138,7 +138,7 @@ public class GraphExtended{
 	 
 	/*returns the vertex of the provided index*/
 	public Graph.Vertex getVertex(int index){
-		return g.getVertex(index);
+		return g.getVertex(index+1);
 	}
 
 	/*check is graph is directed*/
