@@ -14,10 +14,13 @@ import java.util.LinkedList;
 
 public class DFS {
     private static int time = 0;
-    private static int cno = 0;
     private static int topNum = 0;
     private static boolean checkCycles = true;
     private static LinkedList<Graph.Vertex> decFinList;
+
+    public static void setCycleChecking(boolean b){
+        checkCycles = b;
+    }
 
     /**
      * Depth First Search Higher level Function Call
@@ -49,17 +52,19 @@ public class DFS {
       */
     public static LinkedList<Graph.Vertex> DFSGraph(Iterator it, GraphExtended ge)throws CyclicGraphException{
         topNum=ge.size();
+        time = 0;
+        ge.cno = 0;
         decFinList= new LinkedList<>();
 
-        while(it.hasNext()) {
-            Graph.Vertex temp = (Graph.Vertex) it.next();
+        for(int i=1;i<=ge.size();i++){
+            Graph.Vertex temp = ge.getVertex(i);
             ge.setSeen(temp, false);
             ge.setParent(temp, null);
         }
         while(it.hasNext()){
             Graph.Vertex u= (Graph.Vertex)it.next();
             if(!ge.getSeen(u)){
-                cno++;
+                ge.cno++;
                 DFSVisit(ge, u);
             }
         }
@@ -77,10 +82,9 @@ public class DFS {
 	 * @param ge :GraphExtended object containing the graph and other details of the vertex
 	 */
     public static void DFSVisit(GraphExtended ge, Graph.Vertex u)throws CyclicGraphException{
-//        int uName= u.getName();
         ge.setSeen(u,true);
         ge.setDis(u,++time);
-        ge.setVCno(u,cno);
+        ge.setVCno(u,ge.cno);
 
         Iterator adjEdges = u.adj.iterator();
 
@@ -91,9 +95,7 @@ public class DFS {
                 ge.setParent(v,u);
                 DFSVisit(ge, v);
             }
-            System.out.print(u.getName() + " "+ ge.getSeen(v));
-            else if(checkCycles && (ge.g.directed && ge.getSeen(v))){
-                System.out.print("checking ");
+            else if(checkCycles && (ge.isDirected() && ge.getSeen(v))){
                 Graph.Vertex a = ge.getParent(u);
                 while(a != null){
                     a = ge.getParent(a);
