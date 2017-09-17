@@ -4,18 +4,23 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 /**
- * Determining if a graph has cycles
+ * Determining if a graph is a Directed Acyclic Graph
  *
  * @author Umang Shah, Shreya Vishwanath Rao, Abhishek Jagwani, Vibha Belavadi
  * @version 1.0: 2017/09/13
  *
  */
 public class CheckDAG {
-
+    /**
+     * Performs DFS on a graph and if any cycles exist it reports an exception
+     *
+     * @param ge : Graph extended object containing the graph
+     * @return   : boolean : True if graph is a DAG else False
+     */
     public static boolean isDAG(GraphExtended ge){
         DFS.setCycleChecking(true);
         try{
-            if(ge.g.directed) {
+            if(ge.isDirected()) {
                 DFS.DFSCall(ge);
                 return true;
             }
@@ -28,10 +33,16 @@ public class CheckDAG {
             return false;
         }
     }
-
+    /**
+     * Main function. Reads the graph from a file sent through command
+     * line. Calls isDag function and displays the result.
+     *
+     * @param args : command line arguments
+     */
     public static void main(String args[])throws FileNotFoundException {
-        Scanner sf1 = new Scanner(new File("/home/uks/ImplofAlgos/Implementation-of-Advanced-Algorithms/SP3/src/cs6301/g21/cyclicgraph.in"));
-        Scanner sf2 = new Scanner(new File("/home/uks/ImplofAlgos/Implementation-of-Advanced-Algorithms/SP3/src/cs6301/g21/cyclicgraph.in"));
+
+        Scanner sf1 = new Scanner(new File(args[0]));
+        Scanner sf2 = new Scanner(new File(args[0]));
         //Same graph with cycle, second run uses undirected graph
         System.out.print("Graph 1: ");
         Graph graph1 = Graph.readDirectedGraph(sf1);

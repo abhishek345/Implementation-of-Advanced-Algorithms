@@ -90,27 +90,35 @@ public class Topological {
 	 * and displays them
 	 *
 	 * @param args : command line arguments
-	 * @throws FileNotFoundException :Exception if no file is provided as input or no file found
+	 * @throws FileNotFoundException : Exception if no file is provided as input or no file found
+     * @throws CyclicGraphException : Exception if graph is cyclic
 	 */
 	public static void main(String[] args)throws FileNotFoundException, CyclicGraphException{
         DFS.setCycleChecking(true);
 		if(args.length > 0){
           Scanner sf = new Scanner(new File(args[0]));
           Graph graph = Graph.readDirectedGraph(sf);
-          LinkedList l1= toplogicalOrder1(graph);
-          Iterator i1= l1.iterator();
-          while(i1.hasNext()){
-        	  System.out.print((Graph.Vertex)i1.next() + " ");
+          try {
+              LinkedList l1= toplogicalOrder1(graph);
+              Iterator i1 = l1.iterator();
+              while (i1.hasNext()) {
+                  System.out.print((Graph.Vertex) i1.next() + " ");
+              }
+              System.out.println();
+          }catch (NullPointerException e){
+              System.out.print("No topological order. ");
           }
-          System.out.println();
-
-          LinkedList l2= toplogicalOrder2(graph);
-          Iterator i2= l2.iterator();
-          while(i2.hasNext()){
-        	  System.out.print((Graph.Vertex)i2.next() + " ");
+          try {
+              LinkedList l2 = toplogicalOrder2(graph);
+              Iterator i2 = l2.iterator();
+              while (i2.hasNext()) {
+                  System.out.print((Graph.Vertex) i2.next() + " ");
+              }
+              System.out.println();
+          }catch (CyclicGraphException ce){
+              System.out.print("Cycle in graph");
           }
-          System.out.println();
-    }
+        }
 
 	}
 }
