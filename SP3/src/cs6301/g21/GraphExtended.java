@@ -140,5 +140,10 @@ public class GraphExtended{
 	public Graph.Vertex getVertex(int index){
 		return g.getVertex(index);
 	}
+
+	/*check is graph is directed*/
+	public boolean isDirected(){
+		return g.directed;
+	}
 	 
 }
