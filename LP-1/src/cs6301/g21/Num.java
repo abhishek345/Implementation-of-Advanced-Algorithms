@@ -43,6 +43,10 @@ public class Num {
 
     }
 
+    private static void changeBase(long newbase){
+        BASE = newbase;
+    }
+
     public Num(long num){
         digits = new LinkedList<>();
         long digit;
@@ -65,7 +69,54 @@ public class Num {
         digits = new LinkedList<>();
     }
 
+    public void printList(){
+        System.out.print(BASE + " : ");
+        Iterator it = this.iterator();
+        while(it.hasNext())
+            System.out.print(it.next() + " ");
+        if(getSign())
+            System.out.println("-");
+        else
+            System.out.println("+");
+    }
 
+    public String toString() {
+        this.trimNum();
+        Num n = makeDec(this);
+        StringBuilder s = new StringBuilder();
+        for(int i=n.size()-1; i>=0;i--){
+            s.append(n.get(i));
+        }
+        return s.toString();
+//        Iterator value = this.iterator();
+//        long result = (long) value.next();
+//        long first;
+//        long factor = BASE;
+//        while(value.hasNext()){
+//            first = (long) value.next();
+//            first = first * factor;
+//            result = result + first;
+//            factor *= BASE;
+//        }
+//        return String.valueOf(result);
+    }
+
+    public static Num makeDec(Num n){
+        long oldbase = BASE;
+        changeBase(10);
+        Num factor = new Num(oldbase);
+        Num current = new Num(0);
+        for(int i=n.size()-1; i>=0;i--){
+//            current.printList();
+            long digit = n.get(i);
+            Num a = new Num(digit);
+            current = Num.product(current, factor);
+//            current.printList();
+            current = Num.unsignedAdd(current, a);
+        }
+        changeBase(oldbase);
+        return current;
+    }
     //trim the String to remove all the zeros
     public static String trimString(String s){
 
@@ -273,51 +324,6 @@ public class Num {
         return subtract(a, simpleMul(divide(a, b), b));
     }
 
-    public void printList(){
-        System.out.print(BASE + " : ");
-        Iterator it = this.iterator();
-        while(it.hasNext())
-            System.out.print(it.next() + " ");
-        if(getSign())
-            System.out.println("-");
-        else
-            System.out.println("+");
-    }
-
-    public String toString() {
-        Iterator value = this.iterator();
-        long result = (long) value.next();
-        long first;
-        long factor = BASE;
-        while(value.hasNext()){
-            first = (long) value.next();
-            first = first * factor;
-            result = result + first;
-            factor *= BASE;
-        }
-        return String.valueOf(result);
-    }
-
-    public void makeDec(){
-        this.trimNum();
-        for(int i=digits.size(); i>=0;i--){
-
-        }
-    }
-    /*
-        while(it.hasNext()){
-
-        }
-
-     */
-
-//    //copy the value of the number to a new number
-//
-//    public static Num copyNum(Num a){
-//        String value = a.toString();
-//        return new Num(value);
-//    }
-
     public int size(){
         return digits.size();
     }
@@ -458,13 +464,13 @@ public class Num {
         if(secondSize == 1)
             return tempArr[0];
         else {
-            Num holder = Num.add(tempArr[0], tempArr[1]);
+            Num holder = Num.unsignedAdd(tempArr[0], tempArr[1]);
             if(secondSize == 2)
                 return holder;
             else{
                 int idx = 2;
                 while(idx < secondSize){
-                    holder = Num.add(holder,tempArr[idx++]);
+                    holder = Num.unsignedAdd(holder,tempArr[idx++]);
                 }
             }
             return holder;
@@ -921,12 +927,13 @@ public class Num {
     //Driver function to check
     public static void main(String args[]){
         Num n = new Num("-10");
+        System.out.print(n);
 //        n.trimNum();
 //        n.printList();
-        Num n2 = new Num(-1);
+//        Num n2 = new Num(-1);
 //        divide(n,n2).printList();
 //        power(n,n2).printList();
-        add(n,n2).printList();
+//        add(n,n2).printList();
     }
 
 }
