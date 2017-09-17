@@ -65,9 +65,6 @@ public class Num {
         digits = new LinkedList<>();
     }
 
-    public boolean isNegative() { return sign; }
-
-    public void setNegative() { sign = true; }
 
     //trim the String to remove all the zeros
     public static String trimString(String s){
@@ -89,7 +86,6 @@ public class Num {
             }
             else
                 stop = true;
-
         }
     }
 
@@ -128,17 +124,17 @@ public class Num {
     }
     //Flip the sign of Num
 
+    public void setSign(boolean b){
+        this.sign = b;
+    }
+
     public void setSign(){
-        if(this.sign)
-            this.sign = false;
-        else
-            this.sign = true;
+        this.sign = !this.sign;
     }
     //get sign of Num
     public boolean getSign(){
         return this.sign;
     }
-
 
     //Long division by binary search. Implement separate method for binary search
     //reference: http://www.techiedelight.com/division-two-numbers-using-binary-search-algorithm/
@@ -244,15 +240,13 @@ public class Num {
                 //System.out.println(quotient.getSign());
                 //getting negative sign here for case quotient = -1, divisor = 10
                 //breaking the code here
-                System.out.println(karatsubaMul(quotient, b).getSign());
+//                System.out.println(karatsubaMul(quotient, b).getSign());
 
                 if(karatsubaMul(quotient, b).compareTo(a) != 0) {
                     quotient = add(quotient, one);
-
                 }
 
                 return quotient;
-
             }
 
         }else {
@@ -304,6 +298,19 @@ public class Num {
         return String.valueOf(result);
     }
 
+    public void makeDec(){
+        this.trimNum();
+        for(int i=digits.size(); i>=0;i--){
+
+        }
+    }
+    /*
+        while(it.hasNext()){
+
+        }
+
+     */
+
 //    //copy the value of the number to a new number
 //
 //    public static Num copyNum(Num a){
@@ -319,7 +326,7 @@ public class Num {
         Num[] ans = new Num[2];
         ans[0] = new Num();
         ans[1] = new Num();
-        System.out.println(n);
+//        System.out.println(n);
         for(int i=0;i < n.size();i++){
             if(i < position){
                 ans[0].addLast(n.get(i));
@@ -334,8 +341,8 @@ public class Num {
     public static Num karatsubaMul(Num a, Num b){
             int len;
 //            System.out.print("Multiplying: ");
-            a.printList();
-            b.printList();
+//            a.printList();
+//            b.printList();
             Num bigger, smaller;
             if(a.size() >= b.size()){
                 bigger = a;
@@ -363,8 +370,8 @@ public class Num {
                 smaller.addLast(0);
             }
 //            System.out.print("padded: ");
-            bigger.printList();
-            smaller.printList();
+//            bigger.printList();
+//            smaller.printList();
             int half = len/2; //length of the half of the numbers
             Num[] aSplit, bSplit;
             aSplit = a.split(a,half);
@@ -407,6 +414,7 @@ public class Num {
             answer = karatsubaMul(a,b);
         if(a.getSign() != b.getSign())
             if(answer.getSign() != true) answer.setSign();
+        answer.trimNum();
         return answer;
     }
 
@@ -464,8 +472,6 @@ public class Num {
 
     }
 
-    public void setPositive() { sign = false;}
-
     static Num power(Num a, long n) {
         Num result;
         if(n==0)
@@ -501,6 +507,9 @@ public class Num {
     }
 
     public static Num unsignedAdd(Num a,Num b){
+        if(a.size() < 1)return b;
+        else if(b.size() < 1)return a;
+
         Iterator<Long> it1 = a.iterator();
         Iterator<Long> it2 = b.iterator();
 
@@ -563,6 +572,9 @@ public class Num {
     }
 
     public static Num unsignedSubtract(Num a,Num b){
+        if(a.size() < 1)return b;
+        else if(b.size() < 1)return a;
+
         Iterator<Long> it1 = a.iterator();
         Iterator<Long> it2 = b.iterator();
 
@@ -576,7 +588,7 @@ public class Num {
         while(temp1!=null && temp2!=null){
             if(carry){
                 if(temp1 == 0)
-                    temp1 = (long)9;
+                    temp1 = BASE-1;
                 else{
                     temp1 -= 1;
                     carry = false;
@@ -604,11 +616,10 @@ public class Num {
             }
         }
 
-
         while(temp1 != null){
             if(carry){
                 if(temp1 == 0)
-                    temp1 = (long)9;
+                    temp1 = BASE-1;
                 else{
                     temp1 -= 1;
                     carry = false;
@@ -633,8 +644,8 @@ public class Num {
         Num tempResult;
         Num a1,b1;
 
-        a.setPositive();
-        b.setPositive();
+        a.setSign(false);
+        b.setSign(false);
 
         int comp=a.compareTo(b);
 
@@ -680,14 +691,10 @@ public class Num {
         else
             tempResult = unsignedAdd(a1,b1);
 
-        if(signA==true)
-            a.setNegative();
-        else
-            a.setPositive();
-        if(signB==true)
-            b.setNegative();
-        else
-            b.setPositive();
+        a.setSign(signA);
+        b.setSign(signB);
+        tempResult.setSign(outSign);
+
         return tempResult;
     }
 
@@ -699,8 +706,8 @@ public class Num {
         boolean outSign;
         Num a1,b1;
 
-        a.setPositive();
-        b.setPositive();
+        a.setSign(false);
+        b.setSign(false);
 
         int comp = a.compareTo(b);
 
@@ -748,14 +755,11 @@ public class Num {
             tempResult = unsignedSubtract(a1,b1);
         }
         //System.out.println(outSign);
-        if(signA==true)
-            a.setNegative();
-        else
-            a.setPositive();
-        if(signB==true)
-            b.setNegative();
-        else
-            b.setPositive();
+        a.setSign(signA);
+        b.setSign(signB);
+
+        tempResult.setSign(outSign);
+
         return tempResult;
 
 
@@ -782,7 +786,7 @@ public class Num {
         while(add(low, new Num("1")).compareTo(high) < 0){
 
             avg = average(high, low);
-            System.out.println(avg);
+//            System.out.println(avg);
 
             Num square = power(avg, 2L);
             int compareResult = square.compareTo(a);
@@ -916,12 +920,12 @@ public class Num {
 
     //Driver function to check
     public static void main(String args[]){
-        Num n = new Num("32");
-        n.trimNum();
-        n.printList();
-        Num n2 = new Num(2);
-        divide(n,n2).printList();
-        subtract(n,n2).printList();
+        Num n = new Num("-10");
+//        n.trimNum();
+//        n.printList();
+        Num n2 = new Num(-1);
+//        divide(n,n2).printList();
+//        power(n,n2).printList();
         add(n,n2).printList();
     }
 
