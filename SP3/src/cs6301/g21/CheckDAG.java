@@ -1,11 +1,15 @@
 package cs6301.g21;
 
-import org.omg.Messaging.SYNC_WITH_TRANSPORT;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
-
+/**
+ * Determining if a graph has cycles
+ *
+ * @author Umang Shah, Shreya Vishwanath Rao, Abhishek Jagwani, Vibha Belavadi
+ * @version 1.0: 2017/09/13
+ *
+ */
 public class CheckDAG {
 
     public static boolean isDAG(GraphExtended ge){

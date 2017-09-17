@@ -56,7 +56,7 @@ public class DFS {
         ge.cno = 0;
         decFinList= new LinkedList<>();
 
-        for(int i=1;i<=ge.size();i++){
+        for(int i=0;i<ge.size();i++){
             Graph.Vertex temp = ge.getVertex(i);
             ge.setSeen(temp, false);
             ge.setParent(temp, null);

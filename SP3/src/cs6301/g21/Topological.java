@@ -92,8 +92,9 @@ public class Topological {
 	 * @param args : command line arguments
 	 * @throws FileNotFoundException :Exception if no file is provided as input or no file found
 	 */
-	public static void main(String[] args)throws FileNotFoundException, Exception{
-        if(args.length > 0){
+	public static void main(String[] args)throws FileNotFoundException, CyclicGraphException{
+        DFS.setCycleChecking(true);
+		if(args.length > 0){
           Scanner sf = new Scanner(new File(args[0]));
           Graph graph = Graph.readDirectedGraph(sf);
           LinkedList l1= toplogicalOrder1(graph);
