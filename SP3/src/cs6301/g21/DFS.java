@@ -18,18 +18,26 @@ public class DFS {
         topNum = ge.size();
     }
 
-    public static void DFSGraph(GraphExtended ge)throws CyclicGraphException{
+    public static LinkedList<Graph.Vertex> DFSCall(Iterator it, GraphExtended ge)throws CyclicGraphException{
+        return DFSGraph(it, ge);
+    }
+
+    public static LinkedList<Graph.Vertex> DFSCall(GraphExtended ge)throws CyclicGraphException{
+        return DFSGraph(ge.iterator(), ge);
+    }
+
+    public static LinkedList<Graph.Vertex> DFSGraph(Iterator it, GraphExtended ge)throws CyclicGraphException{
         topNum=ge.size();
         decFinList= new LinkedList<>();
 
-        Iterator it = ge.g.iterator();
-        for(int i=0;i<ge.size();i++) {
-            ge.setSeen(i, false);
-            ge.setParent(i, -1);
+        while(it.hasNext()) {
+            Graph.Vertex temp = (Graph.Vertex) it.next();
+            ge.setSeen(temp, false);
+            ge.setParent(temp, null);
         }
         while(it.hasNext()){
             Graph.Vertex u= (Graph.Vertex)it.next();
-            if(!ge.getSeen(u.getName())){
+            if(!ge.getSeen(u)){
                 cno++;
                 DFSVisit(ge, u);
             }
@@ -38,41 +46,38 @@ public class DFS {
 
     public static void DFSVisit(GraphExtended ge, Graph.Vertex u)throws CyclicGraphException{
         int uName= u.getName();
-        ge.setSeen(uName,true);
-        ge.setDis(uName,++time);
-        ge.setVCno(uName,cno);
+        ge.setSeen(u,true);
+        ge.setDis(u,++time);
+        ge.setVCno(u,cno);
 
         Iterator adjEdges = u.adj.iterator();
 
         while(adjEdges.hasNext()){
             Graph.Edge e = (Graph.Edge)adjEdges.next();
             Graph.Vertex v = e.otherEnd(u);
-            if(!ge.getSeen(v.getName())){
-                ge.setParent(v.getName(),uName);
+            if(!ge.getSeen(v)){
+                ge.setParent(v,u);
                 DFSVisit(ge, v);
             }
-            else if(checkCycles && (ge.isDir() && ge.getSeen(v.getName()))){
-
-                int a = ge.getParent(u.getName());
-                if(ge.getVCno(uName) == ge.getVCno(v.getName()))
-                    throw new CyclicGraphException("Cycle ");
-                while(a != -1){
+            else if(checkCycles && (ge.g.directed && ge.getSeen(v))){
+                Graph.Vertex a = ge.getParent(u);
+                while(a != null){
                     a = ge.getParent(a);
-                    if(a == v.getName())
+                    if(a.getName() == v.getName())
                         throw new CyclicGraphException("Cycle Found");
                 }
                 System.out.print("no cycle found");
             }
         }
-        ge.setFin(uName,++time);
-        ge.setTop(uName,topNum--);
+        ge.setFin(u,++time);
+        ge.setTop(u,topNum--);
         decFinList.addFirst(u); //supposed to be addFirst
     }
 
     public static boolean isDAG(GraphExtended ge){
         try{
-            if(ge.isDir()) {
-                DFSGraph(ge);
+            if(ge.g.directed) {
+                DFSCall(ge);
                 return true;
             }
             else{
