@@ -3,6 +3,7 @@ package cs6301.g21;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
+import java.lang.Math;
 
 public class Num {
 
@@ -117,6 +118,7 @@ public class Num {
         changeBase(oldbase);
         return current;
     }
+
     //trim the String to remove all the zeros
     public static String trimString(String s){
 
@@ -173,8 +175,8 @@ public class Num {
     public LinkedList<Long> getDigits(){
         return this.digits;
     }
-    //Flip the sign of Num
 
+    //Flip the sign of Num
     public void setSign(boolean b){
         this.sign = b;
     }
@@ -182,6 +184,7 @@ public class Num {
     public void setSign(){
         this.sign = !this.sign;
     }
+
     //get sign of Num
     public boolean getSign(){
         return this.sign;
@@ -224,7 +227,7 @@ public class Num {
                 avg = average(high, low);
 
                 //calculate temporary multiplication
-                Num temp = simpleMul(b, avg);
+                Num temp = product(b, avg);
                 int compareResult = temp.compareTo(a);
                 Num reminder = subtract(a, temp);
 
@@ -280,6 +283,7 @@ public class Num {
                 quotient = divideUnsigned(a, b);
                 b.setSign();
                 quotient.setSign();
+                quotient.trimNum();
                 return quotient;
 
             }else{
@@ -288,15 +292,12 @@ public class Num {
                 quotient = divideUnsigned(a, b);
                 a.setSign();
                 quotient.setSign();
-                //System.out.println(quotient.getSign());
-                //getting negative sign here for case quotient = -1, divisor = 10
-                //breaking the code here
-//                System.out.println(karatsubaMul(quotient, b).getSign());
 
-                if(karatsubaMul(quotient, b).compareTo(a) != 0) {
+                if(product(quotient, b).compareTo(a) != 0) {
                     quotient = add(quotient, one);
                 }
 
+                quotient.trimNum();
                 return quotient;
             }
 
@@ -316,12 +317,13 @@ public class Num {
 
         }
 
+        quotient.trimNum();
         return quotient;
     }
 
     //Simple modulus after invoking the divison method
     public static Num mod(Num a, Num b){
-        return subtract(a, simpleMul(divide(a, b), b));
+        return subtract(a, product(divide(a, b), b));
     }
 
     public int size(){
@@ -779,7 +781,7 @@ public class Num {
         Num avg;
 
         //handle edge cases of a=1 and a=0
-        if(a.toString().equals("1") || a.toString().equals("0"))
+        if(a.compareTo(one) == 0 || a.compareTo(zero) == 0)
             return high;
 
         //handle edge cases of a=-ve number where sign==true
@@ -801,11 +803,13 @@ public class Num {
                 high = avg;
             else if(compareResult < 0)
                 low = avg;
-            else
+            else {
+                avg.trimNum();
                 return avg;
+            }
 
         }
-
+        low.trimNum();
         return low;
     }
 
@@ -815,7 +819,7 @@ public class Num {
         Num sum = add(a, b);
         Num answer;
 
-        LinkedList<Long> n = sum.getDigits();
+        LinkedList<Long> n = toBase10(sum);
         String avg = "";
         String carry = "";
         long digit = 0L;
@@ -842,34 +846,9 @@ public class Num {
         if(answer.getSign() != sum.getSign())
             answer.setSign();
 
+        answer.trimNum();
         return answer;
-    }
-
-
-    //Compares two numbers and sees which one is greater
-//    public static int isGreater(Num a, Num b){
-//
-//        if(a.digits.size()>b.digits.size())
-//            return 1;
-//        else if(a.digits.size() == b.digits.size()){
-//            if(a.digits.getLast() > b.digits.getLast())
-//                return 1;
-//            else if(a.digits.getLast() < b.digits.getLast()){
-//                return -1;
-//            }else{
-//                for(int i=0; i<a.digits.size(); i++){
-//                    if(a.digits.get(i) > b.digits.get(i))
-//                        return 1;
-//                    else if(a.digits.get(i) < b.digits.get(i))
-//                        return -1;
-//                    else
-//                        return 0;
-//                }
-//            }
-//        }
-//
-//        return -1;
-//    }
+    } 
 
     //Compares two numbers and sees which one is greater
     public int compareTo(Num b){
@@ -880,22 +859,17 @@ public class Num {
             else
                 return 1;
 
-        //Remove any leading zeros in a and b
-        String s1 = this.toString();
-        String s2 = b.toString();
-        //take care of all leading zeros
-        while ((s1.length() > 1) && (s1.charAt(0) == '0'))
-            s1 = s1.substring(1);
-        //take care of all leading zeros
-        while ((s2.length() > 1) && (s2.charAt(0) == '0'))
-            s2 = s2.substring(1);
+        //Remove any leading zeros in a and b using trimNum()
+        this.trimNum();
+        b.trimNum();
+
         //see if the numbers have different sizes
-        if(s1.length() > s2.length()){
+        if(this.size() > b.size()){
             if(this.sign)
                 return -1;
             else
                 return 1;
-        }else if(s1.length() < s2.length()){
+        }else if(this.size() < b.size()){
             if(this.sign)
                 return 1;
             else
@@ -903,9 +877,11 @@ public class Num {
         }else{
             long tempThis;
             long tempB;
-            for(int i=s1.length()-1; i>-1; i--){
+            for(int i=this.size()-1; i>=0; i--){
                 tempThis = this.get(i);
+                //System.out.println(tempThis);
                 tempB = b.get(i);
+                //System.out.println(tempB);
                 if(tempThis > tempB){
                     if(this.getSign())
                         return -1;
@@ -924,9 +900,35 @@ public class Num {
         return 0;
     }
 
-    //Driver function to check
+    //convert to base 10 for average:
+    public static LinkedList<Long> toBase10(Num a){
+
+        long l = 0l;
+        long temp;
+
+        LinkedList<Long> linkedList = a.digits;
+        LinkedList<Long> inTen = new LinkedList<Long>();
+
+        for(int i=0; i<a.size(); i++){
+            l = (long) (l + linkedList.get(i)* Math.pow(BASE,i));
+        }
+
+        while (l != 0) {
+            temp = l % 10l;
+            inTen.addLast(temp);
+            l = l / 10l;
+        }
+
+        return inTen;
+
+    }
+
     public static void main(String args[]){
-        Num n = new Num("-10");
+        Num n = new Num("-32");
+        Num n2 = new Num("-322");
+
+        Num result = divide(n,n2);
+        result.printList();
         System.out.print(n);
 //        n.trimNum();
 //        n.printList();
