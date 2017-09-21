@@ -1,23 +1,48 @@
 package cs6301.g21;
 
+import java.util.ArrayList;
 import java.util.Queue;
 
 public class Operation {
+    private static ArrayList<String> supportedOp;
+
     private static int JUMP = 3;
     private static int POST = 2;
     private static int VAR = 1;
     private static int PRINT = 0;
     private int type;
-    private int jumps;
+    private String jumps[];
     private Num value;
     private Queue expression;
 	private String varName;
-
+//	private
     public Operation(){
+
         type = -1;
-        jumps = 0;
+        jumps = new String[2];
         value = null;
     }
+
+    public static void initChecker(){
+        supportedOp = new ArrayList<>();
+        supportedOp.add("+");
+        supportedOp.add("-");
+        supportedOp.add("*");
+        supportedOp.add("/");
+        supportedOp.add("(");
+        supportedOp.add(")");
+        supportedOp.add("^");
+        supportedOp.add("!");
+        supportedOp.add("%");
+    }
+    //Checks if it is a valid operator
+    public static boolean isValidOperator(String token){
+        if(supportedOp.contains(token))
+            return true;
+
+        return false;
+    }
+
     public void setType(int type){
         this.type = type;
     }
@@ -26,6 +51,14 @@ public class Operation {
 		return this.type;
 	}
 	
+	public void setValue(String s){
+		this.value = new Num(s);
+	}
+
+	public Num getValue(){
+		return this.value;
+	}
+
 	public void setVar(String var){
 		this.varName = var;
 	}
@@ -49,7 +82,7 @@ public class Operation {
 	
 	public String resolve(){
 		Num val_ = Register.varReg.get(this.varName);
-		if(val_.compareTo(zero_) == 1){
+		if(val_.compareTo(Register.zero_) == 1){
 			return jumps[0];
 		}
 		return jumps[1];
