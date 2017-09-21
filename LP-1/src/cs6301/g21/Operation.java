@@ -1,5 +1,6 @@
 package cs6301.g21;
 
+import java.util.Queue;
 
 public class Operation {
     private static int JUMP = 3;
@@ -9,7 +10,8 @@ public class Operation {
     private int type;
     private int jumps;
     private Num value;
-    private String expression;
+    private Queue expression;
+	private String varName;
 
     public Operation(){
         type = -1;
@@ -19,20 +21,37 @@ public class Operation {
     public void setType(int type){
         this.type = type;
     }
-    public Num execute(){
-        switch(type){
-            case 3://JUMP
-                break;
-            case 2://POSTFIX
-                break;
-            case 1://VAR ASSIGNMENT
-                break;
-            case 0://PRINT VAR
-                System.out.print("");
-                //printList
-            default:
-
-        }
-        return new Num();
-    }
+    
+	public int getType(){
+		return this.type;
+	}
+	
+	public void setVar(String var){
+		this.varName = var;
+	}
+	
+	public String getVar(){
+		return this.varName;
+	}
+	
+	public void setExpression(Queue expr){
+		this.expression = expr;
+	}
+	
+	public Queue getExpression(){
+		return this.expression;
+	}
+	
+	public void setJumps(String j1, String j2){
+		jumps[0] = j1;
+		jumps[1] = j2;
+	}
+	
+	public String resolve(){
+		Num val_ = Register.varReg.get(this.varName);
+		if(val_.compareTo(zero_) == 1){
+			return jumps[0];
+		}
+		return jumps[1];
+	}
 }
