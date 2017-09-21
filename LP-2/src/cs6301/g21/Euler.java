@@ -8,6 +8,7 @@ import java.util.LinkedList;
 /**
  * Implementation of graph to check if Eulerian and stitching and printing the subtours
  * @author Shreya Vishwanath Rao, Abhishek Jagwani, Umang Shah, Vibha Belavadi
+ * @version 1.0: 2017/09/20
  */
 
 
