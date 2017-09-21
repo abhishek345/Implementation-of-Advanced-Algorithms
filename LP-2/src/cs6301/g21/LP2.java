@@ -20,8 +20,8 @@ public class LP2 {
             File inputFile = new File(args[0]);
             in = new Scanner(inputFile);
         } else {
-            return;
-//            in = new Scanner(System.in);
+//            return;
+            in = new Scanner(System.in);
         }
 	int start = 1;
         if(args.length > 1) {
