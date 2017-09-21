@@ -5,6 +5,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.List;
 
+/**
+ * Implementation of graph to check if Eulerian and print the Euler tour
+ * @author Shreya Vishwanath Rao, Abhishek Jagwani, Umang Shah, Vibha Belavadi
+ */
+
+
 public class LP2 {
     static int VERBOSE = 1;
     public static void main(String[] args) throws FileNotFoundException {
@@ -40,9 +46,9 @@ public class LP2 {
         if(VERBOSE > 0) {
 	    System.out.println("Output:\n_________________________");
         System.out.println(tour.size());
-//	    for(Graph.Edge e: tour) {
-//                System.out.print(e);
-//            }
+	    for(Graph.Edge e: tour) {
+                System.out.print(e);
+            }
 	    System.out.println();
 	    System.out.println("_________________________");
         }
