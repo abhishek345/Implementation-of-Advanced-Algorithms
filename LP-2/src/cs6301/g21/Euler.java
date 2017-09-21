@@ -14,17 +14,17 @@ public class Euler {
     static Graph g;
     // Constructor
     Euler(Graph g, Graph.Vertex start) {
-	VERBOSE = 1;
-	tour = new LinkedList<>();
-	ge = new GraphExtended2(g);
+        VERBOSE = 1;
+        tour = new LinkedList<>();
+        ge = new GraphExtended2(g);
     }
 
     // To do: function to find an Euler tour
     public List<Graph.Edge> findEulerTour() {
-	findTours();
-	if(VERBOSE > 9) { printTours(); }
-	stitchTours();
-	return tour;
+        findTours();
+        if(VERBOSE > 9) { printTours(); }
+        stitchTours();
+        return tour;
     }
 
     /* To do: test if the graph is Eulerian.
@@ -34,10 +34,10 @@ public class Euler {
      * "Graph is not strongly connected"
      */
     boolean isEulerian() {
-//	System.out.println("Graph is not Eulerian");
-//	System.out.println("Reason: Graph is not strongly connected");
+    //	System.out.println("Graph is not Eulerian");
+    //	System.out.println("Reason: Graph is not strongly connected");
 	//previously it was false
-	return true;
+	    return true;
     }
 
     // Find tours starting at vertices with unexplored edges
@@ -75,6 +75,7 @@ public class Euler {
      * Just use System.out.print(u) and System.out.print(e)
      */
     void printTours() {
+
     }
 
     // Stitch tours into a single tour using the algorithm discussed in class
@@ -84,33 +85,30 @@ public class Euler {
         while(!started && sticher.hasNext()) {
             Graph.Vertex starter = (Graph.Vertex) sticher.next();
             GraphExtended2.GEVertex start = ge.getGEVertex(starter.getName() + 1);
-            if (start.getSubTour() != null && start.tourStarted == false) {
+            if (!start.tourStarted && start.getSubTour() != null) {
                 started = true;
                 start.tourStarted = true;
-                explore(start.getElement());
+                explore(start);
             }
         }
     }
-        
-    void explore(Graph.Vertex u){
-        GraphExtended2.GEVertex uX= ge.getGEVertex(u.getName()+1);
-        if(uX.getSubTour() != null){
-            Iterator tourIt = uX.getSubTour().iterator();
-            while(tourIt.hasNext()){
-                Graph.Edge e = (Graph.Edge) tourIt.next();
-                tour.add(e);
-                Graph.Vertex v = e.otherEnd(u);
-                GraphExtended2.GEVertex vX = ge.getGEVertex(v.getName()+1);
-                if(vX.getSubTour() != null && vX.tourStarted==false){
-                    vX.tourStarted = true;
-                    explore(v);
-                    vX.setSubTour(null);
-                }
+
+
+    void explore(GraphExtended2.GEVertex uX){
+        Iterator tourIt = uX.getSubTour().iterator();
+        while(tourIt.hasNext()){
+            Graph.Edge e = (Graph.Edge) tourIt.next();
+            tour.add(e);
+            Graph.Vertex v = e.otherEnd(uX.getElement());
+            GraphExtended2.GEVertex vX = ge.getGEVertex(v.getName()+1);
+            if(vX.getSubTour() != null && !vX.tourStarted){
+                vX.tourStarted = true;
+                explore(vX);
             }
         }
     }
 
     void setVerbose(int v) {
-	VERBOSE = v;
+	    VERBOSE = v;
     }
 }
