@@ -8,6 +8,7 @@ import java.util.List;
 /**
  * Implementation of graph to check if Eulerian and print the Euler tour
  * @author Shreya Vishwanath Rao, Abhishek Jagwani, Umang Shah, Vibha Belavadi
+ * @version 1.0: 2017/09/20
  */
 
 
