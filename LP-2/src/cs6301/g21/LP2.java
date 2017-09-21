@@ -40,9 +40,9 @@ public class LP2 {
         if(VERBOSE > 0) {
 	    System.out.println("Output:\n_________________________");
         System.out.println(tour.size());
-	    for(Graph.Edge e: tour) {
-                System.out.print(e);
-            }
+//	    for(Graph.Edge e: tour) {
+//                System.out.print(e);
+//            }
 	    System.out.println();
 	    System.out.println("_________________________");
         }

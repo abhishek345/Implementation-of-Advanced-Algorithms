@@ -43,36 +43,21 @@ public class Euler {
     // Find tours starting at vertices with unexplored edges
     void findTours() {
         Iterator it = ge.iterator();
-
         while(it.hasNext()){
             Graph.Vertex current = (Graph.Vertex)it.next();
-//            System.out.println(current.getName());
             GraphExtended2.GEVertex currentX = ge.getGEVertex(current.getName()+1);
             if(currentX.hasNext()){
                 findTours(currentX.getElement(), currentX.getSubTour());
             }
         }
-//    	GraphExtended2.GEVertex start= ge.getGEVertex(1);
-//    	findTours(start.getElement(), start.getSubTour());
-//    	Iterator vertices = ge.iterator();
-//    	while(vertices.hasNext()){
-//    		Graph.Vertex v= (Graph.Vertex)vertices.next();
-//    		if(ge.hasNext(v)){
-//    			GraphExtended2.GEVertex geV= ge.getGEVertex(v.getName()+1);
-//    	    	findTours(geV.getElement(), geV.getSubTour());
-//    		}
-//    	}
     }
     
 	void findTours(Graph.Vertex u, List<Graph.Edge> subTour){
 		Graph.Vertex temp =u;
 		while(ge.hasNext(u)){
 			Graph.Edge e = ge.next(u);
-//			tour.add(e);
 			subTour.add(e);
 			u = e.otherEnd(u);
-//			if(u==temp)
-//				break;
 		}
 		if(u!=temp){
 			System.out.println("Not Eulerian");
@@ -123,19 +108,6 @@ public class Euler {
                 }
             }
         }
-//    	Graph.Vertex temp;
-//    	temp = u;
-//    	GraphExtended2.GEVertex geV= ge.getGEVertex(temp.getName()+1);
-//    	for(Graph.Edge e : geV.getSubTour()){
-//    		tour.add(e);
-//    		temp = e.otherEnd(temp);
-//    		GraphExtended2.GEVertex geV1= ge.getGEVertex(temp.getName()+1);
-//    		if(geV1.getSubTour()!=null){
-//    			explore(temp);
-//                geV1.setSubTour(null);
-//    		}
-//    	}
-//    	geV.setSubTour(null);
     }
 
     void setVerbose(int v) {
