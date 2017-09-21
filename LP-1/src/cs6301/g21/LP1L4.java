@@ -18,7 +18,7 @@ public class LP1L4 {
         
 
         if(true){//argslength > 0 and file from cmd line
-            Scanner in = new Scanner(new File("/home/uks/ImplofAlgos/Implementation-of-Advanced-Algorithms/LP-1/src/cs6301/g21/input/lp1-l4-in2.txt"));
+            Scanner in = new Scanner(new File("/home/uks/ImplofAlgos/Implementation-of-Advanced-Algorithms/LP-1/src/cs6301/g21/input/lp1-l4-in1.txt"));
             Operation.initChecker();
             while (in.hasNextLine()){
                 String line = in.nextLine();
@@ -83,6 +83,7 @@ public class LP1L4 {
 
                             break;
                         }
+                        else if(tokens[i].contains(";")) break;
                     }
                 }
                 program.add(op);
@@ -92,6 +93,7 @@ public class LP1L4 {
                 System.out.println(i + " > "+program.get(i));
             }
             int pc = 100;
+            Num lastvar = null;
             while(pc < program.size()){
                 Operation ptr = program.get(pc);
                 int type = ptr.getType();
@@ -126,10 +128,11 @@ public class LP1L4 {
                 if(ptr.getLevel() == 3){
                     Num outNum = Register.getVar(ptr.getVar());
                     System.out.println(outNum);
-                    outNum.printList();
+                    lastvar = outNum;
                 }
             }
-
+            if(lastvar != null)
+                lastvar.printList();
 
         }
     }

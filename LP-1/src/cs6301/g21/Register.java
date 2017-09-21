@@ -20,6 +20,8 @@ public class Register{
 	}
 
 	static int getLineNo(String lno){
-		return progReg.get(lno);
+	    if(lno != null)
+		    return progReg.get(lno);
+	    return -1;
 	}
 }
