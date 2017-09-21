@@ -112,6 +112,7 @@ public class Euler {
             Graph.Edge e = (Graph.Edge) tourIt.next();
             tour.add(e);
             Graph.Vertex v = e.otherEnd(uX.getElement());
+            uX = ge.getGEVertex(v.getName()+1);
             GraphExtended2.GEVertex vX = ge.getGEVertex(v.getName()+1);
             if(vX.getSubTour() != null && !vX.tourStarted){
                 vX.tourStarted = true;
