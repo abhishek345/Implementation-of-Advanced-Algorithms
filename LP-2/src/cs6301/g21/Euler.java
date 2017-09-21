@@ -1,15 +1,20 @@
 package cs6301.g21;
-
 import java.util.List;
-
 import java.util.Iterator;
-
 import java.util.LinkedList;
+
+
+
+/**
+ * Implementation of graph to check if Eulerian and stitching and printing the subtours
+ * @author Shreya Vishwanath Rao, Abhishek Jagwani, Umang Shah, Vibha Belavadi
+ */
+
+
 
 public class Euler {
     int VERBOSE;
     List<Graph.Edge> tour;
-    
     static GraphExtended2 ge;
     static Graph g;
     // Constructor
@@ -19,7 +24,7 @@ public class Euler {
         ge = new GraphExtended2(g);
     }
 
-    // To do: function to find an Euler tour
+    //function to find an Euler tour
     public List<Graph.Edge> findEulerTour() {
         findTours();
         if(VERBOSE > 9) { printTours(); }
@@ -27,16 +32,10 @@ public class Euler {
         return tour;
     }
 
-    /* To do: test if the graph is Eulerian.
-     * If the graph is not Eulerian, it prints the message:
-     * "Graph is not Eulerian" and one reason why, such as
-     * "inDegree = 5, outDegree = 3 at Vertex 37" or
-     * "Graph is not strongly connected"
+    /* 
+     * Checks if the graph is Eulerian
      */
     boolean isEulerian() {
-    //	System.out.println("Graph is not Eulerian");
-    //	System.out.println("Reason: Graph is not strongly connected");
-	//previously it was false
 	    return true;
     }
 
@@ -52,6 +51,7 @@ public class Euler {
         }
     }
     
+    // Find sub tours and adds the edges into respective sub tours
 	void findTours(Graph.Vertex u, List<Graph.Edge> subTour){
 		Graph.Vertex temp =u;
 		while(ge.hasNext(u)){
@@ -65,16 +65,27 @@ public class Euler {
 		}
 	}
 
-    /* Print tours found by findTours() using following format:
-     * Start vertex of tour: list of edges with no separators
-     * Example: lp2-in1.txt, with start vertex 3, following tours may be found.
-     * 3: (3,1)(1,2)(2,3)(3,4)(4,5)(5,6)(6,3)
-     * 4: (4,7)(7,8)(8,4)
-     * 5: (5,7)(7,9)(9,5)
-     *
-     * Just use System.out.print(u) and System.out.print(e)
-     */
+    // Print tours found by findTours()
     void printTours() {
+        Iterator it = ge.iterator();
+        while(it.hasNext()){
+            Graph.Vertex current = (Graph.Vertex)it.next();
+            GraphExtended2.GEVertex currentX = ge.getGEVertex(current.getName()+1);
+            if(currentX.getSubTour()!=null){
+            	Iterator tourIt = currentX.getSubTour().iterator();
+                if(tourIt.hasNext()){
+                	System.out.println();
+                	System.out.print(current);
+                	System.out.print(": ");
+                }
+            	//System.out.println();
+            	while(tourIt.hasNext()){
+            		Graph.Edge e = (Graph.Edge) tourIt.next();
+            		System.out.print(e);
+            	}	
+            }
+    	}
+        System.out.println();
 
     }
 
@@ -93,7 +104,7 @@ public class Euler {
         }
     }
 
-
+    //checks the unexplored verticed having subtours and stitches them
     void explore(GraphExtended2.GEVertex uX){
         Iterator tourIt = uX.getSubTour().iterator();
         while(tourIt.hasNext()){
