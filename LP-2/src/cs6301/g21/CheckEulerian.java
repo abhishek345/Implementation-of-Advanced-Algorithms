@@ -4,6 +4,14 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+/**
+ * Checks if the graph is a Eulerian or not
+ *
+ * @author Abhishek Jagwani, Umang Shah, Shreya Vishwanath Rao, Vibha Belavadi
+ * @version 1.0: 2017/09/13
+ * @version 1.1: 2017/09/20
+ * @version 1.2: 2017/09/21
+ */
 
 public class CheckEulerian {
 	
