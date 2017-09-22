@@ -33,7 +33,6 @@ public class LP2 {
         Graph g = Graph.readDirectedGraph(in);
 	Graph.Vertex startVertex = g.getVertex(start);
 
-        Timer timer = new Timer();
 	Euler euler = new Euler(g, startVertex);
 	euler.setVerbose(VERBOSE);
 
@@ -41,8 +40,10 @@ public class LP2 {
 	if(!eulerian) {
 	    return;
 	}
+	
+	Timer timer = new Timer();
 	List<Graph.Edge> tour = euler.findEulerTour();
-        timer.end();
+    timer.end();
 
         if(VERBOSE > 0) {
 	    System.out.println("Output:\n_________________________");
