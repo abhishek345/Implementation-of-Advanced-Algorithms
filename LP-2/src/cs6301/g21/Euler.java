@@ -3,15 +3,12 @@ import java.util.List;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-
-
 /**
  * Implementation of graph to check if Eulerian and stitching and printing the subtours
  * @author Shreya Vishwanath Rao, Abhishek Jagwani, Umang Shah, Vibha Belavadi
  * @version 1.0: 2017/09/20
+ * @version 1:1: 2017/09/21
  */
-
-
 
 public class Euler {
     int VERBOSE;
