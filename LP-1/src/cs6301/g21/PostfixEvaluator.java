@@ -8,7 +8,7 @@ import java.util.Stack;
 public class PostfixEvaluator {
 	
 	public static Num evaluate(Queue<String> q){
-		
+
 		Stack<Num> stack = new Stack<Num>();
 		Tokens T= new Tokens();
 		

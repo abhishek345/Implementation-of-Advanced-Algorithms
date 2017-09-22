@@ -3,14 +3,13 @@ package cs6301.g21;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
-import java.lang.Math;
 
 public class Num {
 
     private LinkedList<Long> digits;
-    private static long BASE = 2;
+    private static long BASE = 1073741824;//2^30
     private boolean sign = false;//false (not set) +ve number; if true (set) -ve num
-    private static boolean flag =  false; //#1
+
     static Num zero = new Num(0);
     static Num one = new Num(1);
     static Num base = new Num(BASE);
@@ -44,7 +43,7 @@ public class Num {
 
     }
 
-    private static void changeBase(long newbase){
+    public static void changeBase(long newbase){
         BASE = newbase;
     }
 
@@ -75,31 +74,18 @@ public class Num {
         Iterator it = this.iterator();
         while(it.hasNext())
             System.out.print(it.next() + " ");
-        if(getSign())
-            System.out.println("-");
-        else
-            System.out.println("+");
     }
 
     public String toString() {
         this.trimNum();
         Num n = makeDec(this);
         StringBuilder s = new StringBuilder();
+        if(getSign())
+            s.append("-");
         for(int i=n.size()-1; i>=0;i--){
             s.append(n.get(i));
         }
         return s.toString();
-//        Iterator value = this.iterator();
-//        long result = (long) value.next();
-//        long first;
-//        long factor = BASE;
-//        while(value.hasNext()){
-//            first = (long) value.next();
-//            first = first * factor;
-//            result = result + first;
-//            factor *= BASE;
-//        }
-//        return String.valueOf(result);
     }
 
     public static Num makeDec(Num n){
@@ -119,26 +105,17 @@ public class Num {
         return current;
     }
 
-    //trim the String to remove all the zeros
-    public static String trimString(String s){
-
-        //take care of all leading zeros
-        while ((s.length() > 1) && (s.charAt(0) == '0'))
-            s = s.substring(1);
-
-        return s;
-    }
-
     private void trimNum(){
-        boolean stop = false;
-        int i= digits.size()-1;
-        while(!stop && i>=0){
-            if(digits.get(i) == 0){
-                digits.remove(i);
-                i--;
+        if(this.size() > 1) {
+            boolean stop = false;
+            int i = digits.size() - 1;
+            while (!stop && i >= 0) {
+                if (digits.get(i) == 0) {
+                    digits.remove(i);
+                    i--;
+                } else
+                    stop = true;
             }
-            else
-                stop = true;
         }
     }
 
@@ -220,6 +197,7 @@ public class Num {
             Num avg;
             Num high = copyNum(a);
             Num low = new Num(0);
+            Num reminder;
 
             while(low.compareTo(high) < 0){
 
@@ -229,10 +207,10 @@ public class Num {
                 //calculate temporary multiplication
                 Num temp = product(b, avg);
                 int compareResult = temp.compareTo(a);
-                Num reminder = subtract(a, temp);
+                reminder = subtract(a, temp);
 
                 //if reminder < divisor, return quotient
-                if(b.compareTo(reminder) > 0)
+                if(b.compareTo(reminder) > 0 && reminder.compareTo(zero) > 0)
                     return avg;
 
                 //if b*avg < a, update low to avg, if b*avg > a, update high to avg
@@ -252,6 +230,7 @@ public class Num {
     }
 
     //copy the value of the number to a new number
+    //copyNum is wrong
     public static Num copyNum(Num a){
         String value = a.toString();
         Num result = new Num(value);
@@ -273,33 +252,22 @@ public class Num {
 
         Num quotient;
 
-
         //consider the sign and call function accordingly
         //when a.sign != b.sign
-        if(aSign != bSign){
+        if(aSign != bSign) {
             //case b<0, a>0
-            if(bSign){
+            if (bSign) {
                 b.setSign();
-                quotient = divideUnsigned(a, b);
-                b.setSign();
-                quotient.setSign();
-                quotient.trimNum();
-                return quotient;
-
-            }else{
-                //handle a<0 case from Wikipedia
+            } else {
                 a.setSign();
-                quotient = divideUnsigned(a, b);
-                a.setSign();
-                quotient.setSign();
-
-                if(product(quotient, b).compareTo(a) != 0) {
-                    quotient = add(quotient, one);
-                }
-
-                quotient.trimNum();
-                return quotient;
             }
+
+            quotient = divideUnsigned(a, b);
+            b.setSign(bSign);
+            a.setSign(aSign);
+            quotient.setSign(true);
+            quotient.trimNum();
+            return quotient;
 
         }else {
             //case a>0 and b>0
@@ -307,9 +275,8 @@ public class Num {
                 a.setSign();
                 b.setSign();
                 quotient = divideUnsigned(a, b);
-                //System.out.println(quotient.getSign());
-                a.setSign();
-                b.setSign();
+                a.setSign(aSign);
+                b.setSign(bSign);
 
             }else
                 //case when a>0 and b>0
@@ -321,8 +288,11 @@ public class Num {
         return quotient;
     }
 
-    //Simple modulus after invoking the divison method
+    //Simple modulus after invoking the division method
     public static Num mod(Num a, Num b){
+        if(a.compareTo(zero) < 0 || b.compareTo(zero) < 0)
+            throw new IllegalArgumentException("Both the dividend and the divisor should be positive");
+
         return subtract(a, product(divide(a, b), b));
     }
 
@@ -334,7 +304,7 @@ public class Num {
         Num[] ans = new Num[2];
         ans[0] = new Num();
         ans[1] = new Num();
-//        System.out.println(n);
+
         for(int i=0;i < n.size();i++){
             if(i < position){
                 ans[0].addLast(n.get(i));
@@ -348,9 +318,7 @@ public class Num {
 
     public static Num karatsubaMul(Num a, Num b){
             int len;
-//            System.out.print("Multiplying: ");
-//            a.printList();
-//            b.printList();
+
             Num bigger, smaller;
             if(a.size() >= b.size()){
                 bigger = a;
@@ -364,9 +332,7 @@ public class Num {
             }
             if(len == 0)
                 return new Num(0);
-//            if(len <= 4) {
-//                return simpleMul(a,b);
-//            }
+
             if(len < 2){
                 return simpleMul(a,b);
             }
@@ -377,40 +343,24 @@ public class Num {
             while(smaller.size() < bigger.size()){
                 smaller.addLast(0);
             }
-//            System.out.print("padded: ");
-//            bigger.printList();
-//            smaller.printList();
+
             int half = len/2; //length of the half of the numbers
             Num[] aSplit, bSplit;
             aSplit = a.split(a,half);
             bSplit = b.split(b,half);
-            //aSplit[0] - L ; [1] - R
 
             Num mulRight = product(aSplit[0], bSplit[0]);
-//            System.out.print("Right Term: "); mulRight.printList();
             Num mulLeft = product(aSplit[1], bSplit[1]);
-//            System.out.print("Left Term: "); mulLeft.printList();
 
             Num mulMid = karatsubaMul(unsignedAdd(aSplit[0],aSplit[1]), unsignedAdd(bSplit[0],bSplit[1]));
 
-//        System.out.print("Middle Term: "); mulMid.printList();
-
-//            System.out.print("Middle Term sub Left: "); subtract(mulMid, mulLeft).printList();
-//            System.out.print("Middle Term sub Right: "); subtract(mulMid, mulRight).printList();
             mulMid = unsignedSubtract(unsignedSubtract(mulMid, mulLeft), mulRight);
-//        System.out.print("Middle Term after sub: "); mulMid.printList();
-            //mulMid = subtract(mulMid, mulRight);
-
-//            mulMid = simpleMul(mulMid, power(new Num(BASE),len/2));
             mulMid.shift(len/2);
-//            Num ans = simpleMul(mulLeft, power(new Num(BASE), len));
             mulLeft.shift(len);
             Num ans = mulLeft;
-//            System.out.print("Before Add with mid step: ");ans.printList();
             ans = unsignedAdd(ans, mulMid);
-//            ans.printList();
             ans = unsignedAdd(ans, mulRight);
-//            System.out.print("Final step: ");ans.printList();
+
             return ans;
    }
 
@@ -819,7 +769,7 @@ public class Num {
         Num sum = add(a, b);
         Num answer;
 
-        LinkedList<Long> n = toBase10(sum);
+        LinkedList<Long> n = makeDec(sum).getDigits();
         String avg = "";
         String carry = "";
         long digit = 0L;
@@ -900,36 +850,13 @@ public class Num {
         return 0;
     }
 
-    //convert to base 10 for average:
-    public static LinkedList<Long> toBase10(Num a){
-
-        long l = 0l;
-        long temp;
-
-        LinkedList<Long> linkedList = a.digits;
-        LinkedList<Long> inTen = new LinkedList<Long>();
-
-        for(int i=0; i<a.size(); i++){
-            l = (long) (l + linkedList.get(i)* Math.pow(BASE,i));
-        }
-
-        while (l != 0) {
-            temp = l % 10l;
-            inTen.addLast(temp);
-            l = l / 10l;
-        }
-
-        return inTen;
-
-    }
-
     public static void main(String args[]){
-        Num n = new Num("-32");
-        Num n2 = new Num("-322");
+        Num n = new Num("125");
+        Num n2 = new Num("5");
 
         Num result = divide(n,n2);
         result.printList();
-        System.out.print(n);
+        System.out.print(result);
 //        n.trimNum();
 //        n.printList();
 //        Num n2 = new Num(-1);

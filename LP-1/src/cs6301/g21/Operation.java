@@ -24,26 +24,6 @@ public class Operation {
         value = null;
     }
 
-    public static void initChecker(){
-        supportedOp = new ArrayList<>();
-        supportedOp.add("+");
-        supportedOp.add("-");
-        supportedOp.add("*");
-        supportedOp.add("/");
-        supportedOp.add("(");
-        supportedOp.add(")");
-        supportedOp.add("^");
-        supportedOp.add("!");
-        supportedOp.add("%");
-    }
-    //Checks if it is a valid operator
-    public static boolean isValidOperator(String token){
-        if(supportedOp.contains(token))
-            return true;
-
-        return false;
-    }
-
     public void setType(int type){
         this.type = type;
     }

@@ -16,10 +16,13 @@ public class LP1L4 {
     public static void main(String args[])throws FileNotFoundException{
         ArrayList<Operation> program = new ArrayList<>();
         
-
+        if(args.length > 0){
+            Num.changeBase(Long.parseLong(args[0]));
+        }
         if(true){//argslength > 0 and file from cmd line
-            Scanner in = new Scanner(new File("/home/uks/ImplofAlgos/Implementation-of-Advanced-Algorithms/LP-1/src/cs6301/g21/input/lp1-l4-in1.txt"));
-            Operation.initChecker();
+            String infile = "/home/uks/Downloads/data-lp1(1)/lp1-l4-in2.txt";
+            Scanner in = new Scanner(new File(infile));
+            ShuntingYard.populateOperators();
             while (in.hasNextLine()){
                 String line = in.nextLine();
                 if(line.equals(";"))
@@ -58,12 +61,12 @@ public class LP1L4 {
                             if(type == VAR)
                                 op.setValue(tokens[i]);
                         }
-                        else if(Operation.isValidOperator(tokens[i]) || (type == VAR && tokens[i].matches("\\[a-zA-Z]+"))){
+                        else if(ShuntingYard.isValidOperator(tokens[i]) || (type == VAR && tokens[i].matches("\\[a-zA-Z]+"))){
                             //expression
-                            Queue q = new ArrayDeque();
-                            String e = line.substring(line.indexOf("= ")+2);
-                            //q = convert(e);
-                            //op.setExpression(q);
+                            Queue q;
+                            String e = line.substring(line.indexOf("= ")+2,line.indexOf(";")-1);
+                            q = InfixToPostfix.infixToPostfix(e);
+                            op.setExpression(q);
                             type = POST;
                             op.setType(type);
                             break;
@@ -78,8 +81,8 @@ public class LP1L4 {
                             }else{
                                 op.setJumps(token, null);
                             }
-                            type = 3;
-                            op.setType(JUMP);
+                            type = JUMP;
+                            op.setType(type);
 
                             break;
                         }
@@ -89,12 +92,13 @@ public class LP1L4 {
                 program.add(op);
             }
 
-            for(int i=0;i < program.size();i++){
-                System.out.println(i + " > "+program.get(i));
-            }
-            int pc = 100;
+//            for(int i=0;i < program.size();i++){
+//                System.out.println(i + " > "+program.get(i));
+//            }
+            int pc = 0;
             Num lastvar = null;
             while(pc < program.size()){
+                //System.out.println(pc);
                 Operation ptr = program.get(pc);
                 int type = ptr.getType();
                 switch(type){
@@ -107,9 +111,10 @@ public class LP1L4 {
                         break;
                     case 2://POSTFIX
                         Num ans;
-//                        ans = evaluate(ptr.getExpression());
-//                        varRegister.put(ptr.getVar());
+                        ans = PostfixEvaluator.evaluate(ptr.getExpression());
+                        Register.putVar(ptr.getVar(), ans);
                         pc++;
+                        lastvar = ans;
                         break;
                     case 1://VAR ASSIGNMENT
                         Register.putVar(ptr.getVar(),ptr.getValue());

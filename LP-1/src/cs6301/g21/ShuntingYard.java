@@ -1,20 +1,12 @@
 package cs6301.g21;
 
 import java.util.ArrayList;
-import java.util.Queue;
-import java.util.Stack;
 
 public class ShuntingYard {
 
-    private static ArrayList<String> supportedOp;
+    private static ArrayList<String> supportedOp = new ArrayList<String>();
 
-    public ShuntingYard(){
-        populateSupportedOps();
-    }
-
-    //Add valid operators to the supported operators class
-    public static void populateSupportedOps(){
-
+    public static void populateOperators(){
         supportedOp.add("+");
         supportedOp.add("-");
         supportedOp.add("*");
@@ -22,12 +14,14 @@ public class ShuntingYard {
         supportedOp.add("(");
         supportedOp.add(")");
         supportedOp.add("^");
-        supportedOp.add("!");
+        supportedOp.add("|");
         supportedOp.add("%");
     }
 
     //Checks if it is a valid operator
     public static boolean isValidOperator(String token){
+
+
 
         if(supportedOp.contains(token))
             return true;
@@ -35,82 +29,26 @@ public class ShuntingYard {
         return false;
     }
 
-    //Checks if is a numeric value
-    public static boolean isNumeric(String token){
+    //
 
-        if(token.matches("\\d+"))
+    /**
+     * Checks if is a token is alphanumeric value
+     * @param token String token to be evaluated
+     * @return Boolean true if
+     */
+    public static boolean isAlphaNumeric(String token){
+
+        if(token.matches("^[a-zA-Z0-9]*$"))
             return true;
 
         return false;
     }
 
-    //Calculate the value given the polish notation
-    //does not handles the case of ( and )
-    public Num calculate(Queue<String> q){
-
-        Stack<Num> stack = new Stack<>();
-
-        for(String item: q){
-
-            if(isNumeric(item)) {
-                stack.push(new Num(item));
-
-            }else if(isValidOperator(item)){
-
-                Num right;
-                Num left;
-
-                if(item.equals("+")){
-                    right = stack.pop();
-                    left = stack.pop();
-                    stack.push(Num.add(left, right));
-
-                }else if(item.equals("-")){
-                    right = stack.pop();
-                    left = stack.pop();
-                    stack.push(Num.subtract(left, right));
-
-                }else if(item.equals("*")){
-                    right = stack.pop();
-                    left = stack.pop();
-                    stack.push(Num.simpleMul(left, right));
-
-                }else if(item.equals("/")){
-                    right = stack.pop();
-                    left = stack.pop();
-                    stack.push(Num.divide(left, right));
-
-                }else if(item.equals("%")){
-                    right = stack.pop();
-                    left = stack.pop();
-                    //stack.push(Num.mod(left, right));
-
-                }else if(item.equals("^")){
-                    right = stack.pop();
-                    left = stack.pop();
-                    stack.push(Num.pow(left, right));
-
-                }else if(item.equals("|")){
-                    right = stack.pop();
-                    stack.push(Num.squareRoot(right));
-
-                }
-
-            }//to do, handle the case of ?, = or ;. Don't, whether to handle it here or in input parsing
-            else if(item.equals("=") || item.equals("?") || item.equals(";")){
-                //don't do anything as of now
-                continue;
-            }
-            else
-                throw new IllegalArgumentException("Invalid token, neither a number nor a token: " + item);
-
-
-        }
-
-        return stack.pop();
-    }
-
-    //Calculate the precedence of the operators
+    /**
+     * Calculates the precedence of the operators
+     * @param op String operator whose precedence needs to be calculated
+     * @return Integer the precedence value of the operation
+     */
     public static int precedence(String op){
 
         if(op.equals("(") || op.equals(")"))
@@ -129,6 +67,14 @@ public class ShuntingYard {
             return 5;
 
         return -1;
+    }
+
+    public static void main(String[] args) {
+
+        //ShuntingYard.populateOperators();
+
+        System.out.println(ShuntingYard.isValidOperator("+"));
+
     }
 
 }
