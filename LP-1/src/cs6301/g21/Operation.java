@@ -16,9 +16,11 @@ public class Operation {
     private Queue expression;
 	private String varName;
 	private int level;
-//	private
-    public Operation(){
 
+	/**
+	 * Constructor for Operation, initialize some variables
+	 */
+    public Operation(){
         type = -1;
         jumps = new String[2];
         value = null;
@@ -60,10 +62,14 @@ public class Operation {
 		jumps[0] = j1;
 		jumps[1] = j2;
 	}
-	
+
+	/**
+	 * For jump statements resolve which line to continue execution from
+	 * @return String: Line no from input prog or null if no jump
+	 */
 	public String resolve(){
 		Num val_ = Register.getVar(this.varName);
-		if(val_.compareTo(Register.zero_) == 1){
+		if(val_.compareTo(Num.zero) == 1){//if greater than zero
 			return jumps[0];
 		}
 		return jumps[1];
@@ -77,6 +83,10 @@ public class Operation {
 	    return this.level;
     }
 
+	/**
+	 * Helper function to give string representation of an operation
+	 * @return String: String form of operation
+	 */
 	public String toString(){
 	    StringBuilder s = new StringBuilder();
 	    s.append(" lev: "+level);
@@ -87,7 +97,7 @@ public class Operation {
             s.append(Register.getLineNo(jumps[0]) + " : " + Register.getLineNo(jumps[1]) + " ;");
         }
 	    else if(type == POST)
-	        s.append("EXP: " + expression+" ;");
+	        s.append(" Exp = " + expression+" ;");
         else if(type == VAR)
             s.append((" Val = " + value+" ;"));
         else

@@ -21,8 +21,6 @@ public class ShuntingYard {
     //Checks if it is a valid operator
     public static boolean isValidOperator(String token){
 
-
-
         if(supportedOp.contains(token))
             return true;
 
@@ -69,12 +67,12 @@ public class ShuntingYard {
         return -1;
     }
 
-    public static void main(String[] args) {
-
-        //ShuntingYard.populateOperators();
-
-        System.out.println(ShuntingYard.isValidOperator("+"));
-
-    }
+//    public static void main(String[] args) {
+//
+//        //ShuntingYard.populateOperators();
+//
+//        System.out.println(ShuntingYard.isValidOperator("+"));
+//
+//    }
 
 }

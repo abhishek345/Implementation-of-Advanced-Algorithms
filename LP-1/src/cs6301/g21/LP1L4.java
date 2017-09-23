@@ -15,16 +15,18 @@ public class LP1L4 {
 
     public static void main(String args[])throws FileNotFoundException{
         ArrayList<Operation> program = new ArrayList<>();
-        
+        Scanner sc = new Scanner(System.in);
         if(args.length > 0){
             Num.changeBase(Long.parseLong(args[0]));
+            System.out.println("Using base from input arguments.");
+        }else{
+            System.out.println("Using default base: 2^30 .");
         }
-        if(true){//argslength > 0 and file from cmd line
-            String infile = "/home/uks/Downloads/data-lp1(1)/lp1-l4-in2.txt";
-            Scanner in = new Scanner(new File(infile));
+//            String infile = "/home/uks/Downloads/data-lp1(1)/lp1-l4-in2.txt";
+//            Scanner in = new Scanner(new File(infile));
             ShuntingYard.populateOperators();
-            while (in.hasNextLine()){
-                String line = in.nextLine();
+            while (true){
+                String line = sc.nextLine();
                 if(line.equals(";"))
                     break;
                 Operation op = new Operation();
@@ -92,11 +94,11 @@ public class LP1L4 {
                 program.add(op);
             }
 
-//            for(int i=0;i < program.size();i++){
-//                System.out.println(i + " > "+program.get(i));
-//            }
+            /**
+             * Execution of operations in program
+             */
             int pc = 0;
-            Num lastvar = null;
+            Num lastvar = null; //last var to be printed or assigned
             while(pc < program.size()){
                 //System.out.println(pc);
                 Operation ptr = program.get(pc);
@@ -121,9 +123,6 @@ public class LP1L4 {
                         pc++;
                         break;
                     case 0://PRINT VAR
-//                        Num outNum = Register.getVar(ptr.getVar());
-//                        System.out.print(outNum);
-//                        outNum.printList();
                         pc++;
                         break;
                     default:
@@ -139,7 +138,6 @@ public class LP1L4 {
             if(lastvar != null)
                 lastvar.printList();
 
-        }
     }
 }
 

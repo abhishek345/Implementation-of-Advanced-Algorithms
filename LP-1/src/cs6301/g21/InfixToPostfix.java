@@ -96,20 +96,20 @@ public class InfixToPostfix {
         return output;
     }
 
-    public static void main(String[] args) {
-
-
-        ShuntingYard.populateOperators();
-
-        //works for this case ( a + b ) * ( c + d ) / b ^ c {a b + c d + * b c ^ /}
-        //a * b ^ c + answer: ( d * e ) {a b c ^ * d e * +}
-        // a * b ^ c answer: {a b c ^ *}
-        // a ^ b * c answer: {a b ^ c *}
-        Queue<String> q = infixToPostfix("a b ^ c *");
-
-        //Prints the answer
-        while (!q.isEmpty())
-            System.out.println(q.remove());
-
-    }
+//    public static void main(String[] args) {
+//
+//
+//        ShuntingYard.populateOperators();
+//
+//        //works for this case ( a + b ) * ( c + d ) / b ^ c {a b + c d + * b c ^ /}
+//        //a * b ^ c + answer: ( d * e ) {a b c ^ * d e * +}
+//        // a * b ^ c answer: {a b c ^ *}
+//        // a ^ b * c answer: {a b ^ c *}
+//        Queue<String> q = infixToPostfix("a b ^ c *");
+//
+//        //Prints the answer
+//        while (!q.isEmpty())
+//            System.out.println(q.remove());
+//
+//    }
 }

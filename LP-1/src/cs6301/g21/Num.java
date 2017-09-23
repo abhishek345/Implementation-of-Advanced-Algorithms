@@ -15,6 +15,10 @@ public class Num {
     static Num base = new Num(BASE);
     static Num ten = new Num(10);
 
+    /**
+     * Create a Num of base BASE from a String
+     * @param num: the number in base 10
+     */
     public Num(String num){
         digits = new LinkedList<>();
         Num current = new Num(0);
@@ -43,10 +47,10 @@ public class Num {
 
     }
 
-    public static void changeBase(long newbase){
-        BASE = newbase;
-    }
-
+    /**
+     * Create a Num of base BASE from a long
+     * @param num: the number in base 10
+     */
     public Num(long num){
         digits = new LinkedList<>();
         long digit;
@@ -65,8 +69,15 @@ public class Num {
         }
     }
 
+    /**
+     * Create an empty Num Object
+     */
     public Num(){
         digits = new LinkedList<>();
+    }
+
+    public static void changeBase(long newbase){
+        BASE = newbase;
     }
 
     public void printList(){
@@ -123,6 +134,10 @@ public class Num {
         return digits.iterator();
     }
 
+    /**
+     * Left Shift operation on Num
+     * @param times: the no of times shift should be applied
+     */
     private void shift(long times){
         while(times > 0){
             digits.addFirst((long)0);
@@ -130,9 +145,11 @@ public class Num {
         }
     }
 
-    //get the value of the digits at a particular index
+    /**
+     * Get the value of the digits at a particular index
+     * @return long: the digit that was stored as long
+     */
     public long get(int i){
-        LinkedList<Long> digits = this.getDigits();
         return digits.get(i);
     }
 
@@ -148,29 +165,51 @@ public class Num {
         digits.remove(index);
     }
 
-    //get digits of the Num
-    public LinkedList<Long> getDigits(){
+    /**
+     * Gives the size of the Num instance
+     * @return int: size of the Num
+     */
+    public int size(){
+        return digits.size();
+    }
+
+    /**
+     * Get the digits of the Num
+     * @return LinkedList: Internal LinkedList of Num
+     */
+    private LinkedList<Long> getDigits(){
         return this.digits;
     }
 
-    //Flip the sign of Num
+    /**
+     * Sets sign of Num to a given sign
+     * @param b : boolean sign to be assigned
+     */
     public void setSign(boolean b){
         this.sign = b;
     }
 
+    /**
+     * Flip the sign of a Num
+     */
     public void setSign(){
         this.sign = !this.sign;
     }
 
-    //get sign of Num
+    /**
+     * Get sign of Num
+     * @return boolean : false if Num is positive, true otherwise
+     */
     public boolean getSign(){
         return this.sign;
     }
 
-    //Long division by binary search. Implement separate method for binary search
-    //reference: http://www.techiedelight.com/division-two-numbers-using-binary-search-algorithm/
-    //reference: https://en.wikipedia.org/wiki/Division_algorithm
-    //Simple division without sign
+    /**
+     * Simple division without sign
+     * @param a : Dividend
+     * @param b : Divisor
+     * @return Num : Returns Quotient
+     */
     public static Num divideUnsigned(Num a, Num b){
 
         //throw exception if dividing by zero and return a if divide by 1
@@ -229,8 +268,11 @@ public class Num {
 
     }
 
-    //copy the value of the number to a new number
-    //copyNum is wrong
+    /**
+     * Copy the value of the number to a new number
+     * @param a : Number to be copied
+     * @return Num: Result is the copied number
+     */
     public static Num copyNum(Num a){
         String value = a.toString();
         Num result = new Num(value);
@@ -242,9 +284,13 @@ public class Num {
         return new Num(value);
     }
 
-    //Long division by binary search.
-    //reference: http://www.techiedelight.com/division-two-numbers-using-binary-search-algorithm/
-    //reference: https://en.wikipedia.org/wiki/Division_algorithm
+
+    /**
+     * Abstraction for handling sign and perform unsigned division
+     * @param a : Dividend
+     * @param b : Divisor
+     * @return Num : Quotient
+     */
     public static Num divide(Num a, Num b){
 
         boolean aSign = a.getSign();
@@ -288,7 +334,12 @@ public class Num {
         return quotient;
     }
 
-    //Simple modulus after invoking the division method
+    /**
+     * Simple modulus after invoking the division method
+     * @param a : Dividend
+     * @param b : Divisor
+     * @return Num: Reminder
+     */
     public static Num mod(Num a, Num b){
         if(a.compareTo(zero) < 0 || b.compareTo(zero) < 0)
             throw new IllegalArgumentException("Both the dividend and the divisor should be positive");
@@ -296,15 +347,10 @@ public class Num {
         return subtract(a, product(divide(a, b), b));
     }
 
-    public int size(){
-        return digits.size();
-    }
-
     public static Num[] split(Num n, int position){
         Num[] ans = new Num[2];
         ans[0] = new Num();
         ans[1] = new Num();
-
         for(int i=0;i < n.size();i++){
             if(i < position){
                 ans[0].addLast(n.get(i));
@@ -314,6 +360,18 @@ public class Num {
             }
         }
         return ans;
+    }
+
+    public static Num product(Num a, Num b){
+        Num answer;
+        if(a.size() < 5 && b.size() < 5)
+            answer = simpleMul(a,b);
+        else
+            answer = karatsubaMul(a,b);
+        if(a.getSign() != b.getSign())
+            if(answer.getSign() != true) answer.setSign();
+        answer.trimNum();
+        return answer;
     }
 
     public static Num karatsubaMul(Num a, Num b){
@@ -330,16 +388,18 @@ public class Num {
                 smaller = a;
                 len = b.size();
             }
-            if(len == 0)
+            if(len == 0)//Empty Num or zero
                 return new Num(0);
 
-            if(len < 2){
+            if(len < 5){
                 return simpleMul(a,b);
             }
+            //padding for odd length
             while(len%2 != 0){
                 bigger.addLast(0);
                 len++;
             }
+            //padding smaller num
             while(smaller.size() < bigger.size()){
                 smaller.addLast(0);
             }
@@ -349,8 +409,8 @@ public class Num {
             aSplit = a.split(a,half);
             bSplit = b.split(b,half);
 
-            Num mulRight = product(aSplit[0], bSplit[0]);
-            Num mulLeft = product(aSplit[1], bSplit[1]);
+            Num mulRight = karatsubaMul(aSplit[0], bSplit[0]);
+            Num mulLeft = karatsubaMul(aSplit[1], bSplit[1]);
 
             Num mulMid = karatsubaMul(unsignedAdd(aSplit[0],aSplit[1]), unsignedAdd(bSplit[0],bSplit[1]));
 
@@ -363,18 +423,6 @@ public class Num {
 
             return ans;
    }
-
-    public static Num product(Num a, Num b){
-        Num answer;
-        if(a.size() < 5 && b.size() < 5)
-            answer = simpleMul(a,b);
-        else
-            answer = karatsubaMul(a,b);
-        if(a.getSign() != b.getSign())
-            if(answer.getSign() != true) answer.setSign();
-        answer.trimNum();
-        return answer;
-    }
 
     public static Num simpleMul(Num a, Num b){
         long value = 0;
@@ -464,6 +512,67 @@ public class Num {
         return result;
     }
 
+    public static Num add(Num a ,Num b){
+        boolean signA = a.getSign();
+        boolean signB = b.getSign();
+        boolean outSign;
+        Num tempResult;
+        Num a1,b1;
+
+        a.setSign(false);
+        b.setSign(false);
+
+        int comp=a.compareTo(b);
+
+        if(comp<0){
+            a1=b;
+            b1=a;
+            if(signA!=signB)
+                outSign=signB;
+            else{
+                if(signA)
+                    outSign=true;
+                else
+                    outSign=false;
+            }
+        }
+        else if(comp>0){
+            a1=a;
+            b1=b;
+            if(signA!=signB)
+                outSign=signA;
+            else{
+                if(signA)
+                    outSign=true;
+                else
+                    outSign=false;
+            }
+        }
+        else
+        {
+            a1=a;
+            b1=b;
+            if(signA!=signB)
+                outSign=signA;
+            else
+                outSign=false;
+        }
+
+        if(signA!=signB){
+            tempResult = unsignedSubtract(a1,b1);
+
+        }
+
+        else
+            tempResult = unsignedAdd(a1,b1);
+
+        a.setSign(signA);
+        b.setSign(signB);
+        tempResult.setSign(outSign);
+
+        return tempResult;
+    }
+
     public static Num unsignedAdd(Num a,Num b){
         if(a.size() < 1)return b;
         else if(b.size() < 1)return a;
@@ -527,133 +636,6 @@ public class Num {
             result.addLast(carry);
 
         return result;
-    }
-
-    public static Num unsignedSubtract(Num a,Num b){
-        if(a.size() < 1)return b;
-        else if(b.size() < 1)return a;
-
-        Iterator<Long> it1 = a.iterator();
-        Iterator<Long> it2 = b.iterator();
-
-        boolean carry = false;
-        Long temp1 = it1.next();
-        Long temp2 = it2.next();
-
-        Num result = new Num();
-        String outStr = "";
-
-        while(temp1!=null && temp2!=null){
-            if(carry){
-                if(temp1 == 0)
-                    temp1 = BASE-1;
-                else{
-                    temp1 -= 1;
-                    carry = false;
-                }
-            }
-            if(temp1<temp2){
-                temp1 += BASE;
-                carry = true;
-            }
-            long difference = temp1 - temp2;
-            result.addLast(difference%BASE);
-
-            try{
-                temp1 = it1.next();
-            }
-            catch(NoSuchElementException e){
-                temp1 = null;
-            }
-
-            try{
-                temp2 = it2.next();
-            }
-            catch(NoSuchElementException e){
-                temp2 = null;
-            }
-        }
-
-        while(temp1 != null){
-            if(carry){
-                if(temp1 == 0)
-                    temp1 = BASE-1;
-                else{
-                    temp1 -= 1;
-                    carry = false;
-                }
-            }
-            result.addLast(temp1);
-            try{
-                temp1 = it1.next();
-            }
-            catch(NoSuchElementException e){
-                temp1 = null;
-            }
-        }
-
-        return result;
-    }
-
-    public static Num add(Num a ,Num b){
-        boolean signA = a.getSign();
-        boolean signB = b.getSign();
-        boolean outSign;
-        Num tempResult;
-        Num a1,b1;
-
-        a.setSign(false);
-        b.setSign(false);
-
-        int comp=a.compareTo(b);
-
-        if(comp<0){
-            a1=b;
-            b1=a;
-            if(signA!=signB)
-                outSign=signB;
-            else{
-                if(signA)
-                    outSign=true;
-                else
-                    outSign=false;
-            }
-        }
-        else if(comp>0){
-            a1=a;
-            b1=b;
-            if(signA!=signB)
-                outSign=signA;
-            else{
-                if(signA)
-                    outSign=true;
-                else
-                    outSign=false;
-            }
-        }
-        else
-        {
-            a1=a;
-            b1=b;
-            if(signA!=signB)
-                outSign=signA;
-            else
-                outSign=false;
-        }
-
-        if(signA!=signB){
-            tempResult = unsignedSubtract(a1,b1);
-
-        }
-
-        else
-            tempResult = unsignedAdd(a1,b1);
-
-        a.setSign(signA);
-        b.setSign(signB);
-        tempResult.setSign(outSign);
-
-        return tempResult;
     }
 
     public static Num subtract(Num a, Num b){
@@ -723,7 +705,77 @@ public class Num {
 
     }
 
-    //Get the square root of Num
+    public static Num unsignedSubtract(Num a,Num b){
+        if(a.size() < 1)return b;
+        else if(b.size() < 1)return a;
+
+        Iterator<Long> it1 = a.iterator();
+        Iterator<Long> it2 = b.iterator();
+
+        boolean carry = false;
+        Long temp1 = it1.next();
+        Long temp2 = it2.next();
+
+        Num result = new Num();
+        String outStr = "";
+
+        while(temp1!=null && temp2!=null){
+            if(carry){
+                if(temp1 == 0)
+                    temp1 = BASE-1;
+                else{
+                    temp1 -= 1;
+                    carry = false;
+                }
+            }
+            if(temp1<temp2){
+                temp1 += BASE;
+                carry = true;
+            }
+            long difference = temp1 - temp2;
+            result.addLast(difference%BASE);
+
+            try{
+                temp1 = it1.next();
+            }
+            catch(NoSuchElementException e){
+                temp1 = null;
+            }
+
+            try{
+                temp2 = it2.next();
+            }
+            catch(NoSuchElementException e){
+                temp2 = null;
+            }
+        }
+
+        while(temp1 != null){
+            if(carry){
+                if(temp1 == 0)
+                    temp1 = BASE-1;
+                else{
+                    temp1 -= 1;
+                    carry = false;
+                }
+            }
+            result.addLast(temp1);
+            try{
+                temp1 = it1.next();
+            }
+            catch(NoSuchElementException e){
+                temp1 = null;
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Get the square root of Num
+     * @param a : Num whose square root is to be found
+     * @return Num: Square Root of a
+     */
     public static Num squareRoot(Num a){
 
         Num low = new Num(1);
@@ -763,7 +815,12 @@ public class Num {
         return low;
     }
 
-    //Manually calculate the average of two numbers
+    /**
+     * Manually calculate the average of two numbers
+     * @param a : Number whose average is to be calculated
+     * @param b : Number whose average is to be calculated
+     * @return Num: Average of the two numbers
+     */
     public static Num average(Num a, Num b){
 
         Num sum = add(a, b);
@@ -798,9 +855,13 @@ public class Num {
 
         answer.trimNum();
         return answer;
-    } 
+    }
 
-    //Compares two numbers and sees which one is greater
+    /**
+     * Compares two numbers and sees which one is greater
+     * @param b : Number to be compared with
+     * @return int: 1 if current object > b, -1 if current object < b, 0 if both are equal
+     */
     public int compareTo(Num b){
         //compare negative and positive numbers
         if(this.getSign() != b.getSign())
@@ -850,19 +911,13 @@ public class Num {
         return 0;
     }
 
-    public static void main(String args[]){
-        Num n = new Num("125");
-        Num n2 = new Num("5");
-
-        Num result = divide(n,n2);
-        result.printList();
-        System.out.print(result);
-//        n.trimNum();
-//        n.printList();
-//        Num n2 = new Num(-1);
-//        divide(n,n2).printList();
-//        power(n,n2).printList();
-//        add(n,n2).printList();
-    }
+//    public static void main(String args[]){
+//        Num n = new Num("125");
+//        Num n2 = new Num("5");
+//
+//        Num result = divide(n,n2);
+//        result.printList();
+//        System.out.print(result);
+//    }
 
 }
