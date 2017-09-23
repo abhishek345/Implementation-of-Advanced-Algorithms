@@ -41,6 +41,35 @@ public class ShuntingYard {
 
         return false;
     }
+    
+    /**
+    * Checks if is the token is a numeric value
+    *
+    * @param token :String token to be evaluated
+    * @return true if token is numeric; false otherwise
+    */
+    public static boolean isNumeric(String token){
+
+        if(token.matches("\\d+"))
+            return true;
+
+        return false;
+    }
+    
+    /**
+    * Checks if the token is a variable
+    *
+    * @param token: String token to be evaluated
+    * @return true if token is a variable; false otherwise
+    */
+	public static boolean isVariable(String token){
+
+        if(Register.varReg.containsKey(token))
+            return true;
+
+        return false;
+    }
+
 
     /**
      * Calculates the precedence of the operators
