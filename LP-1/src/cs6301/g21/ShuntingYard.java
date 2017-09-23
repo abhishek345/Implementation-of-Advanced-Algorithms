@@ -27,8 +27,6 @@ public class ShuntingYard {
         return false;
     }
 
-    //
-
     /**
      * Checks if is a token is alphanumeric value
      * @param token String token to be evaluated
@@ -95,13 +93,5 @@ public class ShuntingYard {
 
         return -1;
     }
-
-//    public static void main(String[] args) {
-//
-//        //ShuntingYard.populateOperators();
-//
-//        System.out.println(ShuntingYard.isValidOperator("+"));
-//
-//    }
 
 }

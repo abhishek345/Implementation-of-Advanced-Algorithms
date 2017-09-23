@@ -1,7 +1,5 @@
 package cs6301.g21;
 
-import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
 
@@ -22,7 +20,6 @@ public class PostfixEvaluator {
 	public static Num evaluate(Queue<String> q){
 
 		Stack<Num> stack = new Stack<Num>();
-		ShuntingYard t= new ShuntingYard();
 		
 		for(String token : q ){
 			
@@ -80,36 +77,5 @@ public class PostfixEvaluator {
 		return stack.pop();
 		
 	}
-	
-// 	public static void main(String[] args){
-// 		Queue<String> queue= new LinkedList<String>();
-		
-// 		//infix = 5 + 6 - 7  * (3+7);
-// 		//postfix = 56+737+*-
-		
-// 		Register.varReg = new HashMap<String,Num>();
-// 		Register.varReg.put("x", new Num(5));
-// 		Register.varReg.put("y", new Num(6));
-// 		Register.varReg.put("z", new Num(7));
-// 		Register.varReg.put("a", new Num(3));
-
-// 		queue.add("x");
-// 		queue.add("y");
-// 		queue.add("+");
-// 		queue.add("z");
-// 		queue.add("a");
-// 		queue.add("z");
-// 		queue.add("+");
-// 		queue.add("*");
-// 		queue.add("-");
-		
-		
-// 		Num result = evaluate(queue);
-// 		//printing the sign since to string doesn't display negative sign
-// 		System.out.println(result.getSign() + " " + result.toString());
-// 		result.printList();
-		
-// 	}
-	
 
 }
