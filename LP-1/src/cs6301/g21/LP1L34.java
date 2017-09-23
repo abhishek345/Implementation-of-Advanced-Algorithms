@@ -6,6 +6,14 @@ import java.util.ArrayList;
 import java.util.Queue;
 import java.util.Scanner;
 
+/**
+ * Driver function which can process inputs from both Level 3 and 4.
+ * Command line argument accepts a base, if no argument default base is used.
+ * Reads input from console.
+ *
+ * @author Umang Shah, Shreya Vishwanath Rao, Vibha Belavadi, Umang Shah, Abhishek Jagwani
+ * @version 1.0: 2017/09/19
+ */
 public class LP1L34 {
     private static int JUMP = 3;
     private static int POST = 2;
@@ -22,7 +30,7 @@ public class LP1L34 {
             System.out.println("Using default base: 2^30 .");
         }
 //            String infile = "/home/uks/Downloads/data-lp1(1)/lp1-l4-in2.txt";
-//            Scanner in = new Scanner(new File(infile));
+//            sc = new Scanner(new File(infile));
             ShuntingYard.populateOperators();
             while (true){
                 String line = sc.nextLine();

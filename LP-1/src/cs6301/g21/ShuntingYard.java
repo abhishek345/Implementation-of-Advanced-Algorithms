@@ -2,10 +2,19 @@ package cs6301.g21;
 
 import java.util.ArrayList;
 
+/**
+ * The Shunting Yard Algorithm and helper functions.
+ *
+ * @author Shreya Vishwanath Rao, Vibha Belavadi, Umang Shah, Abhishek Jagwani
+ * @version 2.0: 2017/09/23
+ */
 public class ShuntingYard {
 
     private static ArrayList<String> supportedOp = new ArrayList<String>();
 
+    /**
+     * Populate list with supported operators
+     */
     public static void populateOperators(){
         supportedOp.add("+");
         supportedOp.add("-");
@@ -18,7 +27,11 @@ public class ShuntingYard {
         supportedOp.add("%");
     }
 
-    //Checks if it is a valid operator
+    /**
+     * Checks if token is one of the supported operations
+     * @param token String token to be evaluated
+     * @return Boolean true if valid; else false
+     */
     public static boolean isValidOperator(String token){
 
         if(supportedOp.contains(token))
@@ -30,7 +43,7 @@ public class ShuntingYard {
     /**
      * Checks if is a token is alphanumeric value
      * @param token String token to be evaluated
-     * @return Boolean true if
+     * @return Boolean true for alphanumeric token; else false
      */
     public static boolean isAlphaNumeric(String token){
 

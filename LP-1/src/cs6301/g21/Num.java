@@ -4,6 +4,15 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
 
+/**
+ * Driver function which can process inputs from both Level 3 and 4.
+ * Command line argument accepts a base, if no argument default base is used.
+ *
+ *
+ * @author Umang Shah, Vibha Belavadi, Abhishek Jagwani, Shreya Vishwanath Rao
+ * @version 3.0: 2017/09/22
+ */
+
 public class Num {
 
     private LinkedList<Long> digits;
