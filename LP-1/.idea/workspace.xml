@@ -12,29 +12,88 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Num.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Num.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/cs6301/g21/Num.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="216">
-              <caret line="121" column="14" lean-forward="false" selection-start-line="121" selection-start-column="14" selection-end-line="121" selection-end-column="14" />
+            <state relative-caret-position="367">
+              <caret line="352" column="27" lean-forward="false" selection-start-line="352" selection-start-column="27" selection-end-line="352" selection-end-column="27" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#166#167#0" expanded="true" />
-                <element signature="e#206#207#0" expanded="true" />
-                <element signature="e#1081#1082#0" expanded="true" />
-                <element signature="e#1124#1125#0" expanded="true" />
-                <element signature="e#1153#1154#0" expanded="true" />
-                <element signature="e#1189#1190#0" expanded="true" />
-                <element signature="e#1228#1229#0" expanded="true" />
-                <element signature="e#1266#1267#0" expanded="true" />
-                <element signature="e#1304#1305#0" expanded="true" />
-                <element signature="e#1341#1342#0" expanded="true" />
-                <element signature="e#1371#1372#0" expanded="true" />
-                <element signature="e#1413#1414#0" expanded="true" />
-                <element signature="e#1680#1681#0" expanded="true" />
-                <element signature="e#1716#1717#0" expanded="true" />
-                <element signature="e#3367#3368#0" expanded="true" />
-                <element signature="e#3400#3401#0" expanded="true" />
+                <element signature="method#Num#0;class#Num#0" expanded="false" />
+                <element signature="method#Num#1;class#Num#0" expanded="false" />
+                <element signature="method#printList#0;class#Num#0" expanded="false" />
+                <element signature="method#toString#0;class#Num#0" expanded="false" />
+                <element signature="method#makeDec#0;class#Num#0" expanded="false" />
+                <element signature="method#trimNum#0;class#Num#0" expanded="false" />
+                <element signature="method#shift#0;class#Num#0" expanded="false" />
+                <element signature="method#divideUnsigned#0;class#Num#0" expanded="false" />
+                <element signature="method#copyNum#0;class#Num#0" expanded="false" />
+                <element signature="method#divide#0;class#Num#0" expanded="false" />
+                <element signature="method#mod#0;class#Num#0" expanded="false" />
+                <element signature="method#simpleMul#0;class#Num#0" expanded="false" />
+                <element signature="method#power#0;class#Num#0" expanded="false" />
+                <element signature="method#power#1;class#Num#0" expanded="false" />
+                <element signature="method#add#0;class#Num#0" expanded="false" />
+                <element signature="method#unsignedAdd#0;class#Num#0" expanded="false" />
+                <element signature="method#subtract#0;class#Num#0" expanded="false" />
+                <element signature="method#unsignedSubtract#0;class#Num#0" expanded="false" />
+                <element signature="method#squareRoot#0;class#Num#0" expanded="false" />
+                <element signature="method#average#0;class#Num#0" expanded="false" />
+                <element signature="method#compareTo#0;class#Num#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ShuntingYard.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/cs6301/g21/ShuntingYard.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="310">
+              <caret line="21" column="56" lean-forward="false" selection-start-line="21" selection-start-column="56" selection-end-line="21" selection-end-column="56" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Tokens.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/cs6301/g21/Tokens.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="145">
+              <caret line="12" column="5" lean-forward="true" selection-start-line="12" selection-start-column="5" selection-end-line="12" selection-end-column="5" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PostfixEvaluator.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/cs6301/g21/PostfixEvaluator.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1476">
+              <caret line="83" column="4" lean-forward="false" selection-start-line="83" selection-start-column="4" selection-end-line="83" selection-end-column="4" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="LP1L4.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/cs6301/g21/LP1L4.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1538">
+              <caret line="99" column="23" lean-forward="true" selection-start-line="99" selection-start-column="23" selection-end-line="99" selection-end-column="23" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Register.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/cs6301/g21/Register.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="270">
+              <caret line="25" column="5" lean-forward="true" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
+              <folding>
+                <element signature="method#getLineNo#0;class#Register#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -58,7 +117,17 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/src/cs6301/g21/ArrayStack.java" />
+        <option value="$PROJECT_DIR$/src/cs6301/Num.java" />
+        <option value="$PROJECT_DIR$/src/cs6301/g21/SubFunctions.java" />
+        <option value="$PROJECT_DIR$/src/cs6301/Add and subtract methods.java" />
+        <option value="$PROJECT_DIR$/src/cs6301/g21/Driver34.java" />
+        <option value="$PROJECT_DIR$/src/cs6301/g21/InfixToPostfix.java" />
+        <option value="$PROJECT_DIR$/src/cs6301/g21/Operation.java" />
+        <option value="$PROJECT_DIR$/src/cs6301/g21/LP1L4.java" />
         <option value="$PROJECT_DIR$/src/cs6301/g21/Num.java" />
+        <option value="$PROJECT_DIR$/src/cs6301/g21/ShuntingYard.java" />
+        <option value="$PROJECT_DIR$/src/cs6301/g21/Tokens.java" />
+        <option value="$PROJECT_DIR$/src/cs6301/g21/PostfixEvaluator.java" />
       </list>
     </option>
   </component>
@@ -83,9 +152,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="AndroidView" />
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -102,17 +169,31 @@
               <item name="LP-1" type="b2602c69:ProjectViewProjectNode" />
               <item name="LP-1" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="cs6301" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="LP-1" type="b2602c69:ProjectViewProjectNode" />
+              <item name="LP-1" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="cs6301" type="462c0819:PsiDirectoryNode" />
               <item name="g21" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scratches" />
+      <pane id="AndroidView" />
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="last_opened_file_path" value="$USER_HOME$/Desktop/CS 6364/Prog Assignment/search" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/cs6301/g21" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -126,7 +207,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.Num">
+  <component name="RunManager" selected="Application.LP1L4">
     <configuration name="ArrayStack" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
@@ -135,6 +216,25 @@
         </pattern>
       </extension>
       <option name="MAIN_CLASS_NAME" value="cs6301.g21.ArrayStack" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="LP-1" />
+      <envs />
+    </configuration>
+    <configuration name="LP1L4" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="cs6301.g21.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="MAIN_CLASS_NAME" value="cs6301.g21.LP1L4" />
       <option name="VM_PARAMETERS" />
       <option name="PROGRAM_PARAMETERS" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
@@ -246,14 +346,16 @@
       <properties />
       <listeners />
     </configuration>
-    <list size="2">
+    <list size="3">
       <item index="0" class="java.lang.String" itemvalue="Application.ArrayStack" />
       <item index="1" class="java.lang.String" itemvalue="Application.Num" />
+      <item index="2" class="java.lang.String" itemvalue="Application.LP1L4" />
     </list>
     <recent_temporary>
-      <list size="2">
-        <item index="0" class="java.lang.String" itemvalue="Application.Num" />
-        <item index="1" class="java.lang.String" itemvalue="Application.ArrayStack" />
+      <list size="3">
+        <item index="0" class="java.lang.String" itemvalue="Application.LP1L4" />
+        <item index="1" class="java.lang.String" itemvalue="Application.Num" />
+        <item index="2" class="java.lang.String" itemvalue="Application.ArrayStack" />
       </list>
     </recent_temporary>
   </component>
@@ -272,32 +374,33 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="75" y="16" width="1303" height="780" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32934132" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32934132" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24980783" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32934132" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
@@ -306,32 +409,257 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <option name="time" value="1" />
+    </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/cs6301/g21/Num.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="1008">
+          <caret line="82" column="20" lean-forward="false" selection-start-line="82" selection-start-column="20" selection-end-line="82" selection-end-column="20" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#166#167#0" expanded="true" />
-            <element signature="e#206#207#0" expanded="true" />
-            <element signature="e#1081#1082#0" expanded="true" />
-            <element signature="e#1124#1125#0" expanded="true" />
-            <element signature="e#1153#1154#0" expanded="true" />
-            <element signature="e#1189#1190#0" expanded="true" />
-            <element signature="e#1228#1229#0" expanded="true" />
-            <element signature="e#1266#1267#0" expanded="true" />
-            <element signature="e#1304#1305#0" expanded="true" />
-            <element signature="e#1341#1342#0" expanded="true" />
-            <element signature="e#1371#1372#0" expanded="true" />
-            <element signature="e#1413#1414#0" expanded="true" />
-            <element signature="e#1680#1681#0" expanded="true" />
-            <element signature="e#1716#1717#0" expanded="true" />
-            <element signature="e#3367#3368#0" expanded="true" />
-            <element signature="e#3400#3401#0" expanded="true" />
+            <element signature="method#Num#0;class#Num#0" expanded="false" />
+            <element signature="method#Num#1;class#Num#0" expanded="false" />
+            <element signature="method#printList#0;class#Num#0" expanded="false" />
+            <element signature="method#toString#0;class#Num#0" expanded="false" />
+            <element signature="method#makeDec#0;class#Num#0" expanded="false" />
+            <element signature="method#trimNum#0;class#Num#0" expanded="false" />
+            <element signature="method#shift#0;class#Num#0" expanded="false" />
+            <element signature="method#divideUnsigned#0;class#Num#0" expanded="false" />
+            <element signature="method#copyNum#0;class#Num#0" expanded="false" />
+            <element signature="method#divide#0;class#Num#0" expanded="false" />
+            <element signature="method#mod#0;class#Num#0" expanded="false" />
+            <element signature="method#simpleMul#0;class#Num#0" expanded="false" />
+            <element signature="method#power#0;class#Num#0" expanded="false" />
+            <element signature="method#power#1;class#Num#0" expanded="false" />
+            <element signature="method#add#0;class#Num#0" expanded="false" />
+            <element signature="method#unsignedAdd#0;class#Num#0" expanded="false" />
+            <element signature="method#subtract#0;class#Num#0" expanded="false" />
+            <element signature="method#unsignedSubtract#0;class#Num#0" expanded="false" />
+            <element signature="method#squareRoot#0;class#Num#0" expanded="false" />
+            <element signature="method#average#0;class#Num#0" expanded="false" />
+            <element signature="method#compareTo#0;class#Num#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cs6301/g21/Driver34.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2178">
+          <caret line="121" column="62" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="152" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cs6301/g21/PostfixEvaluator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="10" column="0" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#2110#2152#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cs6301/g21/InfixToPostfix.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="630">
+          <caret line="37" column="0" lean-forward="false" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
+          <folding>
+            <element signature="method#needPostfix#0;class#InfixToPostfix#0" expanded="false" />
+            <element signature="method#infixToPostfix#0;class#InfixToPostfix#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cs6301/g21/Operation.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="414">
+          <caret line="24" column="5" lean-forward="false" selection-start-line="24" selection-start-column="5" selection-end-line="24" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#resolve#0;class#Operation#0" expanded="false" />
+            <element signature="method#toString#0;class#Operation#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cs6301/g21/LP1L4.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="22" column="71" lean-forward="false" selection-start-line="22" selection-start-column="71" selection-end-line="22" selection-end-column="71" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cs6301/g21/Num.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1008">
+          <caret line="82" column="20" lean-forward="false" selection-start-line="82" selection-start-column="20" selection-end-line="82" selection-end-column="20" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#Num#0;class#Num#0" expanded="false" />
+            <element signature="method#Num#1;class#Num#0" expanded="false" />
+            <element signature="method#printList#0;class#Num#0" expanded="false" />
+            <element signature="method#toString#0;class#Num#0" expanded="false" />
+            <element signature="method#makeDec#0;class#Num#0" expanded="false" />
+            <element signature="method#trimNum#0;class#Num#0" expanded="false" />
+            <element signature="method#shift#0;class#Num#0" expanded="false" />
+            <element signature="method#divideUnsigned#0;class#Num#0" expanded="false" />
+            <element signature="method#copyNum#0;class#Num#0" expanded="false" />
+            <element signature="method#divide#0;class#Num#0" expanded="false" />
+            <element signature="method#mod#0;class#Num#0" expanded="false" />
+            <element signature="method#simpleMul#0;class#Num#0" expanded="false" />
+            <element signature="method#power#0;class#Num#0" expanded="false" />
+            <element signature="method#power#1;class#Num#0" expanded="false" />
+            <element signature="method#add#0;class#Num#0" expanded="false" />
+            <element signature="method#unsignedAdd#0;class#Num#0" expanded="false" />
+            <element signature="method#subtract#0;class#Num#0" expanded="false" />
+            <element signature="method#unsignedSubtract#0;class#Num#0" expanded="false" />
+            <element signature="method#squareRoot#0;class#Num#0" expanded="false" />
+            <element signature="method#average#0;class#Num#0" expanded="false" />
+            <element signature="method#compareTo#0;class#Num#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cs6301/g21/Driver34.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2178">
+          <caret line="121" column="62" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="152" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cs6301/g21/PostfixEvaluator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="10" column="0" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#2110#2152#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cs6301/g21/InfixToPostfix.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="630">
+          <caret line="37" column="0" lean-forward="false" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
+          <folding>
+            <element signature="method#needPostfix#0;class#InfixToPostfix#0" expanded="false" />
+            <element signature="method#infixToPostfix#0;class#InfixToPostfix#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cs6301/g21/Operation.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="414">
+          <caret line="24" column="5" lean-forward="false" selection-start-line="24" selection-start-column="5" selection-end-line="24" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#resolve#0;class#Operation#0" expanded="false" />
+            <element signature="method#toString#0;class#Operation#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cs6301/g21/LP1L4.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="22" column="71" lean-forward="false" selection-start-line="22" selection-start-column="71" selection-end-line="22" selection-end-column="71" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cs6301/g21/Num.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1008">
+          <caret line="82" column="20" lean-forward="false" selection-start-line="82" selection-start-column="20" selection-end-line="82" selection-end-column="20" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#Num#0;class#Num#0" expanded="false" />
+            <element signature="method#Num#1;class#Num#0" expanded="false" />
+            <element signature="method#printList#0;class#Num#0" expanded="false" />
+            <element signature="method#toString#0;class#Num#0" expanded="false" />
+            <element signature="method#makeDec#0;class#Num#0" expanded="false" />
+            <element signature="method#trimNum#0;class#Num#0" expanded="false" />
+            <element signature="method#shift#0;class#Num#0" expanded="false" />
+            <element signature="method#divideUnsigned#0;class#Num#0" expanded="false" />
+            <element signature="method#copyNum#0;class#Num#0" expanded="false" />
+            <element signature="method#divide#0;class#Num#0" expanded="false" />
+            <element signature="method#mod#0;class#Num#0" expanded="false" />
+            <element signature="method#simpleMul#0;class#Num#0" expanded="false" />
+            <element signature="method#power#0;class#Num#0" expanded="false" />
+            <element signature="method#power#1;class#Num#0" expanded="false" />
+            <element signature="method#add#0;class#Num#0" expanded="false" />
+            <element signature="method#unsignedAdd#0;class#Num#0" expanded="false" />
+            <element signature="method#subtract#0;class#Num#0" expanded="false" />
+            <element signature="method#unsignedSubtract#0;class#Num#0" expanded="false" />
+            <element signature="method#squareRoot#0;class#Num#0" expanded="false" />
+            <element signature="method#average#0;class#Num#0" expanded="false" />
+            <element signature="method#compareTo#0;class#Num#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cs6301/g21/Driver34.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2178">
+          <caret line="121" column="62" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="152" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cs6301/g21/InfixToPostfix.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="630">
+          <caret line="37" column="0" lean-forward="false" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
+          <folding>
+            <element signature="method#needPostfix#0;class#InfixToPostfix#0" expanded="false" />
+            <element signature="method#infixToPostfix#0;class#InfixToPostfix#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cs6301/g21/PostfixEvaluator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="10" column="0" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#2110#2152#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cs6301/g21/Operation.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="414">
+          <caret line="24" column="5" lean-forward="false" selection-start-line="24" selection-start-column="5" selection-end-line="24" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#resolve#0;class#Operation#0" expanded="false" />
+            <element signature="method#toString#0;class#Operation#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cs6301/g21/LP1L4.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="22" column="71" lean-forward="false" selection-start-line="22" selection-start-column="71" selection-end-line="22" selection-end-column="71" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -342,22 +670,64 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#166#167#0" expanded="true" />
-            <element signature="e#206#207#0" expanded="true" />
-            <element signature="e#1081#1082#0" expanded="true" />
-            <element signature="e#1124#1125#0" expanded="true" />
-            <element signature="e#1153#1154#0" expanded="true" />
-            <element signature="e#1189#1190#0" expanded="true" />
-            <element signature="e#1228#1229#0" expanded="true" />
-            <element signature="e#1266#1267#0" expanded="true" />
-            <element signature="e#1304#1305#0" expanded="true" />
-            <element signature="e#1341#1342#0" expanded="true" />
-            <element signature="e#1371#1372#0" expanded="true" />
-            <element signature="e#1413#1414#0" expanded="true" />
-            <element signature="e#1680#1681#0" expanded="true" />
-            <element signature="e#1716#1717#0" expanded="true" />
-            <element signature="e#3367#3368#0" expanded="true" />
-            <element signature="e#3400#3401#0" expanded="true" />
+            <element signature="method#Num#0;class#Num#0" expanded="false" />
+            <element signature="method#Num#1;class#Num#0" expanded="false" />
+            <element signature="method#printList#0;class#Num#0" expanded="false" />
+            <element signature="method#toString#0;class#Num#0" expanded="false" />
+            <element signature="method#makeDec#0;class#Num#0" expanded="false" />
+            <element signature="method#trimNum#0;class#Num#0" expanded="false" />
+            <element signature="method#shift#0;class#Num#0" expanded="false" />
+            <element signature="method#divideUnsigned#0;class#Num#0" expanded="false" />
+            <element signature="method#copyNum#0;class#Num#0" expanded="false" />
+            <element signature="method#divide#0;class#Num#0" expanded="false" />
+            <element signature="method#mod#0;class#Num#0" expanded="false" />
+            <element signature="method#simpleMul#0;class#Num#0" expanded="false" />
+            <element signature="method#power#0;class#Num#0" expanded="false" />
+            <element signature="method#power#1;class#Num#0" expanded="false" />
+            <element signature="method#add#0;class#Num#0" expanded="false" />
+            <element signature="method#unsignedAdd#0;class#Num#0" expanded="false" />
+            <element signature="method#subtract#0;class#Num#0" expanded="false" />
+            <element signature="method#unsignedSubtract#0;class#Num#0" expanded="false" />
+            <element signature="method#squareRoot#0;class#Num#0" expanded="false" />
+            <element signature="method#average#0;class#Num#0" expanded="false" />
+            <element signature="method#compareTo#0;class#Num#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cs6301/g21/Driver34.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1908">
+          <caret line="107" column="57" lean-forward="false" selection-start-line="107" selection-start-column="57" selection-end-line="107" selection-end-column="57" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cs6301/g21/Register.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="72">
+          <caret line="4" column="13" lean-forward="false" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cs6301/g21/PostfixEvaluator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="72">
+          <caret line="7" column="13" lean-forward="false" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#2110#2152#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cs6301/g21/LP1L4.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1890">
+          <caret line="110" column="57" lean-forward="false" selection-start-line="110" selection-start-column="57" selection-end-line="110" selection-end-column="57" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -368,22 +738,27 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#166#167#0" expanded="true" />
-            <element signature="e#206#207#0" expanded="true" />
-            <element signature="e#1081#1082#0" expanded="true" />
-            <element signature="e#1124#1125#0" expanded="true" />
-            <element signature="e#1153#1154#0" expanded="true" />
-            <element signature="e#1189#1190#0" expanded="true" />
-            <element signature="e#1228#1229#0" expanded="true" />
-            <element signature="e#1266#1267#0" expanded="true" />
-            <element signature="e#1304#1305#0" expanded="true" />
-            <element signature="e#1341#1342#0" expanded="true" />
-            <element signature="e#1371#1372#0" expanded="true" />
-            <element signature="e#1413#1414#0" expanded="true" />
-            <element signature="e#1680#1681#0" expanded="true" />
-            <element signature="e#1716#1717#0" expanded="true" />
-            <element signature="e#3367#3368#0" expanded="true" />
-            <element signature="e#3400#3401#0" expanded="true" />
+            <element signature="method#Num#0;class#Num#0" expanded="false" />
+            <element signature="method#Num#1;class#Num#0" expanded="false" />
+            <element signature="method#printList#0;class#Num#0" expanded="false" />
+            <element signature="method#toString#0;class#Num#0" expanded="false" />
+            <element signature="method#makeDec#0;class#Num#0" expanded="false" />
+            <element signature="method#trimNum#0;class#Num#0" expanded="false" />
+            <element signature="method#shift#0;class#Num#0" expanded="false" />
+            <element signature="method#divideUnsigned#0;class#Num#0" expanded="false" />
+            <element signature="method#copyNum#0;class#Num#0" expanded="false" />
+            <element signature="method#divide#0;class#Num#0" expanded="false" />
+            <element signature="method#mod#0;class#Num#0" expanded="false" />
+            <element signature="method#simpleMul#0;class#Num#0" expanded="false" />
+            <element signature="method#power#0;class#Num#0" expanded="false" />
+            <element signature="method#power#1;class#Num#0" expanded="false" />
+            <element signature="method#add#0;class#Num#0" expanded="false" />
+            <element signature="method#unsignedAdd#0;class#Num#0" expanded="false" />
+            <element signature="method#subtract#0;class#Num#0" expanded="false" />
+            <element signature="method#unsignedSubtract#0;class#Num#0" expanded="false" />
+            <element signature="method#squareRoot#0;class#Num#0" expanded="false" />
+            <element signature="method#average#0;class#Num#0" expanded="false" />
+            <element signature="method#compareTo#0;class#Num#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -394,56 +769,240 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#166#167#0" expanded="true" />
-            <element signature="e#206#207#0" expanded="true" />
-            <element signature="e#1081#1082#0" expanded="true" />
-            <element signature="e#1124#1125#0" expanded="true" />
-            <element signature="e#1153#1154#0" expanded="true" />
-            <element signature="e#1189#1190#0" expanded="true" />
-            <element signature="e#1228#1229#0" expanded="true" />
-            <element signature="e#1266#1267#0" expanded="true" />
-            <element signature="e#1304#1305#0" expanded="true" />
-            <element signature="e#1341#1342#0" expanded="true" />
-            <element signature="e#1371#1372#0" expanded="true" />
-            <element signature="e#1413#1414#0" expanded="true" />
-            <element signature="e#1680#1681#0" expanded="true" />
-            <element signature="e#1716#1717#0" expanded="true" />
-            <element signature="e#3367#3368#0" expanded="true" />
-            <element signature="e#3400#3401#0" expanded="true" />
+            <element signature="method#Num#0;class#Num#0" expanded="false" />
+            <element signature="method#Num#1;class#Num#0" expanded="false" />
+            <element signature="method#printList#0;class#Num#0" expanded="false" />
+            <element signature="method#toString#0;class#Num#0" expanded="false" />
+            <element signature="method#makeDec#0;class#Num#0" expanded="false" />
+            <element signature="method#trimNum#0;class#Num#0" expanded="false" />
+            <element signature="method#shift#0;class#Num#0" expanded="false" />
+            <element signature="method#divideUnsigned#0;class#Num#0" expanded="false" />
+            <element signature="method#copyNum#0;class#Num#0" expanded="false" />
+            <element signature="method#divide#0;class#Num#0" expanded="false" />
+            <element signature="method#mod#0;class#Num#0" expanded="false" />
+            <element signature="method#simpleMul#0;class#Num#0" expanded="false" />
+            <element signature="method#power#0;class#Num#0" expanded="false" />
+            <element signature="method#power#1;class#Num#0" expanded="false" />
+            <element signature="method#add#0;class#Num#0" expanded="false" />
+            <element signature="method#unsignedAdd#0;class#Num#0" expanded="false" />
+            <element signature="method#subtract#0;class#Num#0" expanded="false" />
+            <element signature="method#unsignedSubtract#0;class#Num#0" expanded="false" />
+            <element signature="method#squareRoot#0;class#Num#0" expanded="false" />
+            <element signature="method#average#0;class#Num#0" expanded="false" />
+            <element signature="method#compareTo#0;class#Num#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/cs6301/g21/ArrayStack.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="43" column="0" lean-forward="true" selection-start-line="43" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/cs6301/g21/Num.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="121" column="14" lean-forward="false" selection-start-line="121" selection-start-column="14" selection-end-line="121" selection-end-column="14" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#166#167#0" expanded="true" />
-            <element signature="e#206#207#0" expanded="true" />
-            <element signature="e#1081#1082#0" expanded="true" />
-            <element signature="e#1124#1125#0" expanded="true" />
-            <element signature="e#1153#1154#0" expanded="true" />
-            <element signature="e#1189#1190#0" expanded="true" />
-            <element signature="e#1228#1229#0" expanded="true" />
-            <element signature="e#1266#1267#0" expanded="true" />
-            <element signature="e#1304#1305#0" expanded="true" />
-            <element signature="e#1341#1342#0" expanded="true" />
-            <element signature="e#1371#1372#0" expanded="true" />
-            <element signature="e#1413#1414#0" expanded="true" />
-            <element signature="e#1680#1681#0" expanded="true" />
-            <element signature="e#1716#1717#0" expanded="true" />
-            <element signature="e#3367#3368#0" expanded="true" />
-            <element signature="e#3400#3401#0" expanded="true" />
+            <element signature="method#Num#0;class#Num#0" expanded="false" />
+            <element signature="method#Num#1;class#Num#0" expanded="false" />
+            <element signature="method#printList#0;class#Num#0" expanded="false" />
+            <element signature="method#toString#0;class#Num#0" expanded="false" />
+            <element signature="method#makeDec#0;class#Num#0" expanded="false" />
+            <element signature="method#trimNum#0;class#Num#0" expanded="false" />
+            <element signature="method#shift#0;class#Num#0" expanded="false" />
+            <element signature="method#divideUnsigned#0;class#Num#0" expanded="false" />
+            <element signature="method#copyNum#0;class#Num#0" expanded="false" />
+            <element signature="method#divide#0;class#Num#0" expanded="false" />
+            <element signature="method#mod#0;class#Num#0" expanded="false" />
+            <element signature="method#simpleMul#0;class#Num#0" expanded="false" />
+            <element signature="method#power#0;class#Num#0" expanded="false" />
+            <element signature="method#power#1;class#Num#0" expanded="false" />
+            <element signature="method#add#0;class#Num#0" expanded="false" />
+            <element signature="method#unsignedAdd#0;class#Num#0" expanded="false" />
+            <element signature="method#subtract#0;class#Num#0" expanded="false" />
+            <element signature="method#unsignedSubtract#0;class#Num#0" expanded="false" />
+            <element signature="method#squareRoot#0;class#Num#0" expanded="false" />
+            <element signature="method#average#0;class#Num#0" expanded="false" />
+            <element signature="method#compareTo#0;class#Num#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cs6301/g21/Num.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#Num#0;class#Num#0" expanded="false" />
+            <element signature="method#Num#1;class#Num#0" expanded="false" />
+            <element signature="method#printList#0;class#Num#0" expanded="false" />
+            <element signature="method#toString#0;class#Num#0" expanded="false" />
+            <element signature="method#makeDec#0;class#Num#0" expanded="false" />
+            <element signature="method#trimNum#0;class#Num#0" expanded="false" />
+            <element signature="method#shift#0;class#Num#0" expanded="false" />
+            <element signature="method#divideUnsigned#0;class#Num#0" expanded="false" />
+            <element signature="method#copyNum#0;class#Num#0" expanded="false" />
+            <element signature="method#divide#0;class#Num#0" expanded="false" />
+            <element signature="method#mod#0;class#Num#0" expanded="false" />
+            <element signature="method#simpleMul#0;class#Num#0" expanded="false" />
+            <element signature="method#power#0;class#Num#0" expanded="false" />
+            <element signature="method#power#1;class#Num#0" expanded="false" />
+            <element signature="method#add#0;class#Num#0" expanded="false" />
+            <element signature="method#unsignedAdd#0;class#Num#0" expanded="false" />
+            <element signature="method#subtract#0;class#Num#0" expanded="false" />
+            <element signature="method#unsignedSubtract#0;class#Num#0" expanded="false" />
+            <element signature="method#squareRoot#0;class#Num#0" expanded="false" />
+            <element signature="method#average#0;class#Num#0" expanded="false" />
+            <element signature="method#compareTo#0;class#Num#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cs6301/g21/Num.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#Num#0;class#Num#0" expanded="false" />
+            <element signature="method#Num#1;class#Num#0" expanded="false" />
+            <element signature="method#printList#0;class#Num#0" expanded="false" />
+            <element signature="method#toString#0;class#Num#0" expanded="false" />
+            <element signature="method#makeDec#0;class#Num#0" expanded="false" />
+            <element signature="method#trimNum#0;class#Num#0" expanded="false" />
+            <element signature="method#shift#0;class#Num#0" expanded="false" />
+            <element signature="method#divideUnsigned#0;class#Num#0" expanded="false" />
+            <element signature="method#copyNum#0;class#Num#0" expanded="false" />
+            <element signature="method#divide#0;class#Num#0" expanded="false" />
+            <element signature="method#mod#0;class#Num#0" expanded="false" />
+            <element signature="method#simpleMul#0;class#Num#0" expanded="false" />
+            <element signature="method#power#0;class#Num#0" expanded="false" />
+            <element signature="method#power#1;class#Num#0" expanded="false" />
+            <element signature="method#add#0;class#Num#0" expanded="false" />
+            <element signature="method#unsignedAdd#0;class#Num#0" expanded="false" />
+            <element signature="method#subtract#0;class#Num#0" expanded="false" />
+            <element signature="method#unsignedSubtract#0;class#Num#0" expanded="false" />
+            <element signature="method#squareRoot#0;class#Num#0" expanded="false" />
+            <element signature="method#average#0;class#Num#0" expanded="false" />
+            <element signature="method#compareTo#0;class#Num#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cs6301/g21/ArrayStack.java" />
+    <entry file="file://$PROJECT_DIR$/src/cs6301/g21/NUM_MYCOPY.java" />
+    <entry file="file://$PROJECT_DIR$/src/cs6301/g21/SubFunctions.java" />
+    <entry file="file://$PROJECT_DIR$/src/cs6301/Add and subtract methods.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="375" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#7183#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cs6301/g21/Driver34.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="580">
+          <caret line="121" column="62" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="152" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cs6301/g21/InfixToPostfix.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="342">
+          <caret line="97" column="0" lean-forward="true" selection-start-line="97" selection-start-column="0" selection-end-line="97" selection-end-column="0" />
+          <folding>
+            <element signature="method#needPostfix#0;class#InfixToPostfix#0" expanded="false" />
+            <element signature="method#infixToPostfix#0;class#InfixToPostfix#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cs6301/g21/Operation.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1134">
+          <caret line="89" column="0" lean-forward="false" selection-start-line="89" selection-start-column="0" selection-end-line="89" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#resolve#0;class#Operation#0" expanded="false" />
+            <element signature="method#toString#0;class#Operation#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cs6301/g21/Register.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="25" column="5" lean-forward="true" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
+          <folding>
+            <element signature="method#getLineNo#0;class#Register#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cs6301/g21/Num.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="367">
+          <caret line="352" column="27" lean-forward="false" selection-start-line="352" selection-start-column="27" selection-end-line="352" selection-end-column="27" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#Num#0;class#Num#0" expanded="false" />
+            <element signature="method#Num#1;class#Num#0" expanded="false" />
+            <element signature="method#printList#0;class#Num#0" expanded="false" />
+            <element signature="method#toString#0;class#Num#0" expanded="false" />
+            <element signature="method#makeDec#0;class#Num#0" expanded="false" />
+            <element signature="method#trimNum#0;class#Num#0" expanded="false" />
+            <element signature="method#shift#0;class#Num#0" expanded="false" />
+            <element signature="method#divideUnsigned#0;class#Num#0" expanded="false" />
+            <element signature="method#copyNum#0;class#Num#0" expanded="false" />
+            <element signature="method#divide#0;class#Num#0" expanded="false" />
+            <element signature="method#mod#0;class#Num#0" expanded="false" />
+            <element signature="method#simpleMul#0;class#Num#0" expanded="false" />
+            <element signature="method#power#0;class#Num#0" expanded="false" />
+            <element signature="method#power#1;class#Num#0" expanded="false" />
+            <element signature="method#add#0;class#Num#0" expanded="false" />
+            <element signature="method#unsignedAdd#0;class#Num#0" expanded="false" />
+            <element signature="method#subtract#0;class#Num#0" expanded="false" />
+            <element signature="method#unsignedSubtract#0;class#Num#0" expanded="false" />
+            <element signature="method#squareRoot#0;class#Num#0" expanded="false" />
+            <element signature="method#average#0;class#Num#0" expanded="false" />
+            <element signature="method#compareTo#0;class#Num#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cs6301/g21/LP1L4.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1538">
+          <caret line="99" column="23" lean-forward="true" selection-start-line="99" selection-start-column="23" selection-end-line="99" selection-end-column="23" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cs6301/g21/ShuntingYard.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="310">
+          <caret line="21" column="56" lean-forward="false" selection-start-line="21" selection-start-column="56" selection-end-line="21" selection-end-column="56" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cs6301/g21/Tokens.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="145">
+          <caret line="12" column="5" lean-forward="true" selection-start-line="12" selection-start-column="5" selection-end-line="12" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cs6301/g21/PostfixEvaluator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1476">
+          <caret line="83" column="4" lean-forward="false" selection-start-line="83" selection-start-column="4" selection-end-line="83" selection-end-column="4" />
+          <folding />
         </state>
       </provider>
     </entry>
