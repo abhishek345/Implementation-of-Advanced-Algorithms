@@ -76,10 +76,17 @@ public class Num {
         digits = new LinkedList<>();
     }
 
+    /**
+     * Change the base being used by Num class
+     * @param newbase: the new base
+     */
     public static void changeBase(long newbase){
         BASE = newbase;
     }
 
+    /**
+     * Print the internal representation of a list
+     */
     public void printList(){
         System.out.print(BASE + " : ");
         Iterator it = this.iterator();
@@ -87,6 +94,10 @@ public class Num {
             System.out.print(it.next() + " ");
     }
 
+    /**
+     * String representation of Num
+     * @return String: the String of number in base 10
+     */
     public String toString() {
         this.trimNum();
         Num n = makeDec(this);
@@ -99,6 +110,11 @@ public class Num {
         return s.toString();
     }
 
+    /**
+     * Create a Num of base 10 from a Num base BASE
+     * @param n: the number in base BASE
+     * @return Num: the number in base 10
+     */
     public static Num makeDec(Num n){
         long oldbase = BASE;
         changeBase(10);
@@ -116,6 +132,9 @@ public class Num {
         return current;
     }
 
+    /**
+     * Trim the leading zeros
+     */
     private void trimNum(){
         if(this.size() > 1) {
             boolean stop = false;
@@ -130,6 +149,9 @@ public class Num {
         }
     }
 
+    /**
+     * Get an iterator for Num
+     */
     public Iterator iterator(){
         return digits.iterator();
     }
@@ -153,14 +175,26 @@ public class Num {
         return digits.get(i);
     }
 
+    /**
+     * Add a value at the head of LinkedList of digits
+     * @param value: the long to be added
+     */
     public void addFirst(long value){
         digits.addFirst(value);
     }
 
+    /**
+     * Add a value at the tail of LinkedList of digits
+     * @param value: the long to be added
+     */
     public void addLast(long value){
         digits.addLast(value);
     }
 
+    /**
+     * Create a Num of base BASE from a String
+     * @param index: the number in base 10
+     */
     public void remove(int index){
         digits.remove(index);
     }
@@ -338,7 +372,7 @@ public class Num {
      * Simple modulus after invoking the division method
      * @param a : Dividend
      * @param b : Divisor
-     * @return Num: Reminder
+     * @return Num: Remainder
      */
     public static Num mod(Num a, Num b){
         if(a.compareTo(zero) < 0 || b.compareTo(zero) < 0)
@@ -347,6 +381,13 @@ public class Num {
         return subtract(a, product(divide(a, b), b));
     }
 
+    /**
+     * Split a Num at certain position and return the two parts
+     *
+     * @param n : Original Num to split
+     * @param position : position to split
+     * @return Num[] : having first part at index 0 and second part at index 1
+     */
     public static Num[] split(Num n, int position){
         Num[] ans = new Num[2];
         ans[0] = new Num();
@@ -362,6 +403,12 @@ public class Num {
         return ans;
     }
 
+    /**
+     * Signed multiplication of two numbers
+     * @param a : Operand 1
+     * @param b : Operand 2
+     * @return Num: Product
+     */
     public static Num product(Num a, Num b){
         Num answer;
         if(a.size() < 5 && b.size() < 5)
@@ -374,6 +421,12 @@ public class Num {
         return answer;
     }
 
+    /**
+     * Unsigned multiplication of two numbers using Divide and Conquer technique
+     * @param a : Operand 1
+     * @param b : Operand 2
+     * @return Num: Product
+     */
     public static Num karatsubaMul(Num a, Num b){
             int len;
 
@@ -423,7 +476,12 @@ public class Num {
 
             return ans;
    }
-
+    /**
+     * Unsigned multiplication of two numbers using iterative method
+     * @param a : Operand 1
+     * @param b : Operand 2
+     * @return Num: Product
+     */
     public static Num simpleMul(Num a, Num b){
         long value = 0;
         long carry = 0;
@@ -478,6 +536,13 @@ public class Num {
 
     }
 
+    /**
+     * Calculates 'a' to the power n, exponent value
+     *
+     * @param a : base Num object
+     * @param n : exponential value
+     * @return Num object that is the result of a^n
+     */
     static Num power(Num a, long n) {
         Num result;
         if(n==0)
@@ -496,7 +561,13 @@ public class Num {
         return result;
     }
 
-    // taking two Num objects as parameters
+    /**
+     * Calculates 'a' to the power n, exponent value. Both parameter are Num objects
+     *
+     * @param a : base value
+     * @param b : exponent value
+     * @return Num object that is the result of a^b
+     */
     public static Num power(Num a, Num b){
         Iterator value= b.iterator();
         Num result= new Num(1);
@@ -511,19 +582,29 @@ public class Num {
         }
         return result;
     }
-
+    
+    /**
+     * Function used to perform of addition of long integers 
+     * @param a : First number to be added of data type Num
+     * @param b : Second number to be added of data type Num
+     * @return : returns the addition of 2 numbers as a Num object
+     */
     public static Num add(Num a ,Num b){
         boolean signA = a.getSign();
         boolean signB = b.getSign();
         boolean outSign;
         Num tempResult;
+       
+        //Variables used to store the initial values with sign of a & b
         Num a1,b1;
 
+        //Set sign positive to compare numbers without sign and pass on the unsigned addition or unsigned subtraction
         a.setSign(false);
         b.setSign(false);
 
         int comp=a.compareTo(b);
 
+        //if a<b
         if(comp<0){
             a1=b;
             b1=a;
@@ -536,6 +617,7 @@ public class Num {
                     outSign=false;
             }
         }
+        //if a>b
         else if(comp>0){
             a1=a;
             b1=b;
@@ -548,6 +630,7 @@ public class Num {
                     outSign=false;
             }
         }
+        //if a==b
         else
         {
             a1=a;
@@ -558,23 +641,34 @@ public class Num {
                 outSign=false;
         }
 
+        //if both numbers have opposite sign, call unsigned subtraction
         if(signA!=signB){
             tempResult = unsignedSubtract(a1,b1);
 
         }
-
+        //if both numbers have same sign, call unsigned addition
         else
             tempResult = unsignedAdd(a1,b1);
 
         a.setSign(signA);
         b.setSign(signB);
+        
+        //set output sign to the final result Num object
         tempResult.setSign(outSign);
 
         return tempResult;
     }
 
+    /**
+     * Function used to perform of addition of long integers irrespective of the sign
+     * @param a : First number to be added of data type Num
+     * @param b : Second number to be added of data type Num
+     * @return : returns the addition of 2 numbers as a Num object
+     */
     public static Num unsignedAdd(Num a,Num b){
-        if(a.size() < 1)return b;
+        
+    	//Edge Cases
+    	if(a.size() < 1)return b;
         else if(b.size() < 1)return a;
 
         Iterator<Long> it1 = a.iterator();
@@ -585,7 +679,8 @@ public class Num {
         Long temp2 = it2.next();
 
         Num result = new Num();
-
+        
+        //Loop to compute addition of 2 numbers till both the numbers have valid digits
         while(temp1!=null && temp2!=null){
             Long sum = temp1 + temp2 + carry;
             result.addLast(sum%BASE);
@@ -606,6 +701,7 @@ public class Num {
             }
         }
 
+        //Loop to add up the digits of Number 1 if Number 2 gets empty
         while(temp1!=null){
             Long sum = temp1 + carry;
             result.addLast(sum%BASE);
@@ -619,6 +715,7 @@ public class Num {
             }
         }
 
+        //Loop to add up Number 2 if Number 1 gets empty
         while(temp2!=null){
             Long sum = temp2 + carry;
             result.addLast(sum%BASE);
@@ -632,25 +729,36 @@ public class Num {
             }
         }
 
+        //Check if carry still exists after addition
         if(carry>0)
             result.addLast(carry);
 
         return result;
     }
-
+    
+    /**
+     * Function used to perform of subtraction of long integers
+     * @param a : First number to be Subtracted of data type Num
+     * @param b : Second number to be subtracted from first number of data type Num
+     * @return : returns the subtraction of 2 numbers as a Num object
+     */
     public static Num subtract(Num a, Num b){
 
         boolean signA = a.getSign();
         boolean signB = b.getSign();
         Num tempResult;
         boolean outSign;
+       
+        //Variables used to store the original values and signs of a & b
         Num a1,b1;
 
+        //Set initial sign to positive and compare both numbers to further pass into unsigned addition or unsigned subtraction
         a.setSign(false);
         b.setSign(false);
 
         int comp = a.compareTo(b);
-
+        
+        //if a<b
         if(comp<0){
             a1=b;
             b1=a;
@@ -663,6 +771,7 @@ public class Num {
                     outSign=true;
             }
         }
+        //if a>b
         else if(comp>0){
             a1=a;
             b1=b;
@@ -675,6 +784,7 @@ public class Num {
                     outSign=false;
             }
         }
+        //if a==b
         else
         {
             a1=a;
@@ -685,28 +795,37 @@ public class Num {
                 outSign=false;
         }
 
+        //if both numbers are having opposite sign, call unsigned addition
         if(signA!=signB){
             tempResult = unsignedAdd(a1,b1);
 
         }
-
+        //if both numbers are having same sign, call unsigned subtraction
         else{
 
             tempResult = unsignedSubtract(a1,b1);
         }
-        //System.out.println(outSign);
+        
         a.setSign(signA);
         b.setSign(signB);
-
+        //Set final output sign to the final result Num object
         tempResult.setSign(outSign);
 
         return tempResult;
 
 
     }
-
+    
+    /**
+     * Function used to perform of Subtraction of long integers irrespective of the sign
+     * @param a : First number to be subtracted of data type Num
+     * @param b : Second number to be subtracted from first number of data type Num
+     * @return : returns the Subtraction of 2 numbers as a Num object
+     */
     public static Num unsignedSubtract(Num a,Num b){
-        if(a.size() < 1)return b;
+        
+    	//Edge cases
+    	if(a.size() < 1)return b;
         else if(b.size() < 1)return a;
 
         Iterator<Long> it1 = a.iterator();
@@ -717,8 +836,8 @@ public class Num {
         Long temp2 = it2.next();
 
         Num result = new Num();
-        String outStr = "";
 
+        //Loop to calculate subtraction when both the numbers are having valid digits
         while(temp1!=null && temp2!=null){
             if(carry){
                 if(temp1 == 0)
@@ -750,6 +869,7 @@ public class Num {
             }
         }
 
+        //Loop for Number 1 to be added when Number 2 gets empty
         while(temp1 != null){
             if(carry){
                 if(temp1 == 0)
@@ -910,14 +1030,5 @@ public class Num {
         }
         return 0;
     }
-
-//    public static void main(String args[]){
-//        Num n = new Num("125");
-//        Num n2 = new Num("5");
-//
-//        Num result = divide(n,n2);
-//        result.printList();
-//        System.out.print(result);
-//    }
 
 }
