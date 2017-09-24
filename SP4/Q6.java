@@ -25,14 +25,9 @@ public class Q6 {
         int num;
         int diff;
 
-        //checking for the end of the array case
-        if(arr[high] < arr.length){
-            diff = high-k;
-            for(int i=1; i< diff; i++){
-                num = arr[high]+i;
-                arrayList.add(num);
-            }
-        }
+        //base case of 1
+        if(arr[0] == 2)
+          arrayList.add(1);
 
         findKNum(arr, low, high);
 
@@ -62,12 +57,8 @@ public class Q6 {
         //change low or high to avg depending on where in array it is
         //print missing elements in between
         if(arr[avg] > (avg+1)){
-            if(avg > 0){
-                if(avg-1 == 0)
-                    diff = arr[avg] - 0; //this case added
-                else
-                    diff = arr[avg]-arr[avg-1];
-            }
+            if(avg > 0)
+                diff = arr[avg]-arr[avg-1];       
             else
                 diff = arr[avg]-1;
 
