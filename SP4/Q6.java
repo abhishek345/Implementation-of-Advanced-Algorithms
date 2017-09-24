@@ -21,7 +21,7 @@ public class Q6 {
     public static ArrayList<Integer> findKNum(int[] arr, int k){
 
         int low = 0;
-        int high = arr.length-1;
+        int high = arr.length; // removed -1 from here
         int num;
         int diff;
 
@@ -62,8 +62,12 @@ public class Q6 {
         //change low or high to avg depending on where in array it is
         //print missing elements in between
         if(arr[avg] > (avg+1)){
-            if(avg > 0)
-                diff = arr[avg]-arr[avg-1];
+            if(avg > 0){
+                if(avg-1 == 0)
+                    diff = arr[avg] - 0; //this case added
+                else
+                    diff = arr[avg]-arr[avg-1];
+            }
             else
                 diff = arr[avg]-1;
 
