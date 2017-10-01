@@ -4,10 +4,10 @@ import cs6301.g00.Shuffle;
 import cs6301.g00.Timer;
 
 /**
- * Implementation of Variations of Merge Sort on integer arrays
+ * Comaprision of Dual Pivot Quick Sort with Merge Sort
  *
- * @author Abhishek Jagwani, Shreya Vishwanath Rao, Umang Shah, Vibha Belavadi
- * @version 1.0 : 09/20/2017
+ * @author Vibha Belavadi, Umang Shah, Abhishek Jagwani, Shreya Vishwanath Rao, 
+ * @version 1.0 : 10/1/2017
  */
 
 public class Q4 {
