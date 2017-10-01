@@ -37,7 +37,7 @@ public class Q4 {
         timer.start();
         MergeSortVariations.mergeSort(array);
         timer.end();
-        System.out.println("Time for Merge Sort Variation 4 : " + timer.toString());
+        System.out.println("Time for best version of Merge Sort : " + timer.toString());
 
         /*timer.start();
         DualPivotPartition.dualPivotQS(array, 0, array.length - 1);
