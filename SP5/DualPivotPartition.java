@@ -1,66 +1,97 @@
+package cs6301.g21;
+
 import java.util.Random;
 
 public class DualPivotPartition{
-  
-  public static void DualPivotQS(T[] A, int p, int r){
-    if(p > r) return;
-    int x[] = Partition(A, p, r);
-    int k,i,j;
-    k = x[0]; i = x[1]; j = x[2];
-    DualPivotQS(A,p+1,k-1);
-    DualPivotQS(A,j+1,r-1);
-    if(A[k-1] != A[j+1])
-      DualPivotQS(A, j, i-1);
-  }
-  
-  public static int[] Partition(T[] A, int p, int r){
-    Random r = new Random(7);
-    int x1,x2;
-    x1 = p + r.nextInt(A.length-1);
-    x2 = p + r.nextInt(A.length-1);
-    int k,i,j;
-    k = p+1; i=p+1; j=r-1;
-    swap(A,x1,p);
-    swap(A,x2,r);
-    while(i < j){
-      if(A[i].compareTo(A[p]) >= 0 && A[i].compareTo(A[r]) <= 0)
-        i++;
-      else if(A[i].compareTo(A[p]) < 0){
-        swap(A, i, k);
-        i++;
-      }
-      else if(A[j].compareTo(A[r]) > 0)
-        j--;
-      else if(A[i].compareTo(A[r]) > 0 && A[j].compareTo(A[p]) < 0){
-        circleSwap(A, k, i, j);
-        k++; i++; j--;
-      }
-      else if(A[i].compareTo(A[r]) > 0 && A[j].compareTo(A[p]) >=0 && A[j].compareTo(A[r]) <= 0){
-        swap(A, i, j);
-        i++;
-        j--;
-      }
-    }
-    swap(A, p, k-1);
-    swap(A, j+1, r);
-    int[] ans = {k , i, j};
-    return ans;
-    
-  }
-  
-  static void swap(T[] A,int p1, int p2){
-    if(p1 != p2){
-      T temp = A[p1];
-      A[p1] = A[p2];
-      A[p2] = temp;
-    }
-  }
-  
-  static void circleSwap(T[] A, int x, int y, int z){
-    T temp = A[y];
-    A[y] = x;
-    A[x] = z;
-    A[z] = temp;
+  static Random rd;
+
+  public static void swap(int[] A, int x, int y){
+    int tmp = A[x];
+    A[x] = A[y];
+    A[y] = tmp;
   }
 
+  public static void circleSwap(int[] A,  int x, int y, int z){
+    int tmp = A[y];
+    A[y] = A[x];
+    A[x] = A[z];
+    A[z] = tmp;
+  }
+
+  public static void quickSort(int[] A, int p,int r){
+    System.out.println("qs: " + p + " , "+r);
+
+
+    if(p >= r) return;
+    if(r-p < 2){
+      InsertionSort.nSquareSort(A,p,r);
+      return;
+    }
+    rd = new Random();
+    int ans[] = partition(A, p, r);
+    int x1 = ans[0];
+    int x2 = ans[1];
+    int i = ans[2];
+    int j = ans[3];
+    int k = ans[4];
+    // System.out.println("x1 x2 i j k : ");
+    // for(int x: ans)
+    //   System.out.print(" > " +x);
+    // System.out.println();
+    quickSort(A, p, k-1);
+    quickSort(A, j+1, r);
+    // if(x1 != x2){
+    quickSort(A, k+1, j-1);
+    // }
+    // System.out.println("printing array: ");
+    // for(int a: A)
+    //   System.out.println(a);
+  }
+
+  public static int[] partition(int[] A, int p, int r){
+    int p1,p2;
+    p1 = rd.nextInt(r-1) + p;
+    p2 = rd.nextInt(r-1) + p;
+    if(A[p1] > A[p2]){
+      int tmp = p1;
+      p1 = p2;
+      p2 = tmp;
+    }
+    System.out.println(" pivots = " + p1 + " , " + p2);
+    swap(A, p1, p);
+    swap(A, p2, r);
+    int x1 = A[p];
+    int x2 = A[r];
+    int i = p+1; int k = p+1; int j = r-1;
+    while(i <= j){
+      if(A[i] < x1){
+        swap(A, i , k); k++;
+      }
+      else if(A[i] >= x2){
+        while(A[j] > x2 && i < j) j--;
+        swap(A, i, j);
+        j--;
+        if(A[i] < x1){
+          swap(A, i , k); k++;
+        }
+      }
+      i++;
+    }
+    k--;
+    j++;
+
+    swap(A, p, k);
+    swap(A, r, j);
+    int ans[] = {x1, x2, i, j, k};
+    return ans;
+  }
+
+  public static void main(String[] args) {
+    int arr[] = {6, 5, 7, 3, 1, 8, 2, 9};
+    quickSort(arr, 0, arr.length-1);
+    //swap(arr, 0, 3);
+    System.out.println("printing array: ");
+    for(int a: arr)
+      System.out.println(a);
+  }
 }
