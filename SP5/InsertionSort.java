@@ -36,27 +36,7 @@ public class InsertionSort {
      * @param arr   int array to be sorted
      */
     static void nSquareSort(int[] arr){
-
-        int tmp;
-
-        for(int i=1; i<arr.length; i++){
-
-            tmp = arr[i];
-            int j;
-
-            for(j=i-1; j>-1; j--){
-
-                if(tmp < arr[j]){
-                    arr[j+1] = arr[j];
-                }else
-                    break;
-
-            }
-
-            arr[j+1] = tmp;
-
-        }
-
+        nSquareSort(arr, 0, arr.length-1);
     }
 
 
@@ -91,3 +71,4 @@ public class InsertionSort {
 
 
 }
+
