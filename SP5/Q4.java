@@ -4,7 +4,7 @@ import cs6301.g00.Shuffle;
 import cs6301.g00.Timer;
 
 /**
- * Comaprision of Dual Pivot Quick Sort with Merge Sort
+ * Comparision of Dual Pivot Quick Sort with best version Merge Sort
  *
  * @author Vibha Belavadi, Umang Shah, Abhishek Jagwani, Shreya Vishwanath Rao, 
  * @version 1.0 : 10/1/2017
@@ -14,7 +14,7 @@ public class Q4 {
 
 
     /**
-     * Main function which calls various versions of merge sort
+     * Main function which compares of Dual Pivot Quick Sort with Merge Sort
      *
      * @param args : command line input
      */
