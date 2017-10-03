@@ -2,17 +2,25 @@
 
 package cs6301.g21;
 import java.util.Comparator;
+import java.util.NoSuchElementException;
 
 public class BinaryHeap<T> {
     T[] pq;
-    Comparator<T> c;
+    Comparator<T> comp;
+    int size=0;
     /** Build a priority queue with a given array q, using q[0..n-1].
      *  It is not necessary that n == q.length.
      *  Extra space available can be used to add new elements.
      */
     public BinaryHeap(T[] q, Comparator<T> comp, int n) {
-	pq = q;
-	c = comp;
+        pq = q;
+        this.comp = comp;
+        size = n;
+        buildHeap();
+    }
+
+    int parent(int i){
+        return (i-1)/2;
     }
 
     public void insert(T x) {
@@ -28,14 +36,32 @@ public class BinaryHeap<T> {
     }
 
     public void add(T x) { /* TO DO. Throw exception if q is full. */
+        if(pq.length == size)
+            throw new ArrayIndexOutOfBoundsException("Heap is full");
+        else{
+            pq[size] = x;
+            percolateUp(size);
+            size++;
+        }
     }
 
     public T remove() { /* TO DO. Throw exception if q is empty. */
-	return null;
+        if(size == 0)
+            throw new NoSuchElementException("Heap is empty");
+        else{
+            T minEle = pq[0];
+            pq[0] = pq[size--];
+            percolateDown(0);
+            return minEle;
+        }
     }
 
     public T peek() { /* TO DO. Throw exception if q is empty. */
-	return null;
+        if(size == 0)
+            throw new NoSuchElementException("Heap is empty");
+        else
+            return pq[0];
+
     }
 
     public void replace(T x) {
@@ -43,18 +69,47 @@ public class BinaryHeap<T> {
 	     (smaller) than root, and restore heap order.  Otherwise do nothing. 
 	   This operation is used in finding largest k elements in a stream.
 	 */
+	    if(comp.compare(x,pq[0]) < 0){
+	        //make x new root
+            T min2 = pq[0];
+            pq[0] = x;
+            add(min2);
+        }
     }
 
     /** pq[i] may violate heap order with parent */
     void percolateUp(int i) { /* to be implemented */
+        T x = pq[i];
+        while(i > 0 && comp.compare(x,pq[parent(i)]) < 0){
+            pq[i] = pq[parent(i)];
+            i = parent(i);
+        }
+        pq[i] = x;
     }
 
     /** pq[i] may violate heap order with children */
     void percolateDown(int i) { /* to be implemented */
+        T x = pq[i];
+        int c = 2*i + 1;
+        while(c <= size-1){
+            if(c < size - 1 && comp.compare(pq[c],pq[c+1]) > 0)
+                c++;
+            if(comp.compare(pq[c],x) <= 0)
+                return;
+            pq[i] = pq[c];
+            i = c;
+            c = 2*i + 1;
+        }
+        pq[i] = x;
     }
 
     /** Create a heap.  Precondition: none. */
     void buildHeap() {
+        if(size > 0){
+            for(int i = ((size+1)/2)-1; i >= 0; i-- ){
+                percolateDown(i);
+            }
+        }
     }
 
     /* sort array A[].
