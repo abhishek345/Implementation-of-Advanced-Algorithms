@@ -1,16 +1,41 @@
-// Ver 1.0:  Starter code for Indexed heaps
-
 package cs6301.g21;
+
 import java.util.Comparator;
 
 public class IndexedHeap<T extends Index> extends BinaryHeap<T> {
-    /** Build a priority queue with a given array q */
-    public IndexedHeap(T[] q, Comparator<T> comp, int n) {
-	super(q, comp, n);
+
+
+    IndexedHeap(T[] q, Comparator<T> comp, int n) {
+        super(q, comp, n);
     }
 
-    /** restore heap order property after the priority of x has decreased */
-    public void decreaseKey(T x) {
-	percolateUp(x.getIndex());
+    void decreaseKey(T x) {
+        percolateUp(x.getIndex());
     }
+
+    void buildHeap() {
+        super.buildHeap();
+        updateIndices();
+
+    }
+
+    void percolateUp(int i) {
+        super.percolateUp(i);
+        updateIndices();
+    }
+
+    void percolateDown(int i) {
+        super.percolateDown(i);
+        updateIndices();
+    }
+
+    //update indices after any operation
+    void updateIndices(){
+        
+        for (int j = 0; j <= size; j++) {
+            T temp = pq[j];
+            temp.putIndex(j);
+        }
+    }
+
 }
