@@ -113,10 +113,17 @@ public class BinaryHeap<T> {
     }
 
     /* sort array A[].
-       Sorted order depends on comparator used to buid heap.
+       Sorted order depends on comparator used to build heap.
        min heap ==> descending order
        max heap ==> ascending order
      */
-    public static<T> void heapSort(T[] A, Comparator<T> comp) { /* to be implemented */
+    public <T> void heapSort(T[] A, Comparator<T> comp) {
+
+        buildHeap();
+        
+        for(int i = A.length-1; i>0; i--){
+            A[i] = (T) remove();
+        }
+
     }
 }
