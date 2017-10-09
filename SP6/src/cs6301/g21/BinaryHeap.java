@@ -50,7 +50,7 @@ public class BinaryHeap<T> {
             throw new NoSuchElementException("Heap is empty");
         else{
             T minEle = pq[0];
-            pq[0] = pq[size--];
+            pq[0] = pq[--size];
             percolateDown(0);
             return minEle;
         }
@@ -70,10 +70,7 @@ public class BinaryHeap<T> {
 	   This operation is used in finding largest k elements in a stream.
 	 */
 	    if(comp.compare(x,pq[0]) < 0){
-	        //make x new root
-            T min2 = pq[0];
-            pq[0] = x;
-            add(min2);
+
         }
     }
 
@@ -94,7 +91,7 @@ public class BinaryHeap<T> {
         while(c <= size-1){
             if(c < size - 1 && comp.compare(pq[c],pq[c+1]) > 0)
                 c++;
-            if(comp.compare(pq[c],x) <= 0)
+            if(comp.compare(x,pq[c]) <= 0)
                 return;
             pq[i] = pq[c];
             i = c;
@@ -117,13 +114,11 @@ public class BinaryHeap<T> {
        min heap ==> descending order
        max heap ==> ascending order
      */
-    public <T> void heapSort(T[] A, Comparator<T> comp) {
-
-        buildHeap();
+    public static<T> void heapSort(T[] A, Comparator<T> comp) {
+        BinaryHeap<T> bheap = new BinaryHeap<>(A, comp, A.length);
         
-        for(int i = A.length-1; i>0; i--){
-            A[i] = (T) remove();
+        for(int i = A.length-1; i>=0; i--){
+            A[i] = bheap.remove();
         }
-
     }
 }
