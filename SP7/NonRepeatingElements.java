@@ -27,8 +27,8 @@ public class NonRepeatingElements {
 		Comparable[] bArray= new Comparable[bList.size()];
 		int count = 0;
 	
-		for(T item: bList){
-			bArray[count]=item;
+		for(T element : bList){
+			bArray[count] = element;
 			count++;
 		}
 		
