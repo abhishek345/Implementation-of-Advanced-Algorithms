@@ -1,5 +1,3 @@
-package cs6301.g21;
-
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Scanner;
@@ -141,7 +139,10 @@ public class BST<T extends Comparable<? super T>> implements Iterable<T> {
     /** TO DO: Iterate elements in sorted order of keys
      */
     public Iterator<T> iterator() {
-	return null;
+      if(root == null)
+      	return null;
+      else
+        return new TreeIterator<T>(root);
     }
 
     public static void main(String[] args) {
