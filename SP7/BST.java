@@ -34,6 +34,7 @@ public class BST<T extends Comparable<? super T>> implements Iterable<T> {
     }
     
     Entry<T> find(T x){
+      //System.out.println("stack cretaed");
     	stack = new Stack<Entry<T>>();
     	stack.push(null);
     	return find(root, x);
