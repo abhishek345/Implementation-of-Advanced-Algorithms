@@ -23,9 +23,11 @@ public class BST<T extends Comparable<? super T>> implements Iterable<T> {
 	size = 0;
     }
 
-    
-    
-
+	Entry<T> peekstack(){
+        if(stack != null && !stack.isEmpty())
+    	    return stack.peek();
+        return null;
+	}
     /** TO DO: Is x contained in tree?
      */
     public boolean contains(T x) {
@@ -79,27 +81,34 @@ public class BST<T extends Comparable<? super T>> implements Iterable<T> {
      *  If tree contains a node with same key, replace element by x.
      *  Returns true if x is a new element added to tree.
      */
-    public boolean add(T x) {
+    public boolean add(T x){
+        Entry<T> newEle = new Entry<>(x, null, null);
+        return addNode(newEle);
+    }
+
+    public boolean addNode(Entry<T> x) {
     	if(root == null){
-    		root = new Entry<>(x, null, null);
+    		root = x;
     		size = 1;
     		return true;
     	}
-    	Entry<T> t = find(x);
-    	int comp = x.compareTo(t.element);
+    	Entry<T> t = find(x.element);
+    	int comp = x.element.compareTo(t.element);
     	if(comp == 0){
-    		t.element = x;
+    		t.element = x.element;
     		return false;
     	}
     	else if(comp < 0)
-    		t.left = new Entry<>(x, null, null);
+    		t.left = x;
     	else
-    		t.right = new Entry<>(x, null, null);
+    		t.right = x;
     	
     	size++;
     	
     	return true;
     }
+
+
 
     /** TO DO: Remove x from tree. 
      *  Return x if found, otherwise return null
