@@ -2,7 +2,6 @@
 /** Starter code for AVL Tree
  */
 
-
 import java.util.Comparator;
 
 public class AVLTree<T extends Comparable<? super T>> extends BST<T> {
@@ -17,35 +16,38 @@ public class AVLTree<T extends Comparable<? super T>> extends BST<T> {
     AVLTree() {
 	super();
     }
-    /*
-    int height(Entry<T> u){
+
+    int height(BST.Entry<T> u){
       if(u == null) return -1;
       int lh = height(u.left);
       int rh = height(u.right);
       return 1 + max(lh, rh);
     }
     
-    int traversal(Entry<T> u, int d){
+    int traversal(BST.Entry<T> u, int d){
       if(u != null){
         int lh = traversal(u.left, d+1);
         int rh = traversal(u.right, d+1);
-        height = 1 + max(lh ,rh);
-        return height;
+        return 1 + max(lh ,rh);
+//        return height;
       }
       else return -1;
-    }*/
-    
+    }
+
     int max(int a, int b){
       return a > b ? a : b;
     }
     
     public boolean add(T x){
-      super.add(x);
-      //balance the tree
-      if(stack != null){
-        BST.Entry<T> t = stack.peek();  
-        System.out.println(t.element);
-      }
+        Entry<T> newEle = new Entry<>(x, null, null);
+        super.addNode(newEle);
+        //balance the tree
+        if(stack != null && ! stack.isEmpty()) {
+          while(! stack.isEmpty()){
+              BST.Entry<T> t = stack.pop();
+              if (t != null) System.out.println(t.element);
+          }
+      }//else just root node
       return true;
     }
     
@@ -54,8 +56,8 @@ public class AVLTree<T extends Comparable<? super T>> extends BST<T> {
       t.add(1); t.add(2); t.add(6);
       t.add(4); t.add(3); t.add(5);t.add(7);
       
-    //  for(Integer x: t)
-      //  System.out.println(x);
+//    for(Integer x: t)
+//      System.out.println(x);
     }
 }
 
