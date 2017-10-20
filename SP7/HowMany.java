@@ -7,7 +7,7 @@ public class HowMany {
 
 	static int howMany(int[] A, int X){
 		TreeMap<Integer, Integer> tMap = new TreeMap<>();
-		int count = 0, i = 0;
+		int count = 0, i = 0, result = 0, temp, count1, count2;
 		
 		for(int t : A){
 			if(tMap.containsKey(t)){
@@ -18,11 +18,26 @@ public class HowMany {
 				tMap.put(t, 1);
 		}
 		
-		for(int t : A){
-			if(t < X - t)
-				count += tMap.get(X-t);
-		}
 		
+		for(int t : tMap.keySet()){
+			temp = X - t;	
+			result = 0;
+			if(tMap.get(t) != null || tMap.get(temp) != 0){
+			   count2 = tMap.get(temp);
+			   count1 = tMap.get(t);
+			   
+			   
+			   if(temp == t){
+				   result = (count2*(count2-1))/2;
+			   }
+			   else{
+				   result = count2*count1;
+				   tMap.put(t, 0);
+				   tMap.put(temp, 0);
+			   }
+			}
+			count += result;
+		}
 		return count;
 	}
 	
