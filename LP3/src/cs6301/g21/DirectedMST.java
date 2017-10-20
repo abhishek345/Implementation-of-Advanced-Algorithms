@@ -65,6 +65,12 @@ public class DirectedMST {
     public void expand(){
         while(expanded.isEmpty()){
             //expand 1 by 1 from stack
+            //pop super node from stack
+            //resetDecrement()
+            //get vertices contained within it from hash map
+            //remove all edges associated to it by assigning null
+            //remove the edge (assign null)
+
         }
     }
 }
