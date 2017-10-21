@@ -65,7 +65,6 @@ public class AVLTree1<T extends Comparable<? super T>> extends BST<T> {
     }
 
     /* Function to insert data recursively */
-    //Does rebalancing only once: Need to fix it
     public boolean addNode(T x)
     {
         AVLTree1.Entry<T> newEle = new Entry<T>(x, null, null);
@@ -76,7 +75,7 @@ public class AVLTree1<T extends Comparable<? super T>> extends BST<T> {
             return false;
 
         //return true if stack has only root
-        if(stack == null || stack.peek() ==null) {
+        if(stack.peek() == null) {
             return true;
 
         }else{
@@ -89,6 +88,8 @@ public class AVLTree1<T extends Comparable<? super T>> extends BST<T> {
                 //update the height of the new parent
                 node = rebalace(curr.element, node);
                 setHeight(node);
+
+                curr = node;
 
             }
 
@@ -148,10 +149,15 @@ public class AVLTree1<T extends Comparable<? super T>> extends BST<T> {
     private AVLTree1.Entry<T> doubleWithRightChild(AVLTree1.Entry<T> node)
     {
         node.right = rotateWithLeftChild((Entry<T>) node.right);
-        return rotateWithRightChild( node );
+        return rotateWithRightChild(node);
     }
 
-    //check if the AVL tree needs to be rebalanced
+    /**
+     * Check if the AVL tree needs to be rebalanced
+     * @param val
+     * @param parent
+     * @return
+     */
     private AVLTree1.Entry<T> rebalace(T val, AVLTree1.Entry<T> parent){
 
         AVLTree1.Entry<T> lchild = (Entry<T>) parent.left;
@@ -159,15 +165,19 @@ public class AVLTree1<T extends Comparable<? super T>> extends BST<T> {
 
         int lHeight = getHeight(lchild);
         int rHeight = getHeight(rchild);
+        int diff = lHeight - rHeight;
 
         //check for balance conditions
-        if((lHeight - rHeight) == 2){
+        if(Math.abs(diff) == 1 | Math.abs(diff) == 0){
+            return parent;
+        }
+        else if(diff == 2){
             if(val.compareTo(lchild.getElement()) < 0)
                 parent = rotateWithLeftChild(parent);
             else
                 parent = doubleWithLeftChild(parent);
 
-        }else if((rHeight - lHeight) == 2){
+        }else if(diff == -2){
             if(val.compareTo(rchild.getElement()) > 0)
                 parent = rotateWithRightChild(parent);
             else
@@ -178,7 +188,7 @@ public class AVLTree1<T extends Comparable<? super T>> extends BST<T> {
         return parent;
     }
 
-    //need to modify this a little
+
     public T remove(T x){
 
         //call the BST remove method
@@ -186,9 +196,9 @@ public class AVLTree1<T extends Comparable<? super T>> extends BST<T> {
         if(result == null)
             return null;
 
-        AVLTree1.Entry<T> curr = null;
+        AVLTree1.Entry<T> curr = new AVLTree1.Entry<T>(x, null, null);
 
-        if(stack == null || stack.peek() ==null) {
+        if(stack.peek() == null) {
             return null;
 
         }else{
