@@ -162,7 +162,7 @@ public class BST<T extends Comparable<? super T>> implements Iterable<T> {
      * @param node
      * @return
      */
-    private Entry rotateWithLeftChild(Entry node)
+    protected Entry rotateWithLeftChild(Entry node)
     {
         int flag = 0;
         Entry n1;
@@ -186,7 +186,7 @@ public class BST<T extends Comparable<? super T>> implements Iterable<T> {
      * @param node
      * @return
      */
-    private Entry rotateWithRightChild(Entry node)
+    protected Entry rotateWithRightChild(Entry node)
     {
         int flag = 0;
         Entry n1;
@@ -212,7 +212,7 @@ public class BST<T extends Comparable<? super T>> implements Iterable<T> {
      * @param node
      * @return
      */
-    private Entry doubleWithLeftChild(Entry node)
+    protected Entry doubleWithLeftChild(Entry node)
     {
         node.left = rotateWithRightChild(node.left);
         return rotateWithLeftChild(node);
@@ -224,7 +224,7 @@ public class BST<T extends Comparable<? super T>> implements Iterable<T> {
      * @param node
      * @return
      */
-    private Entry doubleWithRightChild(Entry node)
+    protected Entry doubleWithRightChild(Entry node)
     {
         node.right = rotateWithLeftChild(node.right);
         return rotateWithRightChild(node);
