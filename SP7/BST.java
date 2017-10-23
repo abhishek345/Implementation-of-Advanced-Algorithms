@@ -157,6 +157,79 @@ public class BST<T extends Comparable<? super T>> implements Iterable<T> {
     }
 		
 
+    /**
+     * Rotate binary tree node with left child
+     * @param node
+     * @return
+     */
+    private Entry rotateWithLeftChild(Entry node)
+    {
+        int flag = 0;
+        Entry n1;
+
+        if(node.equals(root)) {
+            flag = -1;
+        }
+
+        n1 =  node.left;
+        node.left = n1.right;
+        n1.right = node;
+
+        if(flag == -1) {
+            root = n1;
+        }
+        return n1;
+    }
+
+    /**
+     * Rotate binary tree node with right child
+     * @param node
+     * @return
+     */
+    private Entry rotateWithRightChild(Entry node)
+    {
+        int flag = 0;
+        Entry n1;
+
+        if(node.equals(root)) {
+            flag = -1;
+        }
+
+        n1 = node.right;
+        node.right = n1.left;
+        n1.left = node;
+
+        if(flag == -1) {
+            root = n1;
+        }
+
+        return n1;
+    }
+
+    /**
+     * Double rotate binary tree node: first left child
+     * with its right child; then node k3 with new left child
+     * @param node
+     * @return
+     */
+    private Entry doubleWithLeftChild(Entry node)
+    {
+        node.left = rotateWithRightChild(node.left);
+        return rotateWithLeftChild(node);
+    }
+
+    /**
+     * Double rotate binary tree node: first right child
+     * with its left child; then node k1 with new right child
+     * @param node
+     * @return
+     */
+    private Entry doubleWithRightChild(Entry node)
+    {
+        node.right = rotateWithLeftChild(node.right);
+        return rotateWithRightChild(node);
+    }
+	
     public static void main(String[] args) {
 	BST<Integer> t = new BST<>();
         Scanner in = new Scanner(System.in);
