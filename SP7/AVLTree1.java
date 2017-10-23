@@ -9,12 +9,12 @@ public class AVLTree1<T extends Comparable<? super T>> extends BST<T> {
 
     static class Entry<T> extends BST.Entry<T> {
         int height;
-        int parent;
+        Entry<T> parent;
 
         Entry(T x, Entry<T> left, Entry<T> right) {
             super(x, left, right);
             height = 0;
-
+            parent = null;
         }
 
         public T getElement() {
@@ -43,8 +43,11 @@ public class AVLTree1<T extends Comparable<? super T>> extends BST<T> {
         return node.height;
     }
 
-
-
+    /**
+     * Update the height of the nodes
+     * @param node
+     * @return
+     */
     int setHeight(AVLTree1.Entry<T> node){
         if(node==null)
             return -1;
@@ -73,10 +76,23 @@ public class AVLTree1<T extends Comparable<? super T>> extends BST<T> {
         return  n1 > n2 ? n1 : n2;
     }
 
-    /* Function to insert data recursively */
-    public boolean addNode(T x)
-    {
+    /**
+     * Adds element to the AVL Tree
+     * @param x
+     * @return
+     */
+    public boolean add(T x){
         AVLTree1.Entry<T> curr = new Entry<T>(x, null, null);
+        return addNode(curr);
+    }
+
+    /**
+     * Function to insert data recursively
+     * @param curr
+     * @return
+     */
+    public boolean addNode(AVLTree1.Entry<T> curr)
+    {
 
         //return false if updated duplicate node
         if(!super.addNode(curr))
@@ -84,7 +100,7 @@ public class AVLTree1<T extends Comparable<? super T>> extends BST<T> {
 
         //return true if stack has only root
         if(stack == null){
-                return true;
+            return true;
 
         }else{
 
@@ -100,10 +116,19 @@ public class AVLTree1<T extends Comparable<? super T>> extends BST<T> {
 
                 //update the height of the new parent
                 node = rebalance(curr.getElement(), node);
+
+                //set height
                 setHeight(node);
 
-                //decrement the size of the stack
-                size--;
+                //parent updation: won't work
+                /*AVLTree1.Entry<T> par = (Entry<T>) stack.peek();
+                if(par != null){
+                    if(par.left.getElement().compareTo(node.getElement()) > 0)
+                        par.right = node;
+                    else
+                        par.left = node;
+                }*/
+
 
             }
 
@@ -119,11 +144,23 @@ public class AVLTree1<T extends Comparable<? super T>> extends BST<T> {
      */
     private AVLTree1.Entry<T> rotateWithLeftChild(AVLTree1.Entry<T> node)
     {
-        AVLTree1.Entry<T> n1 = (Entry<T>) node.left;
+        int flag = 0;
+        AVLTree1.Entry<T> n1;
+
+        if(node.equals(root)) {
+            flag = -1;
+        }
+
+        n1 = (Entry<T>) node.left;
         node.left = n1.right;
         n1.right = node;
-        setHeight(node);
+
         setHeight(n1);
+
+        if(flag == -1) {
+            root = n1;
+            root.parent = null;
+        }
         return n1;
     }
 
@@ -134,15 +171,38 @@ public class AVLTree1<T extends Comparable<? super T>> extends BST<T> {
      */
     private AVLTree1.Entry<T> rotateWithRightChild(AVLTree1.Entry<T> node)
     {
-        AVLTree1.Entry<T> n1 = (Entry) node.right;
-        node.right = n1.left;
-        n1.left = node;
-        if(node.equals(root)){
-            root = n1;
+        int flag = 0;
+        AVLTree1.Entry<T> n1;
+        AVLTree1.Entry<T> par = node.parent;
+
+        if(node.equals(root)) {
+            flag = -1;
         }
 
-        setHeight(node);
+        n1 = (Entry<T>) node.right;
+        if(n1.left != null)
+            n1.left.parent = node;
+        node.right = n1.left;
+        n1.left = node;
+        node.parent = n1;
+
+        //update the parent
+        if(par != null){
+            if(par.getElement().compareTo(n1.getElement()) > 0) {
+                n1.parent = par;
+                par.left = n1;
+            }else {
+                n1.parent = par;
+                par.right = n1;
+            }
+        }
+
         setHeight(n1);
+
+        if(flag == -1) {
+            root = n1;
+            root.parent = null;
+        }
         return n1;
     }
 
@@ -185,6 +245,9 @@ public class AVLTree1<T extends Comparable<? super T>> extends BST<T> {
         int diff = 0;
 
         //Find the difference in heights between left child and right child
+        if(lchild == null && rchild == null)
+            return parent;
+
         if(lchild == null && rchild != null){
             diff = - getHeight(rchild) - 1;
 
@@ -193,7 +256,6 @@ public class AVLTree1<T extends Comparable<? super T>> extends BST<T> {
 
         }else if(lchild != null && rchild !=null){
             diff = getHeight(lchild) - getHeight(rchild);
-
         }
 
         //check for balance conditions
@@ -241,7 +303,7 @@ public class AVLTree1<T extends Comparable<? super T>> extends BST<T> {
                 BST.Entry<T> node = stack.pop();
 
                 //check the balancing condition:
-                node = rebalance(curr.getElement(), ( Entry<T>) node);
+                node = rebalance(curr.getElement(), (Entry<T>) node);
 
                 //update the height of element
                 setHeight((Entry<T>) node);
@@ -264,16 +326,16 @@ public class AVLTree1<T extends Comparable<? super T>> extends BST<T> {
             t.add(val);
         }*/
 
-        t.addNode(1);
-        t.addNode(2);
-        t.addNode(3);
-        t.addNode(4);
-        t.addNode(5);
-        t.addNode(6);
-        t.addNode(8);
-        t.addNode(9);
-        t.addNode(7);
-        t.addNode(10);
+        t.add(1);
+        t.add(2);
+        t.add(3);
+        t.add(4);
+        t.add(5);
+        t.add(6);
+        t.add(8);
+        t.add(9);
+        t.add(7);
+        t.add(10);
 
         for(Integer x: t)
             System.out.println(x);
