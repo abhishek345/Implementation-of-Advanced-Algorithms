@@ -3,8 +3,20 @@ package cs6301.g21;
 import java.util.Scanner;
 import java.util.TreeMap;
 
-public class HowMany {
+/**
+ * Implementation of How many pairs of elements of Array A sum to X
+ * @author  Abhishek Jagwani, Shreya Vishwanath Rao, Umang Shah, Vibha Belavadi
+ * @version 1.0:10/15/2017
+ * @since 1.0
+ */
 
+public class HowMany {
+	/**
+	 * Class to find out number of pairs sum to integer X
+	 * @param A : input Array
+	 * @param X : Target Sum
+	 * @return : number of pairs sum to X
+	 */
 	static int howMany(int[] A, int X){
 		TreeMap<Integer, Integer> tMap = new TreeMap<>();
 		int count = 0, i = 0, result = 0, temp, count1, count2;
@@ -41,6 +53,10 @@ public class HowMany {
 		return count;
 	}
 	
+	/**
+	 * Main function
+	 * @param args : command line input
+	 */
 	public static void main(String[] args){
 		Scanner in = new Scanner(System.in);
 		System.out.println("Enter the size of array");
