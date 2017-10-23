@@ -39,6 +39,7 @@ public class BST<T extends Comparable<? super T>> implements Iterable<T> {
       //System.out.println("stack cretaed");
     	stack = new Stack<Entry<T>>();
     	stack.push(null);
+	stack.push(root);
     	return find(root, x);
     }
     
@@ -154,6 +155,7 @@ public class BST<T extends Comparable<? super T>> implements Iterable<T> {
       else
         return new TreeIterator<T>(root);
     }
+		
 
     public static void main(String[] args) {
 	BST<Integer> t = new BST<>();
