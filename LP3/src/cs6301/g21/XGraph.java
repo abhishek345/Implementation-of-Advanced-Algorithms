@@ -13,19 +13,25 @@
  **/
 
 package cs6301.g21;
-//import cs6301.g21.Graph.*;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.LinkedList;
-import java.util.Scanner;
-
+import java.util.*;
 
 
 public class XGraph extends Graph {
+    HashMap<XVertex, List<XVertex>> superNodeMap;
+    int cno;
+
     public static class XVertex extends Vertex {
         int weightDecrease = 0;
+        int cno;
+        int dis;
+        int fin;
+        int topno;
+        int indegree;
+
+        boolean seen;
         boolean disabled;
+        XVertex parent;
         List<XEdge> xadj;
 
         XVertex(Vertex u) {
@@ -34,9 +40,26 @@ public class XGraph extends Graph {
             xadj = new LinkedList<>();
         }
 
-        boolean isDisabled() { return disabled; }
+        void setSeen(boolean b){ seen = b; }
+        boolean getSeen(){ return seen; }
 
+        void setParent(XVertex p){ parent = p; }
+        XVertex getParent(){ return parent; }
+
+        void setDis(int b){ dis = b; }
+
+        void setFin(int b){ fin = b; }
+
+        void setVCno(int b){ cno = b; }
+        int getVCno(){ return cno; }
+
+        boolean isDisabled() { return disabled; }
         void disable() { disabled = true; }
+
+        void setTop(int b){ topno = b; }
+
+        void setInDegree(int b){ indegree = b; }
+        int getInDegree(){ return indegree; }
 
         @Override
         public Iterator<Edge> iterator() { return new XVertexIterator(this); }
@@ -111,6 +134,7 @@ public class XGraph extends Graph {
             x1.xadj.add(new XEdge(x1, x2, e.weight));
             }
         }
+        superNodeMap = new HashMap<>();
     }
 
     @Override
