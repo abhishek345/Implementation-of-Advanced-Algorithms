@@ -33,8 +33,8 @@ public class StronglyConnectedComponent {
 	 * @return  : int :the number of components
 	 */
 	static int stronglyConnectedComponents(Graph g)throws CyclicGraphException {
-	
-		LinkedList<Vertex> decFinList1 = Topological.toplogicalOrder2(g);
+		DFS.setCycleChecking(false);
+		LinkedList<XGraph.XVertex> decFinList1 = Topological.toplogicalOrder2(g);
 		
 		Graph gT = reverseGraph(g);
 		Iterator V= decFinList1.iterator();
@@ -96,7 +96,7 @@ public class StronglyConnectedComponent {
 	 * @throws FileNotFoundException :Exception if no file is provided as input or no file found
 	 */
 	public static void main(String[] args)throws FileNotFoundException,CyclicGraphException{
-		DFS.setCycleChecking(false);
+
         if(args.length > 0){
           Scanner sf = new Scanner(new File(args[0]));
           Graph graph = Graph.readDirectedGraph(sf);

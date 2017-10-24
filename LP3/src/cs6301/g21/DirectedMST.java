@@ -15,21 +15,23 @@ public class DirectedMST {
     }
 
     public int construct(List edgeList){
-        //make zero edge graph
         boolean stillPossibleToFindMST = true; // dummy
         while(stillPossibleToFindMST) {
             if (!zeroTree(edgeList)) {
                 //findSCC() - this should mark component nos
-                //using comp nos, shrink()
-                shrink();
+                shrink();//using comp nos, shrink()
                 return 0;
             }
             //else found mst, end.
             else {
                 expand();
                 //calc weight from edgeList and return
-                //optional: restore Graph to original state , reverse all actions
-                return 1;
+                int weight = 0;
+                for(Object xe: edgeList){
+                    weight += ((XGraph.XEdge) xe).getWeight();
+                }
+                return weight;
+                //optional: if not already done restore Graph to original state , reverse all actions
             }
         }
         return -1;
@@ -46,13 +48,12 @@ public class DirectedMST {
         //if it has all edges, it is mst
         //restore weights - XVertex.resetDecrement()
         //fill edges into edgeList also calc weight
-        //
         return true;
-        //else false
     }
 
     public void shrink(){
         //for vertices having same comp no do:
+
         //create super node super1;
             //super1 = XVertex.add(comp number) - should do the foll:
                 //create a vertex
@@ -63,14 +64,15 @@ public class DirectedMST {
     }
 
     public void expand(){
+        //test variables for expand
         while(expanded.isEmpty()){
             //expand 1 by 1 from stack
             //pop super node from stack
             //resetDecrement()
             //get vertices contained within it from hash map
-            //remove all edges associated to it by assigning null
-            //remove the edge (assign null)
-
+            //go through each vertex and enable edges
+            //remove all edges associated to super node by assigning null
+            //remove the super node (assign null)
         }
     }
 }
