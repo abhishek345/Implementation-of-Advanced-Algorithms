@@ -1,4 +1,3 @@
-
 /** @author rbk
  *  Ver 1.0: 2017/09/29
  *  Example to extend Graph/Vertex/Edge classes to implement algorithms in which nodes and edges
@@ -32,12 +31,13 @@ public class XGraph extends Graph {
         boolean seen;
         boolean disabled;
         XVertex parent;
-        List<XEdge> xadj;
+        List<XEdge> xadj, xrevAdj;
 
         XVertex(Vertex u) {
             super(u);
             disabled = false;
             xadj = new LinkedList<>();
+            xrevAdj = new LinkedList<>();
         }
 
         void setSeen(boolean b){ seen = b; }
@@ -60,10 +60,35 @@ public class XGraph extends Graph {
 
         void setInDegree(int b){ indegree = b; }
         int getInDegree(){ return indegree; }
+        
+        void setDecrement(int weight){
+        	weightDecrease = weight;
+        	Iterator<Edge> edges = revIterator();
+        	while(edges.hasNext()){
+        		XEdge e = (XEdge) edges.next();
+        		e.weight-=weight;
+        	}
+        	
+//        	for(XEdge e : revIterator()){
+//        		
+//        	}
+        }
+        
+        void resetDecrement(){
+//        	weightDecrease = weight;
+        	Iterator<Edge> edges = revIterator();
+        	while(edges.hasNext()){
+        		XEdge e = (XEdge) edges.next();
+        		e.weight+=weightDecrease;
+        	}
+        }
+        
 
         @Override
         public Iterator<Edge> iterator() { return new XVertexIterator(this); }
-
+        
+        public Iterator<Edge> revIterator() { return new XVertexIterator(this,true); }
+        
         class XVertexIterator implements Iterator<Edge> {
             XEdge cur;
             Iterator<XEdge> it;
@@ -71,6 +96,14 @@ public class XGraph extends Graph {
 
             XVertexIterator(XVertex u) {
             this.it = u.xadj.iterator();
+            ready = false;
+            }
+            
+            XVertexIterator(XVertex u, boolean rev){
+            if(rev == true)
+            	this.it = u.xrevAdj.iterator();
+            else
+            	this.it = u.xadj.iterator();
             ready = false;
             }
 
@@ -131,7 +164,9 @@ public class XGraph extends Graph {
             Vertex v = e.otherEnd(u);
             XVertex x1 = getVertex(u);
             XVertex x2 = getVertex(v);
-            x1.xadj.add(new XEdge(x1, x2, e.weight));
+            XEdge xedge = new XEdge(x1, x2, e.weight);
+            x1.xadj.add(xedge);
+            x2.revAdj.add(xedge);
             }
         }
         superNodeMap = new HashMap<>();
@@ -186,14 +221,12 @@ public class XGraph extends Graph {
         Graph g = Graph.readGraph(new Scanner(System.in));
 	XGraph xg = new XGraph(g);
 	Vertex src = xg.getVertex(1);
-
 	System.out.println("Node : Dist : Edges");
 	BFS b = new BFS(xg, src);
         b.bfs();
         Vertex farthest = DiameterTree.findFarthest(b);
 	xg.printGraph(b);
 	System.out.println("Source: " + src + " Farthest: " + farthest + " Distance: " + b.distance(farthest));
-
 	System.out.println("\nDisabling vertices 8 and 9");
 	xg.disable(8);
 	xg.disable(9);
@@ -203,7 +236,6 @@ public class XGraph extends Graph {
 	xg.printGraph(b);
 	System.out.println("Source: " + src + " Farthest: " + farthest + " Distance: " + b.distance(farthest));
     }
-
     void printGraph(BFS b) {
         for(Vertex u: this) {
             System.out.print("  " + u + "  :   " + b.distance(u) + "  : ");
@@ -212,14 +244,12 @@ public class XGraph extends Graph {
             }
             System.out.println();
         }
-
     }*/
 
 }
 
 /*
 Sample output:
-
 Node : Dist : Edges
   1  :   0  : (1,2)(1,3)
   2  :   1  : (2,1)(2,4)(2,5)
@@ -231,7 +261,6 @@ Node : Dist : Edges
   8  :   3  : (8,4)
   9  :   3  : (9,7)
 Source: 1 Farthest: 8 Distance: 3
-
 Disabling vertices 8 and 9
   1  :   0  : (1,2)(1,3)
   2  :   1  : (2,1)(2,4)(2,5)
@@ -241,5 +270,4 @@ Disabling vertices 8 and 9
   6  :   2  : (6,3)
   7  :   2  : (7,3)
 Source: 1 Farthest: 4 Distance: 2
-
 */
