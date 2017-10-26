@@ -74,7 +74,9 @@ public class DirectedMST {
      * @param C no of components that will be present in current graph
      */
     public void shrink(int C){
+        //hold the vertices within each component
         ArrayList<List<XGraph.XVertex>> componentVertices = new ArrayList<>();
+        //init to empty components
         for(int i=0;i < C; i++){
             componentVertices.add(new ArrayList<>());
         }
@@ -82,46 +84,77 @@ public class DirectedMST {
         for(Graph.Vertex u: dirGraph){
             //store vertices in respective list.
             XGraph.XVertex uX = (XGraph.XVertex) u;
+            //add to corresp component list, where index i = component i
             componentVertices.get(uX.getVCno()).add(uX);
         }
         //find and record edges to other components
         ArrayList<List<XGraph.XEdge>> minEdges = new ArrayList<>();
+        //go through vertices in each component
         for(List vertexList: componentVertices){
-            minEdges.add(new ArrayList<>());
+            //minEdges.add(new ArrayList<>());
+            //outgoing min edge to all reachable components
+            HashMap<Integer, XGraph.XEdge> temp = new HashMap<>();
+            //go through edges of each vertex
             for(Object uX: vertexList){
                 Iterator eItr = ((XGraph.XVertex)uX).iterator();
                 while(eItr.hasNext()){
+                    XGraph.XEdge e = ((XGraph.XEdge) eItr.next());
+                    //comp no of To vertex
+                    int cnum = ((XGraph.XVertex)e.to).getVCno();
+                    int wt = e.weight;
+                    XGraph.XEdge minE = temp.get(cnum);
+                    //track and update min outgoing edge to each Cj from current comp Ci
+                    if(minE == null){
+                        temp.put(cnum, e);
+                    }else{
+                        if(wt < minE.weight){
+                            temp.put(cnum, e);
+                        }
+                    }
 
                 }
+                ((XGraph.XVertex) uX).disable();
             }
+            //minEdges.add(new ArrayList<>());
+            ArrayList<XGraph.XEdge> tempList = new ArrayList<>();
+            for(Map.Entry<Integer, XGraph.XEdge> m: temp.entrySet()){
+                //disable these edges
+                m.getValue().disabled = true;
+                tempList.add(m.getValue());
+            }
+            minEdges.add(tempList);
+            //disable original edges, only newly added edges betw supernode are active now
         }
+        //create super node super1;
         List<XGraph.XVertex> newNodes = XGraph.createComponents(minEdges);
+        //super1 = XVertex.add(comp number) - should do the foll:
+        //create a vertex
+        //add to hash map as <xvertex, list<xvertex>> this will be used for restoring
+        //find min edge from incoming vertices, add it as new edges to super1.
+        //min edges will be recorded during component iteration, keep just these edges, disable the rest
+        //create new edges between every Ci, Cj which has an edge from prev step
         for(int i=0;i < C;i++){
             //array list so it is ok to use for loop
             supernodeMap.put(newNodes.get(i), componentVertices.get(i));
+            //stack.push(super1);
             expanded.push(newNodes.get(i));
         }
-        //create super node super1;
-            //super1 = XVertex.add(comp number) - should do the foll:
-                //create a vertex
-                //add to hash map as <xvertex, list<xvertex>> this will be used for restoring
-                //find min edge from incoming vertices, add it as new edges to super1.
-                    //min edges will be recorded during component iteration, keep just these edges, disable the rest
-                    //create new edges between every Ci, Cj which has an edge from prev step
-                    //disable original edges, only newly added edges betw supernode are active now
 
-                //disable all other edges
-        //stack.push(super1);
     }
 
     public void expand(){
         //test variables for expand
-        while(expanded.isEmpty()){
-            //expand 1 by 1 from stack
+
+        //expand 1 by 1 from stack
+        while(!expanded.isEmpty()){
             //pop super node from stack
+            XGraph.XVertex supernode = expanded.pop();
             //get vertices contained within it from hash map
-            //go through each vertex and enable edges
+            List<XGraph.XVertex> vList = supernodeMap.get(supernode);
             //remove all edges associated to super node by assigning null
+
+            //go through each vertex and enable edges
+
             //remove the super node (assign null)
         }
     }
