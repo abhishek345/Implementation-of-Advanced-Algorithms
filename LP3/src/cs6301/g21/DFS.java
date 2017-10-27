@@ -58,7 +58,7 @@ public class DFS {
         decFinList= new LinkedList<>();
 
         for(int i=0;i<ge.size();i++){
-            XGraph.XVertex temp = (XGraph.XVertex) ge.getVertex(i);
+            XGraph.XVertex temp = (XGraph.XVertex) ge.getVertex(i+1);
             temp.setSeen(false);
             temp.setParent(null);
         }
@@ -87,7 +87,7 @@ public class DFS {
         u.setDis(++time);
         u.setVCno(ge.cno);
 
-        Iterator adjEdges = u.adj.iterator();
+        Iterator adjEdges = u.xadj.iterator();
 
         while(adjEdges.hasNext()){
             XGraph.XEdge e = (XGraph.XEdge)adjEdges.next();
