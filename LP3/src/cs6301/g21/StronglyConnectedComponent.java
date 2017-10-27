@@ -32,20 +32,22 @@ public class StronglyConnectedComponent {
 	 * @param g : graph whose Strongly Connected Component are determined 
 	 * @return  : int :the number of components
 	 */
-	static int stronglyConnectedComponents(Graph g)throws CyclicGraphException {
+	static int stronglyConnectedComponents(XGraph g)throws CyclicGraphException {
 		DFS.setCycleChecking(false);
 		LinkedList<XGraph.XVertex> decFinList1 = Topological.toplogicalOrder2(g);
 		
-		Graph gT = reverseGraph(g);
+//		Graph gT = reverseGraph(g);
+		g.reverseGraph();
 		Iterator V= decFinList1.iterator();
 		
 		LinkedList<Vertex> finOrder = new LinkedList<Vertex>();
 		while(V.hasNext()){
 			int vName=((Vertex)V.next()).getName();
-			finOrder.add(gT.getVertex(vName+1));
+			finOrder.add(g.getVertex(vName+1)); //changed gT to g
 		}
 		
-		findComponents(gT,finOrder);
+		findComponents(g,finOrder); //changed gT to g
+		g.reverseGraph();
 		
 		return ge.cno;
 	}
@@ -57,21 +59,21 @@ public class StronglyConnectedComponent {
 	 * @param g : graph whose edges have to be reverses
 	 * @return  : Graph :reversed graph
 	 */
-	static Graph reverseGraph(Graph g){
-		Graph gT= new Graph(g.size());
-		gT.directed=true;
-		
-		Iterator<Vertex> vertices= g.iterator();
-		
-		while(vertices.hasNext()){
-			Vertex v = (Vertex)vertices.next();
-			
-			int vName = v.getName();
-			gT.getVertex(vName+1).adj=v.revAdj;
-			gT.getVertex(vName+1).revAdj=v.adj;
-		}
-		return gT;
-	}
+//	static Graph reverseGraph(Graph g){
+//		Graph gT= new Graph(g.size());
+//		gT.directed=true;
+//		
+//		Iterator<Vertex> vertices= g.iterator();
+//		
+//		while(vertices.hasNext()){
+//			Vertex v = (Vertex)vertices.next();
+//			
+//			int vName = v.getName();
+//			gT.getVertex(vName+1).adj=v.revAdj;
+//			gT.getVertex(vName+1).revAdj=v.adj;
+//		}
+//		return gT;
+//	}
 	
 	/**
 	 * 
@@ -95,15 +97,16 @@ public class StronglyConnectedComponent {
 	 * @param args : command line arguments
 	 * @throws FileNotFoundException :Exception if no file is provided as input or no file found
 	 */
-	public static void main(String[] args)throws FileNotFoundException,CyclicGraphException{
-
-        if(args.length > 0){
-          Scanner sf = new Scanner(new File(args[0]));
-          Graph graph = Graph.readDirectedGraph(sf);
-          int count= stronglyConnectedComponents(graph);
-          System.out.println("Number of Components="+count);
-        }
-		
-	}
+//	public static void main(String[] args)throws FileNotFoundException,CyclicGraphException{
+//
+//        if(args.length > 0){
+//          Scanner sf = new Scanner(new File(args[0]));
+//          Graph graph = Graph.readDirectedGraph(sf);
+//          XGraph x= new XGraph(graph);
+//          int count= stronglyConnectedComponents(x);
+//          System.out.println("Number of Components="+count);
+//        }
+//		
+//	}
 	
 }
