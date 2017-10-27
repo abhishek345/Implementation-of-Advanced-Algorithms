@@ -70,7 +70,7 @@ public class XGraph extends Graph {
         		XEdge e = (XEdge) edges.next();
         		e.weight-=weight;
 			if(e.weight > 0)
-        			disable();
+        			e.disable();
         	}
         	
 //        	for(XEdge e : revIterator()){
@@ -84,7 +84,7 @@ public class XGraph extends Graph {
         	while(edges.hasNext()){
         		XEdge e = (XEdge) edges.next();
         		e.weight+=weightDecrease;
-			enable();
+			e.enable();
         	}
         }
         
@@ -146,7 +146,10 @@ public class XGraph extends Graph {
 	    super(from, to, weight);
 	    disabled = false;
 	}
-
+	    
+	void disable(){ disabled = true; }
+	void enable(){ disabled = false; }
+	    
 	boolean isDisabled() {
 		XVertex xfrom = (XVertex) from;
 		XVertex xto = (XVertex) to;
