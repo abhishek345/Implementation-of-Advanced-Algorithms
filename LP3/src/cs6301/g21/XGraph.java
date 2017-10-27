@@ -216,6 +216,51 @@ public class XGraph extends Graph {
 	XVertex u = (XVertex) getVertex(i);
 	u.disable();
     }
+	
+    /**
+     * Creates super nodes and adds them to the vertices array
+     * 
+     * @param minEdges list of edges that come out of each component in the graph
+     * @return List of super node vertices
+     */
+    public List<XVertex> createComponents(ArrayList<List<XEdge>> minEdges){
+    	List<XVertex> newNodes = new ArrayList<XVertex>();
+
+    	if(minEdges==null)
+    		return newNodes;
+    	
+    	int numOfComp=minEdges.size();
+    	
+    	if((n+ numOfComp)>=xv.length){
+    		XVertex[] newXV= new XVertex[2*xv.length];
+    		newXV= Arrays.copyOf(xv, xv.length);
+    		xv= newXV;
+    	}
+    	
+    	int i=0;
+    	for(List<XEdge> edgeList: minEdges){
+    		for(XEdge e : edgeList){
+    			XVertex newFrom=(XVertex) getVertex(n+i);
+    			
+    			XVertex to = (XVertex) e.otherEnd(newFrom);
+    			XVertex newTo=(XVertex) getVertex(n+to.getName());
+    			
+    			int weight = e.getWeight();
+    			
+    			XEdge newEdge = new XEdge(newFrom,newTo,weight);
+    			newFrom.xadj.add(newEdge);
+    			newTo.revAdj.add(newEdge);
+    			m++;
+    		}
+    	}
+
+    	for(i=n;i<n+numOfComp;i++){
+    		newNodes.add((XVertex) getVertex(i));
+    	}
+    	
+    	n+=numOfComp;
+    	return newNodes;
+    }
     /*
     public static void main(String[] args) {
         Graph g = Graph.readGraph(new Scanner(System.in));
