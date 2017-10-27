@@ -245,6 +245,10 @@ public class XGraph extends Graph {
     		xv= newXV;
     	}
     	
+    	for(int i=n;i<n+numOfComp;i++){
+    		xv[i]=new XVertex(new Vertex(i));
+    	}
+    	
     	int i=0;
     	for(List<XEdge> edgeList: minEdges){
     		for(XEdge e : edgeList){
@@ -269,6 +273,7 @@ public class XGraph extends Graph {
     	n+=numOfComp;
     	return newNodes;
     }
+
     /*
     public static void main(String[] args) {
         Graph g = Graph.readGraph(new Scanner(System.in));
