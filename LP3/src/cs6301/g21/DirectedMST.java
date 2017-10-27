@@ -101,7 +101,11 @@ public class DirectedMST {
             //reset minWeight for next vertex
             minWeight = Integer.MAX_VALUE;
         }
-
+//        for(Graph.Vertex u : dirGraph){
+//        	XGraph.XVertex uX = (XGraph.XVertex) u;
+//        	for(Graph.Edge v : uX)
+//        		System.out.println((XGraph.XEdge)v);
+//        }
 
         //try bfs/dfs from root use only zero edges
         //if it has traversed all vertices, it is mst
@@ -129,12 +133,13 @@ public class DirectedMST {
                 XGraph.XEdge xEdge = (XGraph.XEdge) edgeIterator.next();
                 if(xEdge.weight == 0) {
                     edgeList.add(xEdge);
+                    System.out.println(xEdge);
                 }
             }
             w = w + v.weightDecrease;
             v.resetDecrement();
         }
-        System.out.println(edgeList.size());
+//        System.out.println(edgeList.size());
         //return weight
         return w;
     }
