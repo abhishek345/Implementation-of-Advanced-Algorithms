@@ -55,6 +55,8 @@ public class XGraph extends Graph {
 
         boolean isDisabled() { return disabled; }
         void disable() { disabled = true; }
+	    
+	void enable() { disabled = false; }
 
         void setTop(int b){ topno = b; }
 
@@ -67,6 +69,8 @@ public class XGraph extends Graph {
         	while(edges.hasNext()){
         		XEdge e = (XEdge) edges.next();
         		e.weight-=weight;
+			if(e.weight > 0)
+        			disable();
         	}
         	
 //        	for(XEdge e : revIterator()){
@@ -80,6 +84,7 @@ public class XGraph extends Graph {
         	while(edges.hasNext()){
         		XEdge e = (XEdge) edges.next();
         		e.weight+=weightDecrease;
+			enable();
         	}
         }
         
