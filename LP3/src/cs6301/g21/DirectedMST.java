@@ -16,6 +16,7 @@ public class DirectedMST {
         //create XGraph from g
         dirGraph = new XGraph(g);
         root = dirGraph.getVertex(start);
+
     }
 
     /**
@@ -24,9 +25,14 @@ public class DirectedMST {
      * @return weight of mst
      */
     public int construct(List edgeList){
+        supernodeMap = new HashMap<>();
+        expanded = new Stack<>();
         boolean stillPossibleToFindMST = true; // dummy
         while(stillPossibleToFindMST) {
-            if (zeroTree(edgeList) < 0) {
+            System.out.println("Find tree ");
+            int weight = zeroTree(edgeList);
+            if (weight < 0) {
+                System.out.println("Need shrinking ");
                 int comp = 0;
                 try {
                     comp = StronglyConnectedComponent.stronglyConnectedComponents(dirGraph);
@@ -36,17 +42,20 @@ public class DirectedMST {
                     //exception will never be generated as cycle checking is disabled
                 }
                 //findSCC() - this should mark component nos
+                System.out.println(comp + " - no of components ");
                 shrink(comp);//using comp nos, shrink()
-                return 0;
+                //return 0;
             }
             //else found mst, end.
             else {
+                System.out.println("Weight not -1");
+                /*
                 expand();
                 //calc weight from edgeList and return
                 int weight = 0;
                 for(Object xe: edgeList){
                     weight += ((XGraph.XEdge) xe).getWeight();
-                }
+                }*/
                 return weight;
                 //optional: if not already done restore Graph to original state , reverse all actions
             }
@@ -70,12 +79,18 @@ public class DirectedMST {
             Iterator<Graph.Edge> edgeIterator = xcur.revIterator();
 
             //if no incoming edge exists, move on to next vertex
-            if(xcur.revAdj.size() == 0)
+//            if(xcur.revAdj.size() == 0)
+//                continue;
+            XGraph.XEdge x;
+            if(!edgeIterator.hasNext())
                 continue;
-
             //pick min weight
+            else {
+                x = (XGraph.XEdge) edgeIterator.next();
+                minWeight = x.weight;
+            }
             while (edgeIterator.hasNext()){
-                XGraph.XEdge x = (XGraph.XEdge) edgeIterator.next();
+                x = (XGraph.XEdge) edgeIterator.next();
                 if(x.weight < minWeight)
                     minWeight = x.weight;
             }
@@ -102,12 +117,15 @@ public class DirectedMST {
             if(xcur.seen == false)
                 return -1;
         }
+        System.out.println("Found MST ");
 
         //restore weights
         for(XGraph.XVertex v : xVertices){
+            System.out.println("v: " + v);
             //fill edges into edgeList also calc weight
             Iterator<Graph.Edge> edgeIterator = v.revIterator();
             while (edgeIterator.hasNext()){
+
                 XGraph.XEdge xEdge = (XGraph.XEdge) edgeIterator.next();
                 if(xEdge.weight == 0) {
                     edgeList.add(xEdge);
@@ -116,35 +134,22 @@ public class DirectedMST {
             w = w + v.weightDecrease;
             v.resetDecrement();
         }
-
+        System.out.println(edgeList.size());
         //return weight
         return w;
     }
-    /*
-    public int zeroTree(List edgeList){
-        //for each vertex in dirGraph
-        //go through all incoming edges (revEdge)
-        //pick min weight
-        //set XVertex.setDecrement(min weight) - this will subtract weight from the edges
-        //disable non zero edges
 
-        //try bfs/dfs from root use only zero edges
-        //if it has all edges, it is mst
-        //restore weights - XVertex.resetDecrement()
-        //fill edges into edgeList also calc weight
-        //return weight
-        return -1;
-    }*/
 
     /**
      *
      * @param C no of components that will be present in current graph
      */
     public void shrink(int C){
+        System.out.println("Now shrinking ");
         //hold the vertices within each component
         ArrayList<List<XGraph.XVertex>> componentVertices = new ArrayList<>();
         //init to empty components
-        for(int i=0;i < C; i++){
+        for(int i=0;i <= C; i++){
             componentVertices.add(new ArrayList<>());
         }
         //get vertex iterator, start at some u
@@ -200,7 +205,7 @@ public class DirectedMST {
         //find min edge from incoming vertices, add it as new edges to super1.
         //min edges will be recorded during component iteration, keep just these edges, disable the rest
         //create new edges between every Ci, Cj which has an edge from prev step
-        for(int i=0;i < C;i++){
+        for(int i=0;i <= C;i++){
             //array list so it is ok to use for loop
             supernodeMap.put(newNodes.get(i), componentVertices.get(i));
             //stack.push(super1);

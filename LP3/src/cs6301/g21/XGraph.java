@@ -69,7 +69,9 @@ public class XGraph extends Graph {
         	while(edges.hasNext()){
         		XEdge e = (XEdge) edges.next();
         		e.weight-=weight;
-			if(e.weight > 0)
+        		if(e.weight == 0)
+                    System.out.println(e + " is 0");
+			    if(e.weight > 0)
         			e.disable();
         	}
         	
@@ -232,7 +234,7 @@ public class XGraph extends Graph {
      * @return List of super node vertices
      */
     public List<XVertex> createComponents(ArrayList<List<XEdge>> minEdges){
-    	List<XVertex> newNodes = new ArrayList<XVertex>();
+    	List<XVertex> newNodes = new ArrayList<>();
 
     	if(minEdges==null)
     		return newNodes;
@@ -251,10 +253,10 @@ public class XGraph extends Graph {
     	int i=0;
     	for(List<XEdge> edgeList: minEdges){
     		for(XEdge e : edgeList){
-    			XVertex newFrom=(XVertex) getVertex(n+i);
+    			XVertex newFrom=(XVertex) getVertex(((XVertex)e.from).getVCno() + n);
     			
     			XVertex to = (XVertex) e.otherEnd(newFrom);
-    			XVertex newTo=(XVertex) getVertex(n+to.getName());
+    			XVertex newTo=(XVertex) getVertex(n+to.getVCno());
     			
     			int weight = e.getWeight();
     			
@@ -262,6 +264,7 @@ public class XGraph extends Graph {
     			newFrom.xadj.add(newEdge);
     			newTo.revAdj.add(newEdge);
     			m++;
+    			i++;
     		}
     	}
 
