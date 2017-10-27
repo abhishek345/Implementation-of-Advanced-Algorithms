@@ -240,8 +240,7 @@ public class XGraph extends Graph {
     	int numOfComp=minEdges.size();
     	
     	if((n+ numOfComp)>=xv.length){
-    		XVertex[] newXV= new XVertex[2*xv.length];
-    		newXV= Arrays.copyOf(xv, xv.length);
+    		XVertex[] newXV= Arrays.copyOf(xv, 2*xv.length);
     		xv= newXV;
     	}
     	

@@ -54,6 +54,73 @@ public class DirectedMST {
         return -1;
     }
 
+    public int zeroTree(List<XGraph.XEdge> edgeList){
+
+        int w = 0;
+
+        //minWeight is used to get minWeight for each vertex
+        int minWeight = Integer.MAX_VALUE;
+
+        //iterate through each vertex in dirGraph
+        XGraph.XGraphIterator it = (XGraph.XGraphIterator) dirGraph.iterator();
+        while (it.hasNext()){
+
+            //get the current vertex
+            XGraph.XVertex xcur = (XGraph.XVertex) it.next();
+            Iterator<Graph.Edge> edgeIterator = xcur.revIterator();
+
+            //if no incoming edge exists, move on to next vertex
+            if(xcur.revAdj.size() == 0)
+                continue;
+
+            //pick min weight
+            while (edgeIterator.hasNext()){
+                XGraph.XEdge x = (XGraph.XEdge) edgeIterator.next();
+                if(x.weight < minWeight)
+                    minWeight = x.weight;
+            }
+
+            //subtract minWeight from the edges for each vertex
+            xcur.setDecrement(minWeight);
+
+            //reset minWeight for next vertex
+            minWeight = Integer.MAX_VALUE;
+        }
+
+
+        //try bfs/dfs from root use only zero edges
+        //if it has traversed all vertices, it is mst
+        LinkedList<XGraph.XVertex> xVertices = null;
+        try {
+            xVertices = DFS.DFSCall(dirGraph);
+        } catch (CyclicGraphException e) {
+            //wont be thrown
+        }
+        XGraph.XGraphIterator it1 = (XGraph.XGraphIterator) dirGraph.iterator();
+        while (it1.hasNext()){
+            XGraph.XVertex xcur = (XGraph.XVertex) it1.next();
+            if(xcur.seen == false)
+                return -1;
+        }
+
+        //restore weights
+        for(XGraph.XVertex v : xVertices){
+            //fill edges into edgeList also calc weight
+            Iterator<Graph.Edge> edgeIterator = v.revIterator();
+            while (edgeIterator.hasNext()){
+                XGraph.XEdge xEdge = (XGraph.XEdge) edgeIterator.next();
+                if(xEdge.weight == 0) {
+                    edgeList.add(xEdge);
+                }
+            }
+            w = w + v.weightDecrease;
+            v.resetDecrement();
+        }
+
+        //return weight
+        return w;
+    }
+    /*
     public int zeroTree(List edgeList){
         //for each vertex in dirGraph
         //go through all incoming edges (revEdge)
@@ -67,7 +134,7 @@ public class DirectedMST {
         //fill edges into edgeList also calc weight
         //return weight
         return -1;
-    }
+    }*/
 
     /**
      *
@@ -126,7 +193,7 @@ public class DirectedMST {
             //disable original edges, only newly added edges betw supernode are active now
         }
         //create super node super1;
-        List<XGraph.XVertex> newNodes = XGraph.createComponents(minEdges);
+        List<XGraph.XVertex> newNodes = dirGraph.createComponents(minEdges);
         //super1 = XVertex.add(comp number) - should do the foll:
         //create a vertex
         //add to hash map as <xvertex, list<xvertex>> this will be used for restoring
