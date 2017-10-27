@@ -176,7 +176,7 @@ public class XGraph extends Graph {
             XVertex x2 = getVertex(v);
             XEdge xedge = new XEdge(x1, x2, e.weight);
             x1.xadj.add(xedge);
-            x2.revAdj.add(xedge);
+            x2.xrevAdj.add(xedge);
             }
         }
         superNodeMap = new HashMap<>();
@@ -262,7 +262,7 @@ public class XGraph extends Graph {
     			
     			XEdge newEdge = new XEdge(newFrom,newTo,weight);
     			newFrom.xadj.add(newEdge);
-    			newTo.revAdj.add(newEdge);
+    			newTo.xrevAdj.add(newEdge);
     			m++;
     			i++;
     		}
