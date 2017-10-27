@@ -87,7 +87,7 @@ public class DFS {
         u.setDis(++time);
         u.setVCno(ge.cno);
 
-        Iterator adjEdges = u.xadj.iterator();
+        Iterator adjEdges = u.iterator();
 
         while(adjEdges.hasNext()){
             XGraph.XEdge e = (XGraph.XEdge)adjEdges.next();
