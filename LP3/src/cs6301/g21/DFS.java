@@ -41,7 +41,8 @@ public class DFS {
      * @return   : LinkedList<Graph.Vertex> : decreasing finish order time of the vertices in the graph
      */
     public static LinkedList<XGraph.XVertex> DFSCall(XGraph ge)throws CyclicGraphException{
-        return DFSGraph(ge.iterator(), ge);
+        setCycleChecking(false);
+    	return DFSGraph(ge.iterator(), ge);
     }
 
     /**
