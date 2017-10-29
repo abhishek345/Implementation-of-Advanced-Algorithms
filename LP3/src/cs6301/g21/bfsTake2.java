@@ -14,6 +14,7 @@ import java.util.Queue;
 
 
 public class bfsTake2 {
+    static int VERBOSE = 0;
     public static final int INFINITY = Integer.MAX_VALUE;
     private static XGraph.XVertex src;
     private static XGraph ge;
@@ -63,19 +64,13 @@ public class bfsTake2 {
                 x = (XGraph.XEdge) edgeIterator.next();
 
                 //do not consider the edge if zeroWeight is true but not a zeroWeight edge
-                if(zeroWeight == true && x.getWeight() != 0){
-                    continue;
-                }
-
                 //if we have to check number of components, continue
                 // incase that check isn't satisfied
                 XGraph.XVertex v = (XGraph.XVertex) x.otherEnd(u);
-                if(numComp == true && (v.getVCno() != u.getVCno())){
-                    continue;
-                }
 
                 //only add unseen vertices and the edges
-                if (!v.getSeen()) {
+                if (!v.getSeen() && ((zeroWeight == true && x.getWeight() == 0)||(zeroWeight == false))
+                        && ((numComp == true && (v.getVCno() == u.getVCno()))||(numComp == false))) {
                     visit(u, v);
                     q.add(v);
                     bfsEdges.add(x);
@@ -97,4 +92,6 @@ public class bfsTake2 {
         v.setParent(u);
         v.dis = u.dis+1;
     }
+
+
 }
