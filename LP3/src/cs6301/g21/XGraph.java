@@ -18,6 +18,7 @@ import java.util.*;
 
 public class XGraph extends Graph {
     HashMap<XVertex, List<XVertex>> superNodeMap;
+    HashMap<XEdge, XEdge> edgeMap;
     int cno;
 
     public static class XVertex extends Vertex {
