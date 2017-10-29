@@ -233,8 +233,9 @@ public class XGraph extends Graph {
      * @param minEdges list of edges that come out of each component in the graph
      * @return List of super node vertices
      */
-    public List<XVertex> createComponents(ArrayList<List<XEdge>> minEdges){
+     public List<XVertex> createComponents(ArrayList<List<XEdge>> minEdges){
     	List<XVertex> newNodes = new ArrayList<>();
+    	HashSet<XVertex> vertexList= new HashSet<XVertex>();
 
     	if(minEdges==null)
     		return newNodes;
@@ -252,8 +253,11 @@ public class XGraph extends Graph {
     	
     	int i=0;
     	for(List<XEdge> edgeList: minEdges){
+    		
+    		//get the edges in that super node
     		for(XEdge e : edgeList){
-    			XVertex newFrom=(XVertex) getVertex(((XVertex)e.from).getVCno() + n);
+    			XVertex from = getVertex((XVertex)e.from);
+    			XVertex newFrom=(XVertex) getVertex(from.getVCno() + n);
     			
     			XVertex to = (XVertex) e.otherEnd(newFrom);
     			XVertex newTo=(XVertex) getVertex(n+to.getVCno());
@@ -262,11 +266,24 @@ public class XGraph extends Graph {
     			
     			XEdge newEdge = new XEdge(newFrom,newTo,weight);
     			newFrom.xadj.add(newEdge);
-    			newTo.xrevAdj.add(newEdge);
+    			newTo.revAdj.add(newEdge);
+    			edgeMap.put(newEdge, e);
+    			
+    			vertexList.add(from);
+    			vertexList.add(to);
+    			
     			m++;
-    			i++;
     		}
+    		
+    		//set the cno vertices in super node and disable them
+    		for(XVertex v:vertexList){
+    			v.setVCno(n+i);
+    			v.disable();
+    		}
+    		i++;
     	}
+    	
+    	
 
     	for(i=n;i<n+numOfComp;i++){
     		newNodes.add((XVertex) getVertex(i));
@@ -274,6 +291,13 @@ public class XGraph extends Graph {
     	
     	n+=numOfComp;
     	return newNodes;
+    }
+    
+    public void expandSuperNode(XVertex xv){
+    	List<XVertex> list = superNodeMap.get(xv);
+    	for(XVertex v: list){
+    		v.enable();
+    	}
     }
 
     /*
