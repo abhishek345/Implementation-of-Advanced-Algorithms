@@ -37,7 +37,7 @@ public class StronglyConnectedComponent {
 		LinkedList<XGraph.XVertex> decFinList1 = Topological.toplogicalOrder2(g);
 		
 //		Graph gT = reverseGraph(g);
-		g.reverseGraph();
+		g.reverseXGraph();
 		Iterator V= decFinList1.iterator();
 		
 		LinkedList<Vertex> finOrder = new LinkedList<Vertex>();
@@ -47,7 +47,7 @@ public class StronglyConnectedComponent {
 		}
 		
 		findComponents(g,finOrder); //changed gT to g
-		g.reverseGraph();
+		g.reverseXGraph();
 		
 		return ge.cno;
 	}
