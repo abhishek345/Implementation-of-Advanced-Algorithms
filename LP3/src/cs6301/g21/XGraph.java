@@ -228,6 +228,19 @@ public class XGraph extends Graph {
 	u.disable();
     }
 	
+    /** Method to reverse the edges of a graph.  Applicable to directed graphs only. */
+    public void reverseXGraph() {
+	if(directed) {
+		Iterator i = iterator();
+	    while(i.hasNext()) {
+	    	XVertex u= (XVertex) i.next();
+	    	List<XEdge> tmp = u.xadj;
+	    	u.xadj = u.xrevAdj;
+	    	u.xrevAdj = tmp;
+	    }
+	}
+    }
+	
     /**
      * Creates super nodes and adds them to the vertices array
      * 
