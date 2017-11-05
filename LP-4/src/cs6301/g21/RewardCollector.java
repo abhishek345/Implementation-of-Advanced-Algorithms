@@ -29,6 +29,7 @@ public class RewardCollector {
     static int maxReward(XGraph.XVertex s, List<Graph.Vertex> tour, int d, int r){
 //        System.out.println(s + ", " + d + ", " + r);
         if(!s.getSeen()) {
+            int sPos = tour.size();
             int curLoc = tour.size();
             int tempReward = r;
             if(d <= s.getDis())
@@ -40,11 +41,18 @@ public class RewardCollector {
                 XGraph.XVertex neighbor = (XGraph.XVertex) e.otherEnd(s);
                 int m = maxReward(neighbor, tour, d+e.weight, tempReward);
                 if( m > bestReward) {
-                    while(tour.size() > curLoc)
-                        tour.remove(tour.size()-1);
+                    //remove everythig betw sLoc and curLoc before moving ahead, as this is a path which we no longer use
+                    int itemsToRemove = curLoc - sPos;
+                    while (itemsToRemove > 0){
+                        tour.remove(sPos);
+                        itemsToRemove--;
+                    }
                     curLoc = tour.size();
                     bestReward = m;
                     bestChild = neighbor;
+                }else{
+                    while(tour.size() > curLoc)
+                        tour.remove(tour.size()-1);
                 }
             }
 
