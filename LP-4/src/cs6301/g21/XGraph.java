@@ -22,13 +22,14 @@ import java.util.*;
 public class XGraph extends Graph {
     int cno;
 
-    public static class XVertex extends Vertex {
+    public static class XVertex extends Vertex implements Index {
         int weightDecrease = -1;
         int cno;
         int dis;
         int fin;
         int topno;
         int indegree;
+        public int index;
 
         boolean seen;
         boolean disabled;
@@ -42,6 +43,16 @@ public class XGraph extends Graph {
             xrevAdj = new LinkedList<>();
         }
 
+        /*Sets the parent attribute of the variable*/
+        public int getIndex() { // To Do
+            return this.index;
+        }
+
+        /*sets the index attribute of the variable*/
+        public void putIndex(int index) { // To Do
+            this.index = index;
+        }
+
         void setSeen(boolean b){ seen = b; }
         boolean getSeen(){ return seen; }
 
@@ -49,6 +60,7 @@ public class XGraph extends Graph {
         XVertex getParent(){ return parent; }
 
         void setDis(int b){ dis = b; }
+        int getDis(){ return dis; }
 
         void setFin(int b){ fin = b; }
 
@@ -97,7 +109,7 @@ public class XGraph extends Graph {
         
         public Iterator<Edge> revIterator() { return new XVertexIterator(this,true); }
         
-        class XVertexIterator implements Iterator<Edge> {
+        class XVertexIterator implements Iterator<Edge>{
             XEdge cur;
             Iterator<XEdge> it;
             boolean ready;
@@ -214,7 +226,7 @@ public class XGraph extends Graph {
 
 
     @Override
-    public Vertex getVertex(int n) {
+    public XVertex getVertex(int n) {
         return xv[n-1];
     }
 

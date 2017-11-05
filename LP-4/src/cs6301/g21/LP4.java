@@ -67,7 +67,9 @@ public class LP4 {
     // Return total reward for tour
     public int reward(HashMap<Vertex,Integer> vertexRewardMap, List<Vertex> tour) {
 	// To do
-        return 0;
+        XGraph ge = new XGraph(g);
+        int total = RewardCollector.collect(ge, ge.getVertex(s.getName()+1),vertexRewardMap, tour);
+        return total;
     }
 
     // Do not modify this function
