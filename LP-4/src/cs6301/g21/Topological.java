@@ -86,12 +86,12 @@ public class Topological {
 
 	}
 
-	public static int allTopological(XGraph ge, boolean onlyCount){
+	public static long allTopological(XGraph ge, boolean onlyCount){
         for(Graph.Vertex u: ge){
             ((XGraph.XVertex) u).setSeen(false);
             ((XGraph.XVertex) u).setInDegree(((XGraph.XVertex) u).xrevAdj.size());
         }
-            int count = 0;
+            long count = 0;
 	    if(onlyCount)
 	        count = findTopological(ge, null);
 	    else
@@ -99,9 +99,9 @@ public class Topological {
 	    return count;
 	}
 
-	static int findTopological(Graph ge, ArrayList<XGraph.XVertex> ordering){
+	static long findTopological(Graph ge, ArrayList<XGraph.XVertex> ordering){
 	    boolean completed = false;
-	    int count=0;
+	    long count=0;
 	    for(Graph.Vertex u: ge){
             XGraph.XVertex uX = (XGraph.XVertex) u;
             if(uX.getInDegree() == 0 && !uX.getSeen()){
