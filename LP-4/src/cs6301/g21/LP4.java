@@ -23,17 +23,16 @@ public class LP4 {
 
     // Part a. Return number of topological orders of g
     public long countTopologicalOrders() {
-	// To do
         XGraph ge = new XGraph(g);
-        return Topological.allTopological(ge);
+        return Topological.allTopological(ge, true);
     }
 
 
     // Part b. Print all topological orders of g, one per line, and 
     //	return number of topological orders of g
     public long enumerateTopologicalOrders() {
-	// To do
-        return 0;
+        XGraph ge = new XGraph(g);
+        return Topological.allTopological(ge, false);
     }
 
 
