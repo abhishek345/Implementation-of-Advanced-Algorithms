@@ -86,12 +86,16 @@ public class Topological {
 
 	}
 
-	public static int allTopological(XGraph ge){
+	public static int allTopological(XGraph ge, boolean onlyCount){
         for(Graph.Vertex u: ge){
             ((XGraph.XVertex) u).setSeen(false);
             ((XGraph.XVertex) u).setInDegree(((XGraph.XVertex) u).xrevAdj.size());
         }
-        int count = findTopological(ge, new ArrayList<>());
+            int count = 0;
+	    if(onlyCount)
+	        count = findTopological(ge, null);
+	    else
+		count = findTopological(ge, new ArrayList<>());
 	    return count;
 	}
 
@@ -106,14 +110,15 @@ public class Topological {
                     v.setInDegree(v.getInDegree()-1);
                 }
 
-
-                ordering.add(uX);
+		if(ordering != null)
+                	ordering.add(uX);
                 uX.setSeen(true);
                 count += findTopological(ge, ordering);
 
 
                 uX.setSeen(false);
-                ordering.remove(ordering.size()-1);
+		if(ordering != null)
+                	ordering.remove(ordering.size()-1);
                 for (Graph.Edge e: uX){
                     XGraph.XVertex v = (XGraph.XVertex)e.otherEnd(uX);
                     v.setInDegree(v.getInDegree()+1);
@@ -124,10 +129,12 @@ public class Topological {
 
         if(!completed){
 	        count++;
-	        for(XGraph.XVertex u: ordering){
-	            System.out.print(u + " ");
-            }
-            System.out.println();
+		if(ordering != null){
+			for(XGraph.XVertex u: ordering){
+			    System.out.print(u + " ");
+			}
+            		System.out.println();
+		}
         }
         return count;
     }
