@@ -55,8 +55,9 @@ public class LP4 {
 
     // Part e. Return weight of shortest path from s to t using at most k edges
     public int constrainedShortestPath(Vertex t, int k) {
-	// To do
-	return 0;
+	 XGraph ge = new XGraph(g);
+         int total = ConstrainedShortestPath.getPaths(ge, ge.getVertex(s.getName()+1), ge.getVertex(t.getName()+1), k);
+	 return total;
     }
 
 
