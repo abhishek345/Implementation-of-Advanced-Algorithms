@@ -39,8 +39,8 @@ public class LP4 {
     // Part c. Return the number of shortest paths from s to t
     // 	Return -1 if the graph has a negative or zero cycle
     public long countShortestPaths(Vertex t) {
-	// To do
-	return 0;
+	XGraph ge = new XGraph(g);
+    	return BellmanFord.getPaths(ge, s, t);
     }
 
     
