@@ -3,7 +3,8 @@ package cs6301.g21;
 import java.util.Iterator;
 
 /**
- *
+ * @author Vibha Belavadi, Umang Shah, Abhishek Jagwani, Shreya Vishwanath Rao
+ * @version 1.0: 2017/11/05 
  */
 public class ConstrainedShortestPath {
 
