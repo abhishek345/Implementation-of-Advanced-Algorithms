@@ -85,7 +85,14 @@ public class Topological {
 		return decFinList;
 
 	}
-
+	
+	/**
+	 * Find and count all the topological orderings of a graph. Public interface
+	 *
+	 * @param ge : graph whose topological order is determined
+	 * @param onlyCount : boolean variable indicating whether to enumerate topological orders or only count
+	 * @return : long, no of topological orders
+	 */
 	public static long allTopological(XGraph ge, boolean onlyCount){
         for(Graph.Vertex u: ge){
             ((XGraph.XVertex) u).setSeen(false);
@@ -98,7 +105,14 @@ public class Topological {
 		count = findTopological(ge, new ArrayList<>());
 	    return count;
 	}
-
+	
+	/**
+	 * Find and count all the topological orderings of a graph using DFS like approach with changing indegree to determine order.
+	 *
+	 * @param ge : graph whose topological order is determined
+	 * @param ordering : to record the order
+	 * @return : long, no of topological orders
+	 */
 	static long findTopological(Graph ge, ArrayList<XGraph.XVertex> ordering){
 	    boolean completed = false;
 	    long count=0;
