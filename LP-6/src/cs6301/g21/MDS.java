@@ -150,6 +150,8 @@ public class MDS {
                 oldSuppliers.remove(supplier);
                 priceSup.put(price, oldSuppliers);
             }
+            if(suppliers == null)
+                suppliers = new ArrayList<>();
             suppliers.add(supInfo);
             priceSup.put(p.price, suppliers);
             itemPriceSupplier.put(p.id, priceSup);
@@ -236,7 +238,21 @@ public class MDS {
       at which they sell the item (non-decreasing order).
     */
     public Long[ ] findSupplier(Long id, float minReputation) {
-	return null;
+        ArrayList<Long> result = new ArrayList<>();
+        TreeMap<Integer, List<SupplierInfo>> priceSup = itemPriceSupplier.get(id);
+        if(priceSup == null)
+            return null;
+        else {
+            for (Map.Entry<Integer, List<SupplierInfo>> pSlist : priceSup.entrySet()) {
+                List<SupplierInfo> sups = pSlist.getValue();
+                for (SupplierInfo s : sups) {
+                    if(s.getReputation() > minReputation)
+                        result.add(s.getSid());
+                }
+
+            }
+            return (Long[]) result.toArray();
+        }
     }
 
     /* find suppliers selling 5 or more products, who have the same
@@ -266,7 +282,16 @@ public class MDS {
        an array with the items removed.
     */
     public Long[ ] purge(float maxReputation) {
-	return null;
+	    //need to get bad suppliers, for that
+        //use reputation tree
+        //get suppliers who are bad suppliers
+        //using supplier info
+        //get items sing pairs []
+        //for each item incr count of bad suppliers
+        //if badSupCount = totalSupCount (from IPSup)
+        //then purge this item
+        //else dont
+        return null;
     }
 
     /* remove item from storage.  Returns the sum of the Longs that
