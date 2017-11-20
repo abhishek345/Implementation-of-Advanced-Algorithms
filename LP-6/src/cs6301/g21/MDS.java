@@ -7,8 +7,8 @@ public class MDS {
     HashMap<Long, TreeSet<Long>> descriptionItemid;
     TreeMap<Long, TreeSet<Long>> itemDecription;
     HashMap<Long, TreeSet<Long>> itemSupplier;
-    TreeMap<Long, TreeSet<SupplierInfo>> supplierInfo;
-    TreeMap<Long, TreeMap<Long, List<SupplierInfo>>> itemPriceSupplier;
+    TreeMap<Long, SupplierInfo> supplierInfo;
+    TreeMap<Long, TreeMap<Integer, List<SupplierInfo>>> itemPriceSupplier;
 
 
     public MDS() {
@@ -33,12 +33,42 @@ public class MDS {
   descr class: tree, sum
    */
     public static class SupplierInfo{
-        long reputation;
-        Pair [] list;
+        Long supplier;
+        float reputation;
+        HashMap<Long, Integer> list;
 
-        public SupplierInfo(long reputation, Pair [] list) {
+        public SupplierInfo(Long supp, float reputation, Pair [] pairs) {
+            this.supplier = supp;
             this.reputation = reputation;
-            this.list = list;
+            list = new HashMap<>();
+            for(Pair p: pairs){
+                list.put(p.id, p.price);
+            }
+        }
+
+        public SupplierInfo(Long supp){
+            this.supplier = supp;
+            list = new HashMap<>();
+        }
+
+        public float getReputation(){
+            return reputation;
+        }
+
+        public void setReputation(float rep){
+            this.reputation = rep;
+        }
+
+        public Integer getPair(long id){
+            return list.get(id);
+        }
+
+        public void setPair(long id, int price){
+            list.put(id, price);
+        }
+
+        public Long getSid(){
+            return supplier;
         }
     }
 
@@ -88,7 +118,44 @@ public class MDS {
       Returns the number of new entries created.
     */
     public int add(Long supplier, Pair[ ] idPrice) {
-	return 0;
+        // add in supplier info and
+        int created = 0;
+        SupplierInfo supInfo = supplierInfo.get(supplier);
+        if(supInfo == null){
+            //supplier did not exist
+            supInfo = new SupplierInfo(supplier);
+
+        }
+        //supp exists, go through its pairs, create pair and incr else replace price
+        for(Pair p: idPrice) {
+            Integer price = supInfo.getPair(p.id);
+
+            if (price == null) {
+                created++;
+                price = p.price;
+            }
+            supInfo.setPair(p.id, p.price);
+            supplierInfo.put(supplier, supInfo);
+
+            //add it to item's tree for price , sup
+            TreeMap priceSup = itemPriceSupplier.get(p.id);
+            if (priceSup == null) {
+                priceSup = new TreeMap<Integer, List<SupplierInfo>>();
+            }
+            //now I have tree, so add it acc to correcr price
+            List<SupplierInfo> suppliers = (List) priceSup.get(p.price);
+            if (price != p.price) {
+                //remove from old tree if needed
+                List<Long> oldSuppliers = (List) priceSup.get(price);
+                oldSuppliers.remove(supplier);
+                priceSup.put(price, oldSuppliers);
+            }
+            suppliers.add(supInfo);
+            priceSup.put(p.price, suppliers);
+            itemPriceSupplier.put(p.id, priceSup);
+        }
+        supplierInfo.put(supplier, supInfo);
+        return created;
     }
 
     /* return an array with the description of id.  Return null if
@@ -147,7 +214,20 @@ public class MDS {
       ordered by the price at which they sell the item (non-decreasing order).
     */
     public Long[ ] findSupplier(Long id) {
-	return null;
+        ArrayList<Long> result = new ArrayList<>();
+	    TreeMap<Integer, List<SupplierInfo>> priceSup = itemPriceSupplier.get(id);
+	    if(priceSup == null)
+            return null;
+	    else {
+            for (Map.Entry<Integer, List<SupplierInfo>> pSlist : priceSup.entrySet()) {
+                List<SupplierInfo> sups = pSlist.getValue();
+                for (SupplierInfo s : sups) {
+                    result.add(s.getSid());
+                }
+
+            }
+            return (Long[]) result.toArray();
+        }
     }
 
     /* given an id and a minimum reputation, return an array of
