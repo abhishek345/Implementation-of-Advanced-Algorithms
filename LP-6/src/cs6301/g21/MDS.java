@@ -35,12 +35,12 @@ public class MDS {
     public static class SupplierInfo{
         Long supplier;
         float reputation;
-        HashMap<Long, Integer> list;
+        TreeMap<Long, Integer> list;
 
         public SupplierInfo(Long supp, float reputation, Pair [] pairs) {
             this.supplier = supp;
             this.reputation = reputation;
-            list = new HashMap<>();
+            list = new TreeMap<>();
             for(Pair p: pairs){
                 list.put(p.id, p.price);
             }
@@ -48,7 +48,7 @@ public class MDS {
 
         public SupplierInfo(Long supp){
             this.supplier = supp;
-            list = new HashMap<>();
+            list = new TreeMap<>();
         }
 
         public float getReputation(){
@@ -265,7 +265,30 @@ public class MDS {
        that each supplier appears only once in the returned array.
     */
     public Long[ ] identical() {
-	return null;
+	    HashSet<Long> result = new HashSet<>();
+
+	    //go through reputation tree
+        //TreeSetFromRepTree : sameRepSuppliers
+        //at each node, group of suppliers with same reputn
+
+        //for sup : sameRepSupp
+        //if sup sells >= 5 items
+        //if comparePairsList(A.list, B.list) add to tree
+
+        return null;
+    }
+
+    boolean comparePairsList(HashMap<Long, Integer> A, HashMap<Long, Integer> B){
+        if(A.size() != B.size())
+            return false;
+        for(Map.Entry<Long, Integer> e:A.entrySet()){
+            Integer itemSupB = B.get(e.getKey());
+            if(itemSupB == null)
+                return false;
+            else if(Math.abs(itemSupB-e.getValue()) > 2)
+                return false;
+        }
+        return true;
     }
 
     /* given an array of ids, find the total price of those items, if
