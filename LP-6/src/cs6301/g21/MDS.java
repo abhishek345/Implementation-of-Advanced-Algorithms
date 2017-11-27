@@ -9,6 +9,7 @@ public class MDS {
     HashMap<Long, TreeSet<Long>> itemSupplier;
     TreeMap<Long, SupplierInfo> supplierInfo;
     TreeMap<Long, TreeMap<Integer, List<SupplierInfo>>> itemPriceSupplier;
+    TreeMap<Float, TreeSet<Long>> reputationSupplier;
 
 
     public MDS() {
@@ -17,6 +18,7 @@ public class MDS {
         itemSupplier = new HashMap<>(); //maps item id with supplier
         supplierInfo = new TreeMap<>(); //maps supplier ID with supplier info
         itemPriceSupplier = new TreeMap<>(); // maps item to a tree ordered on the price and holds info about supplier selling the item at that price
+        reputationSupplier = new TreeMap<>(); //maps the reputation with supplier
     }
 
     public static class Pair {
@@ -44,6 +46,12 @@ public class MDS {
             for(Pair p: pairs){
                 list.put(p.id, p.price);
             }
+        }
+
+        public SupplierInfo(Long supp, float reputation){
+            this.supplier = supp;
+            this.reputation = reputation;
+            list = null;
         }
 
         public SupplierInfo(Long supp){
@@ -109,7 +117,47 @@ public class MDS {
        supplier is new, and false otherwise.
     */
     public boolean add(Long supplier, float reputation) {
-	return true;
+        boolean isNewSupplier = false;
+        SupplierInfo s = supplierInfo.get(supplier);
+
+        if(s == null){
+            //create new SupplierInfo instance
+            //put that instance into supplierInfo TreeMap
+            s = new SupplierInfo(supplier, reputation);
+            supplierInfo.put(supplier, s);
+            isNewSupplier = true;
+
+            //add to the new reputationSupplier treeMap
+            addToReputation(supplier, reputation);
+
+        }else{
+            // get and update the old reputation in Reputation TreeMap
+            //remove supplierInfo from old reputation tree
+            float oldRep = s.getReputation();
+            s.setReputation(reputation);
+            TreeSet<Long> tOld = reputationSupplier.get(oldRep);
+            if(tOld != null){
+                tOld.remove(supplier);
+            }
+
+            //add to the new reputationSupplier treeMap
+            addToReputation(supplier, reputation);
+        }
+
+        return isNewSupplier;
+    }
+
+    /*
+    * Helper function to add to reputationSupplier TreeSet
+    * //if the TreeSet doesn't exist, create new and add to that*/
+    public void addToReputation(Long supplier, float reputation){
+        TreeSet<Long> t = reputationSupplier.get(reputation);
+        if(t == null){
+            t = new TreeSet<>();
+            t.add(supplier);
+            reputationSupplier.put(reputation, t);
+        }else
+            t.add(supplier);
     }
 
     /* add products and their prices at which the supplier sells the
@@ -305,24 +353,81 @@ public class MDS {
        an array with the items removed.
     */
     public Long[ ] purge(float maxReputation) {
-	    //need to get bad suppliers, for that
-        //use reputation tree
-        //get suppliers who are bad suppliers
-        //using supplier info
-        //get items sing pairs []
-        //for each item incr count of bad suppliers
-        //if badSupCount = totalSupCount (from IPSup)
+        HashMap<Long, Long> badcount=new HashMap<>();
+        for(Map.Entry<Float, TreeSet<Long>> e: reputationSupplier.entrySet()){
+            //need to get bad suppliers, for that
+            if(e.getKey() > maxReputation) {
+                break;
+            }
+            else{
+                //use reputation tree
+                //get suppliers who are bad suppliers
+                //using supplier info
+                //get items using pairs []
+                if(e != null) {
+                    for (Long s : e.getValue()){
+                        SupplierInfo sp = supplierInfo.get(s);
+                        if(sp != null){
+                            for(Long itemSold: sp.list.keySet()){
+                                //for each item incr count of bad suppliers
+                                Long c = badcount.get(itemSold);
+                                if(itemSold == null)
+                                    c = new Long(0);
+                                c += 1;
+                                badcount.put(itemSold, c);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        ArrayList<Long> removed = new ArrayList<>();
+        for(Map.Entry<Long, Long> counts : badcount.entrySet()){
+            //if badSupCount = totalSupCount (from IPSup)
+            if(counts.getValue() == itemPriceSupplier.get(counts.getKey()).size()){
+                removed.add(counts.getKey());
+                remove(counts.getKey());
+            }
+        }
         //then purge this item
         //else dont
-        return null;
+        return removed.toArray(new Long[removed.size()]);
     }
 
-    /* remove item from storage.  Returns the sum of the Longs that
+    /* remove item from storage. Returns the sum of the Longs that
        are in the description of the item deleted (or 0, if such an id
        did not exist).
     */
     public Long remove(Long id) {
-	return 0L;
+        Long sum = 0L;
+        TreeSet<Long> valDesc;
+        TreeSet<Long> valItem;
+
+        //remove from itemDescription after adding all the longs of that id
+        try {
+            valDesc = itemDecription.remove(id);
+            if (valDesc != null) {
+                for (Long l : valDesc) {
+                    //add the description
+                    sum = sum + l;
+
+                    //remove from descriptionItemid
+                    try {
+
+                        itemPriceSupplier.remove(l);
+                    } catch (NullPointerException npe){}
+
+                    try {
+                        valItem = descriptionItemid.get(l);
+                        if (valItem != null)
+
+                    }catch (NullPointerException npe){}
+                }
+                //delete the item from the map
+//            itemDecription.remove(id);
+            }
+        }catch (NullPointerException npe){}
+        return sum;
     }
 
     /* remove from the given id's description those elements that are
@@ -331,14 +436,72 @@ public class MDS {
        number of elements that were actually removed from the description.
     */
     public int remove(Long id, Long[ ] arr) {
-	return 0;
+
+        int count = 0;
+        TreeSet<Long> val;
+
+        if(itemDecription == null)
+            return 0;
+
+        //check for null values as well
+        for(Long l : arr){
+
+            //remove from itemDescription Map
+            val = itemDecription.get(id);
+            if(val != null) {
+                if (val.remove(l))
+                    count++;
+            }
+
+            //remove from descriptionItemid map
+            val = descriptionItemid.get(l);
+            if(val != null) {
+                val.remove(id);
+            }
+        }
+
+        return count;
     }
 
     /* remove the elements of the array from the description of all
        items.  Return the number of items that lost one or more terms
        from their descriptions.
+       check for the other way, get the list of item ids containing that particular
+       description and keep removing from item id all the elements
     */
     public int removeAll(Long[ ] arr) {
-	return 0;
+
+        //remove from descriptionItemId map
+        for(Long l : arr)
+            descriptionItemid.remove(l);
+
+        //count of items which lost one or more terms from their descriptions
+        int count = 0;
+
+        //flag to check if terms lost
+        boolean lost = false;
+
+        //check for null references
+        if(itemDecription == null)
+            return count;
+
+        //iterate through value, and remove description from itemDescription
+        for(TreeSet<Long> value : itemDecription.values()){
+
+            //flip lost to true if it's already true or the remove op is successful
+            for(Long l : arr){
+                if(value.remove(l) || lost)
+                    lost = true;
+            }
+
+            //increment count if one or more items removed from description
+            if(lost)
+                count++;
+
+            //reset flag
+            lost = false;
+        }
+
+        return count;
     }
 }
