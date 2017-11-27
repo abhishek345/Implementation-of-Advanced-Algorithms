@@ -35,9 +35,14 @@ public class TestClass {
         //1: 1, 3:2, 4:1, 5:3
         printLongArr(larr);
 
+        //Test: add(supplier, reputation)
+        db.add(L(21), 3.0f);
+        db.add(L(22), 4.5f);
+        db.add(L(23), 4.5f);
+        db.add(L(24), 4.0f);
         //test: add sup, pair
         MDS.Pair p1[] = new MDS.Pair[3];
-        MDS.Pair p2[] = new MDS.Pair[2];
+        MDS.Pair p2[] = new MDS.Pair[1];
         MDS.Pair p3[] = new MDS.Pair[2];
 
         p1[0] = new MDS.Pair(3, 10);
@@ -45,16 +50,14 @@ public class TestClass {
         p1[2] = new MDS.Pair(5, 10);
 
         p2[0] = new MDS.Pair(4, 15);
-        p2[1] = new MDS.Pair(5, 20);
+//        p2[1] = new MDS.Pair(5, 20);
 
         p3[0] = new MDS.Pair(4, 15);
         p3[1] = new MDS.Pair(5, 15);
-
+        //1: 21, 2: -, 3:21, 4:23,24, 5:21, 24
         db.add(L(21), p1);
         db.add(L(23), p2);
         db.add(L(24), p3);
-
-        //Test: add(supplier, reputation)
 
         //test: findSupplier(id)
         Long[] sups = db.findSupplier(L(5));
@@ -65,5 +68,7 @@ public class TestClass {
         sups = db.findSupplier(L(5), 3.4f);
         printLongArr(sups);
 
+        sups = db.purge(4.4f);
+        printLongArr(sups);
     }
 }

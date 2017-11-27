@@ -51,7 +51,7 @@ public class MDS {
         public SupplierInfo(Long supp, float reputation){
             this.supplier = supp;
             this.reputation = reputation;
-            list = null;
+            list = new TreeMap<>();
         }
 
         public SupplierInfo(Long supp){
@@ -72,6 +72,7 @@ public class MDS {
         }
 
         public void setPair(long id, int price){
+//            if()
             list.put(id, price);
         }
 
@@ -184,6 +185,11 @@ public class MDS {
             }
             supInfo.setPair(p.id, p.price);
             supplierInfo.put(supplier, supInfo);
+            TreeSet<Long> supsOfItem = itemSupplier.get(p.id);
+            if(supsOfItem == null)
+                supsOfItem = new TreeSet<>();
+            supsOfItem.add(supplier);
+            itemSupplier.put(p.id, supsOfItem);
 
             //add it to item's tree for price , sup
             TreeMap priceSup = itemPriceSupplier.get(p.id);
@@ -257,7 +263,8 @@ public class MDS {
       (non-decreasing order).
     */
     public Long[ ] findItem(Long n, int minPrice, int maxPrice, float minReputation) {
-	return null;
+
+        return null;
     }
 
     /* given an id, return an array of suppliers who sell that item,
@@ -276,7 +283,7 @@ public class MDS {
                 }
 
             }
-            return (Long[]) result.toArray();
+            return result.toArray(new Long[result.size()]);
         }
     }
 
@@ -299,7 +306,7 @@ public class MDS {
                 }
 
             }
-            return (Long[]) result.toArray();
+            return result.toArray(new Long[result.size()]);
         }
     }
 
@@ -371,7 +378,7 @@ public class MDS {
                             for(Long itemSold: sp.list.keySet()){
                                 //for each item incr count of bad suppliers
                                 Long c = badcount.get(itemSold);
-                                if(itemSold == null)
+                                if(c == null)
                                     c = new Long(0);
                                 c += 1;
                                 badcount.put(itemSold, c);
@@ -384,14 +391,20 @@ public class MDS {
         ArrayList<Long> removed = new ArrayList<>();
         for(Map.Entry<Long, Long> counts : badcount.entrySet()){
             //if badSupCount = totalSupCount (from IPSup)
-            if(counts.getValue() == itemPriceSupplier.get(counts.getKey()).size()){
+            if(counts.getValue() == itemSupplier.get(counts.getKey()).size()){
+                //then purge this item
                 removed.add(counts.getKey());
-                remove(counts.getKey());
             }
         }
-        //then purge this item
-        //else dont
-        return removed.toArray(new Long[removed.size()]);
+
+        Long[] toRemove = new Long[removed.size()];
+        int i =0;
+        for(Long r:removed){
+            remove(r);
+            toRemove[i++] = r;
+        }
+
+        return toRemove;
     }
 
     /* remove item from storage. Returns the sum of the Longs that
@@ -406,21 +419,20 @@ public class MDS {
         //remove from itemDescription after adding all the longs of that id
         try {
             valDesc = itemDecription.remove(id);
+
             if (valDesc != null) {
+                try {
+                    itemPriceSupplier.remove(id);
+                } catch (NullPointerException npe){}
                 for (Long l : valDesc) {
                     //add the description
                     sum = sum + l;
 
                     //remove from descriptionItemid
                     try {
-
-                        itemPriceSupplier.remove(l);
-                    } catch (NullPointerException npe){}
-
-                    try {
                         valItem = descriptionItemid.get(l);
                         if (valItem != null)
-
+                            valItem.remove(id);
                     }catch (NullPointerException npe){}
                 }
                 //delete the item from the map
